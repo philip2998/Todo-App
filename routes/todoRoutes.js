@@ -1,6 +1,6 @@
 import express from 'express';
 import TodoController from '../controllers/TodoController.js';
-import AuthController from '../controllers/authController.js';
+import AuthController from '../controllers/AuthController.js';
 
 const todoRouter = express.Router();
 

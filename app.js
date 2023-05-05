@@ -10,7 +10,7 @@ import userRouter from './routes/userRoutes.js';
 import todoRouter from './routes/todoRoutes.js';
 
 import AppError from './utils/AppError.js';
-import ErrorsHandler from './errors/ErrorsHandler.js';
+import ErrorsHandler from './errorsHandlers/ErrorsHandler.js';
 
 const app = express();
 
