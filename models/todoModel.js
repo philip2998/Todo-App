@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const TodoSchema = new mongoose.Schema({
+const todoSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, 'Title must have a name'],
@@ -11,6 +11,6 @@ const TodoSchema = new mongoose.Schema({
   },
 });
 
-const Todo = mongoose.model('Todo', TodoSchema);
+const Todo = mongoose.model('Todo', todoSchema);
 
 export default Todo;
