@@ -1,5 +1,5 @@
 import Todo from '../models/todoModel.js';
-import AppError from '../errors/AppError.js';
+import AppError from '../utils/AppError.js';
 import catchAsync from '../utils/catchAsync.js';
 import sendSuccessResponse from '../utils/sendSuccessResponse.js';
 
