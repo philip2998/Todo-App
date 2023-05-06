@@ -6,8 +6,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import xss from 'xss-clean';
 
-import userRouter from './routes/userRoutes.js';
-import todoRouter from './routes/todoRoutes.js';
+import routes from './routes/index.js';
 
 import AppError from './utils/AppError.js';
 import ErrorsHandler from './errorsHandlers/ErrorsHandler.js';
@@ -41,9 +40,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// ROUTES
-app.use('/api/users', userRouter);
-app.use('/api/todo', todoRouter);
+// ROUTE
+app.use('/api', routes);
 
 // Global Error Handling Middleware
 app.all('*', (req, res, next) => {
