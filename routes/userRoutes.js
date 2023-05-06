@@ -1,14 +1,16 @@
 import express from 'express';
 import UserController from '../controllers/UserController.js';
-import AuthController from '../controllers/AuthController.js';
+import signup from '../middlewares/signup.js';
+import login from '../middlewares/login.js';
+import protect from '../middlewares/protect.js';
 
 const userRouter = express.Router();
 
-userRouter.post('/signup', AuthController.signup);
-userRouter.post('/login', AuthController.login);
+userRouter.post('/signup', signup);
+userRouter.post('/login', login);
 
-userRouter.patch('/updateMe', AuthController.protect, UserController.updateMe);
-userRouter.delete('/deleteMe', AuthController.protect, UserController.deleteMe);
+userRouter.patch('/updateMe', protect, UserController.updateMe);
+userRouter.delete('/deleteMe', protect, UserController.deleteMe);
 
 userRouter
   .route('/')
