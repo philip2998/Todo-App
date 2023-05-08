@@ -1,8 +1,8 @@
 import express from 'express';
 import UserController from '../controllers/UserController.js';
-import signup from '../middlewares/signup.js';
-import login from '../middlewares/login.js';
-import protect from '../middlewares/protect.js';
+import signup from '../controllers/signup.js';
+import login from '../controllers/login.js';
+import protect from '../controllers/protect.js';
 
 const userRouter = express.Router();
 

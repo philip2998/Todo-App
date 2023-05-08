@@ -1,6 +1,6 @@
 import AppError from '../utils/AppError.js';
 
-const restrictTo = role => {
+const checkPermissions = role => {
   return (req, res, next) => {
     if (!role.includes(req.user.role)) {
       return next(
@@ -11,4 +11,4 @@ const restrictTo = role => {
   };
 };
 
-export default restrictTo;
+export default checkPermissions;

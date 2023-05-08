@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import AppError from '../utils/AppError.js';
 import catchAsync from '../utils/catchAsync.js';
-import createSendToken from './createSendToken.js';
+import createSendToken from '../utils/createSendToken.js';
 
 // For login we have to check some validation about
 // email and password, and if it is ok we send token

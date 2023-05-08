@@ -1,6 +1,6 @@
 import User from '../models/userModel.js';
 import catchAsync from '../utils/catchAsync.js';
-import createSendToken from './createSendToken.js';
+import createSendToken from '../utils/createSendToken.js';
 
 const signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
