@@ -5,12 +5,6 @@ import filterBody from '../utils/filterBody.js';
 import sendSuccessResponse from '../utils/sendSuccessResponse.js';
 
 export default class UserController {
-  static getAllUsers = catchAsync(async (req, res, next) => {
-    const users = await User.find();
-
-    sendSuccessResponse(res, 200, users);
-  });
-
   static updateMe = catchAsync(async (req, res, next) => {
     if (req.body.password || req.body.passwordConfirm) {
       return next(
@@ -39,28 +33,7 @@ export default class UserController {
     sendSuccessResponse(res, 204, null);
   });
 
-  static getUser = catchAsync(async (req, res, next) => {
-    res.status(500).json({
-      status: 'error',
-      message: 'This rout is not yet defined!',
-    });
-  });
-
   static createUser = catchAsync(async (req, res, next) => {
-    res.status(500).json({
-      status: 'error',
-      message: 'This rout is not yet defined!',
-    });
-  });
-
-  static updateUser = catchAsync(async (req, res, next) => {
-    res.status(500).json({
-      status: 'error',
-      message: 'This rout is not yet defined!',
-    });
-  });
-
-  static deleteUser = catchAsync(async (req, res, next) => {
     res.status(500).json({
       status: 'error',
       message: 'This rout is not yet defined!',
