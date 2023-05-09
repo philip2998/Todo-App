@@ -11,13 +11,13 @@ userRouter.post('/signup', signup);
 userRouter.post('/login', login);
 
 // Protect all routes that it comes after this middleware
-route.use(protect);
+userRouter.use(protect);
 
 userRouter.patch('/updateMe', protect, UserController.updateMe);
 userRouter.delete('/deleteMe', protect, UserController.deleteMe);
 
 // Protect all routes that it comes after this middleware
-route.use(checkPermissions('admin'));
+userRouter.use(checkPermissions('admin'));
 
 userRouter
   .route('/')
