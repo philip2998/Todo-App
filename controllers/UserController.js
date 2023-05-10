@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import filterBody from '../utils/filterBody.js';
 import sendSuccessResponse from '../utils/sendSuccessResponse.js';
-import { getOne, getAll, deleteOne, updateOne } from './HandlerFactory.js';
+import { getOne, getAll, deleteOne, updateOne } from './handlerFactory.js';
 
 export default class UserController {
   static updateMe = catchAsync(async (req, res, next) => {
