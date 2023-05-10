@@ -1,8 +1,8 @@
 import express from 'express';
-import ViewsController from '../controllers/ViewsController.js';
+import { getLoginForm } from '../controllers/getLoginForm.js';
 
 const viewRouter = express.Router();
 
-viewRouter.get('/login', ViewsController.getLoginForm);
+viewRouter.get('/login', getLoginForm);
 
 export default viewRouter;
