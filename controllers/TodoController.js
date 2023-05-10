@@ -5,7 +5,7 @@ import {
   createOne,
   updateOne,
   deleteOne,
-} from './HandlerFactory.js';
+} from './handlerFactory.js';
 
 export default class TodoController {
   static getAllTodos = getAll(Todo);
