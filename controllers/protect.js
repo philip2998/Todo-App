@@ -4,6 +4,10 @@ import User from '../models/userModel.js';
 import AppError from '../utils/AppError.js';
 import catchAsync from '../utils/catchAsync.js';
 
+// In this protect function we need to get token, check if it's true
+// making verification token, checking current user and Grant access to
+// protected route
+
 const protect = catchAsync(async (req, res, next) => {
   let token;
   if (
@@ -11,7 +15,7 @@ const protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-  }
+  } else if (req.cookies.jwt) token = req.cookies.jwt;
 
   if (!token)
     return next(new AppError('You are not logged in. Please log in!', 401));
@@ -24,6 +28,7 @@ const protect = catchAsync(async (req, res, next) => {
       new AppError('The user belonging to this token does no longer exist', 401)
     );
   req.user = currentUser;
+  res.locals.user = currentUser;
   next();
 });
 

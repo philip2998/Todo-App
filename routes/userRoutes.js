@@ -19,10 +19,7 @@ userRouter.delete('/deleteMe', protect, UserController.deleteMe);
 // Protect all routes that it comes after this middleware
 userRouter.use(checkPermissions('admin'));
 
-userRouter
-  .route('/')
-  .get(UserController.getAllUsers)
-  .post(UserController.createUser);
+userRouter.route('/').get(UserController.getAllUsers);
 userRouter
   .route('/:id')
   .get(UserController.getUser)

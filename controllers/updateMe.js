@@ -3,7 +3,7 @@ import catchAsync from '../utils/catchAsync.js';
 import filterBody from '../utils/filterBody.js';
 import sendSuccessResponse from '../utils/sendSuccessResponse.js';
 
-export const updateMe = Model =>
+const updateMe = Model =>
   catchAsync(async (req, res, next) => {
     if (req.body.password || req.body.passwordConfirm) {
       return next(
@@ -25,3 +25,5 @@ export const updateMe = Model =>
     );
     sendSuccessResponse(res, 201, updatedUser);
   });
+
+export default updateMe;

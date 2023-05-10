@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import xss from 'xss-clean';
+import cookieParser from 'cookie-parser';
 
 import routes from './routes/index.js';
 import viewRouter from './routes/viewRoutes.js';
@@ -37,6 +38,9 @@ const limiter = rateLimit({
 app.use('/users', limiter);
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 app.use(mongoSanitize());
 app.use(xss());
 
