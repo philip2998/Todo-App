@@ -7,10 +7,11 @@ export default class ErrorsHandler {
     err.status = err.status || 'Error';
 
     if (process.env.NODE_ENV === 'development') {
-      ErrorsHandler.sendErrorForDev(err, res);
+      ErrorsHandler.sendErrorForDev(err, req, res);
       next();
     } else if (process.env.NODE_ENV === 'production') {
       let error = { ...err }; // Deep copy
+      error.message = err.message;
 
       // Hanlding specific types of errors form production environment
       if (error.name === 'CastError')
@@ -23,31 +24,53 @@ export default class ErrorsHandler {
         error = JWTErrorsHandler.handleJWTError();
       if (error.anme === 'TokenExpiredError')
         error = JWTErrorsHandler.handleJWTExpiredToken();
-      ErrorsHandler.sendErrorForProd(error, res);
+
+      ErrorsHandler.sendErrorForProd(error, req, res);
     }
   }
 
-  static sendErrorForDev(err, res) {
-    res.status(err.statusCode).json({
-      status: err.status,
-      error: err,
-      message: err.message,
-      stack: err.stack,
+  static sendErrorForDev(err, req, res) {
+    if (req.originalUrl.startsWith('/api')) {
+      return res.status(err.statusCode).json({
+        status: err.status,
+        error: err,
+        message: err.message,
+        stack: err.stack,
+      });
+    }
+    return res.status(err.statusCode).render('error', {
+      title: 'Something went wrong!',
+      msg: err.message,
     });
   }
-
-  static sendErrorForProd(err, res) {
-    if (err.isOperational) {
-      res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message,
-      });
-    } else {
+  // First we need to know if it is operational(trusted) error
+  // and if so we send to client message, otherwise
+  // programming or other unknown error
+  static sendErrorForProd(err, req, res) {
+    if (req.originalUrl.startsWith('/api')) {
+      if (err.isOperational) {
+        return res.status(err.statusCode).json({
+          status: err.status,
+          msg: err.message,
+        });
+      }
       console.error('ERROR', err);
-      res.status(500).json({
+      return res.status(500).json({
         status: 'error',
-        message: 'Something went wrong!',
+        msg: 'Something went wrong!',
       });
     }
+    if (err.isOperational) {
+      return res.status(err.statusCode).render('error', {
+        title: 'Something went wrong!',
+        msg: err.message,
+      });
+    }
+    console.error('ERROR', err);
+
+    return res.status(err.statusCode).render('error', {
+      title: 'Something went wrong!',
+      msg: 'Please try again later.',
+    });
   }
 }
