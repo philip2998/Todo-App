@@ -1,4 +1,4 @@
-import AppError from '../utils/AppError.js';
+import AppError from './AppError.js';
 
 export default class JWTErrorsHandler {
   static handleJWTError() {

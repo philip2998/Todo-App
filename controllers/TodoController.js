@@ -1,34 +1,34 @@
 import TodoService from '../services/TodoService.js';
-import AppError from '../utils/AppError.js';
+import AppError from '../errors/AppError.js';
 import catchAsync from '../utils/catchAsync.js';
 import sendSuccessResponse from '../utils/sendSuccessResponse.js';
 
 export default class TodoController {
   static getAllTodos = catchAsync(async (req, res, next) => {
-    const users = await TodoService.getAllTodos();
-    sendSuccessResponse(res, 200, users);
+    const todos = await TodoService.getAllTodos();
+    sendSuccessResponse(res, 200, todos);
   });
 
   static getTodo = catchAsync(async (req, res, next) => {
-    const user = await TodoService.getTodo(req.params.id);
+    const todo = await TodoService.getTodo(req.params.id);
 
-    if (!user) return next(new AppError('No Document found with that ID', 404));
+    if (!todo) return next(new AppError('No Document found with that ID', 404));
 
-    sendSuccessResponse(res, 200, user);
+    sendSuccessResponse(res, 200, todo);
   });
 
   static createTodo = catchAsync(async (req, res, next) => {
-    const newUser = await TodoService.createTodo(req.body);
-    sendSuccessResponse(res, 201, newUser);
+    const newTodo = await TodoService.createTodo(req.body);
+    sendSuccessResponse(res, 201, newTodo);
   });
 
   static updateTodo = catchAsync(async (req, res, next) => {
-    const updatedUser = await TodoService.updateTodo(req.params.id, req.body);
+    const updatedTodo = await TodoService.updateTodo(req.params.id, req.body);
 
-    if (!updatedUser)
+    if (!updatedTodo)
       return next(new AppError('No Document found with that ID', 404));
 
-    sendSuccessResponse(res, 200, updatedUser);
+    sendSuccessResponse(res, 200, updatedTodo);
   });
 
   static deleteTodo = catchAsync(async (req, res, next) => {

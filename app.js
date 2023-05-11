@@ -11,8 +11,8 @@ import cookieParser from 'cookie-parser';
 import routes from './routes/index.js';
 import viewRouter from './routes/viewRoutes.js';
 
-import AppError from './utils/AppError.js';
-import ErrorsHandler from './errorsHandlers/ErrorsHandler.js';
+import AppError from './errors/AppError.js';
+import ErrorsHandler from './errors/ErrorsHandler.js';
 
 const app = express();
 

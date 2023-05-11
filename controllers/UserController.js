@@ -1,5 +1,5 @@
 import UserService from '../services/UserService.js';
-import AppError from '../utils/AppError.js';
+import AppError from '../errors/AppError.js';
 import catchAsync from '../utils/catchAsync.js';
 import filterBody from '../utils/filterBody.js';
 import sendSuccessResponse from '../utils/sendSuccessResponse.js';

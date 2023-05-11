@@ -11,6 +11,7 @@ export default class UserRepository {
 
   static async createOneData(data) {
     const newDocument = await User.create(data);
+    return newDocument;
   }
 
   static async updateOneData(id, data) {
@@ -18,6 +19,10 @@ export default class UserRepository {
       new: true,
       runValidators: true,
     });
+  }
+
+  static async findOneData(query, select = '') {
+    return User.findOne(query).select(select);
   }
 
   static async deleteOneData(id, active) {

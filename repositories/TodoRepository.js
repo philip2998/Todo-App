@@ -1,4 +1,4 @@
-import Todo from '../models/userModel.js';
+import Todo from '../models/todoModel.js';
 
 export default class TodoRepository {
   static async getAllData() {
@@ -11,6 +11,7 @@ export default class TodoRepository {
 
   static async createOneData(data) {
     const newDocument = await Todo.create(data);
+    return newDocument;
   }
 
   static async updateOneData(id, data) {

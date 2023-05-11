@@ -1,7 +1,7 @@
 import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
-import AppError from '../utils/AppError.js';
+import AppError from '../errors/AppError.js';
 import catchAsync from '../utils/catchAsync.js';
 
 // In this protect function we need to get token, check if it's true

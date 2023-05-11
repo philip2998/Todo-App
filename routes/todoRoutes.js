@@ -1,7 +1,7 @@
 import express from 'express';
 import TodoController from '../controllers/TodoController.js';
 import protect from '../controllers/protect.js';
-import checkPermissions from '../middlewares/checkPermissions.js';
+import AuthController from '../controllers/AuthController.js';
 
 const todoRouter = express.Router();
 
@@ -13,6 +13,10 @@ todoRouter
   .route('/:id')
   .get(TodoController.getTodo)
   .patch(TodoController.updateTodo)
-  .delete(protect, checkPermissions('admin'), TodoController.deleteTodo);
+  .delete(
+    protect,
+    AuthController.checkPermissions('admin'),
+    TodoController.deleteTodo
+  );
 
 export default todoRouter;
