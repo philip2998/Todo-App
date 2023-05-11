@@ -9,7 +9,6 @@ import xss from 'xss-clean';
 import cookieParser from 'cookie-parser';
 
 import routes from './routes/index.js';
-import viewRouter from './routes/viewRoutes.js';
 
 import AppError from './errors/AppError.js';
 import ErrorsHandler from './errors/ErrorsHandler.js';
@@ -50,7 +49,7 @@ app.use((req, res, next) => {
 });
 
 // ROUTE
-app.use('/', viewRouter);
+app.use('/', routes);
 app.use('/api', routes);
 
 // Global Error Handling Middleware
