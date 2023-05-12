@@ -18,6 +18,6 @@ export default class TodoService {
   }
 
   static async deleteTodo(id, active) {
-    return await TodoRepository.deleteOneData(id, data);
+    return await TodoRepository.deleteOneData(id, active);
   }
 }

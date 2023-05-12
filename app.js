@@ -15,9 +15,6 @@ import ErrorsHandler from './errors/ErrorsHandler.js';
 
 const app = express();
 
-app.set('view engine', 'pug');
-app.set('views', path.resolve('views'));
-
 // GLOBAL MIDDLEWARES
 // In our global middlewares we set some important stuff
 // Set security HTTP header, Development logging, set limit requests
@@ -49,7 +46,6 @@ app.use((req, res, next) => {
 });
 
 // ROUTE
-app.use('/', routes);
 app.use('/api', routes);
 
 // Global Error Handling Middleware

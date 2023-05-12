@@ -21,7 +21,11 @@ export default class UserService {
     return UserRepository.findOneData(query, select);
   }
 
+  static async findUserById(id) {
+    return await UserRepository.findDataById(id);
+  }
+
   static async deleteUser(id, active) {
-    return await UserRepository.deleteOneData(id, data);
+    return await UserRepository.deleteOneData(id, active);
   }
 }

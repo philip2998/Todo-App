@@ -25,6 +25,10 @@ export default class UserRepository {
     return User.findOne(query).select(select);
   }
 
+  static async findDataById(id) {
+    return await User.findById(id);
+  }
+
   static async deleteOneData(id, active) {
     return await User.findByIdAndDelete(id, active);
   }

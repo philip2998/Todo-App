@@ -193,6 +193,16 @@ body {
   border-radius: 5px;
 }
 
+.signup-form {
+  margin: 0 auto;
+  max-width: 55rem;
+  background-color: #fff;
+  -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
+  padding: 5rem 7rem;
+  border-radius: 5px;
+}
+
 .heading-secondary {
   font-size: 2.25rem;
   text-transform: uppercase;
@@ -335,4 +345,56 @@ body {
   font-weight: 700;
   max-width: 50rem;
   margin: 0 auto;
+}
+
+.todo-container {
+  max-width: 400px;
+  margin: 20px auto;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.todo-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.todo-item input[type='checkbox'] {
+  margin-right: 10px;
+}
+
+.todo-item label {
+  flex-grow: 1;
+}
+
+.todo-item.completed label {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-form {
+  display: flex;
+  margin-top: 20px;
+}
+
+.todo-form input[type='text'] {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.todo-form button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.todo-form button:hover {
+  background-color: #45a049;
 }
