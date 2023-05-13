@@ -1,7 +1,7 @@
 import UserService from '../services/UserService.js';
 import AppError from '../errors/AppError.js';
-import catchAsync from '../utils/catchAsync.js';
-import createSendToken from '../utils/createSendToken.js';
+import { createSendToken } from '../utils/tokens.js';
+import { catchAsync } from '../utils/helpers.js';
 
 export default class AuthController {
   static signup = catchAsync(async (req, res, next) => {

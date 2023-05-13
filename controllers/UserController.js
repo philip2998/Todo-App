@@ -1,8 +1,10 @@
 import UserService from '../services/UserService.js';
 import AppError from '../errors/AppError.js';
-import catchAsync from '../utils/catchAsync.js';
-import filterBody from '../utils/filterBody.js';
-import sendSuccessResponse from '../utils/sendSuccessResponse.js';
+import {
+  catchAsync,
+  filterBody,
+  sendSuccessResponse,
+} from '../utils/helpers.js';
 
 export default class UserController {
   static getAllUsers = catchAsync(async (req, res, next) => {
@@ -13,7 +15,7 @@ export default class UserController {
   static getUser = catchAsync(async (req, res, next) => {
     const user = await UserService.getUser(req.params.id);
 
-    if (!user) return next(new AppError('No Document found with that ID', 404));
+    if (!user) return next(new AppError('No User found with that ID', 404));
 
     sendSuccessResponse(res, 200, user);
   });
@@ -27,45 +29,19 @@ export default class UserController {
     const updatedUser = await UserService.updateUser(req.params.id, req.body);
 
     if (!updatedUser)
-      return next(new AppError('No Document found with that ID', 404));
+      return next(new AppError('No User found with that ID', 404));
 
     sendSuccessResponse(res, 200, updatedUser);
   });
 
-  static updateMe = catchAsync(async (req, res, next) => {
-    if (req.body.password || req.body.passwordConfirm) {
-      return next(
-        new AppError(
-          'This rout is not for password updates. Please use /updatePassword'
-        )
-      );
-    }
-    // Filtered out unwanted fields names that are not allowed to updated
-    const filteredBody = filterBody(req.body, 'name', 'email');
-
-    const updatedUser = await UserService.updateUser(
-      req.user.id,
-      filteredBody,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    sendSuccessResponse(res, 201, updatedUser);
-  });
-
   static deleteUser = catchAsync(async (req, res, next) => {
-    const deletedUser = await UserService.deleteUser(req.params.id);
+    const deletedUser = await UserService.deleteUser(req.user.id, {
+      active: false,
+    });
 
     if (!deletedUser)
-      return next(new AppError('No Document found with tat ID', 404));
+      return next(new AppError('No User found with tat ID', 404));
 
     sendSuccessResponse(res, 200, deletedUser);
-  });
-
-  static deleteMe = catchAsync(async (req, res, next) => {
-    await UserService.deleteUser(req.user.id, { active: false });
-
-    sendSuccessResponse(res, 204, null);
   });
 }

@@ -1,6 +1,12 @@
-import signJwtToken from './signJwtToken.js';
+import jwt from 'jsonwebtoken';
 
-const createSendToken = (user, statusCode, res) => {
+export const signJwtToken = id => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+};
+
+export const createSendToken = (user, statusCode, res) => {
   const token = signJwtToken(user._id);
   const cookieOptions = {
     expires: new Date(
@@ -22,5 +28,3 @@ const createSendToken = (user, statusCode, res) => {
     },
   });
 };
-
-export default createSendToken;

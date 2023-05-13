@@ -12,8 +12,10 @@ userRouter.get('/logout', AuthController.logout);
 // Protect all routes that it comes after this middleware
 userRouter.use(protectRoutes);
 
-userRouter.patch('/updateMe', UserController.updateMe);
-userRouter.delete('/deleteMe', UserController.deleteMe);
+userRouter
+  .route('/:id')
+  .patch(UserController.updateUser)
+  .delete(UserController.deleteUser);
 
 // Protect all routes that it comes after this middleware
 userRouter.use(AuthController.checkPermissions('admin'));
@@ -22,10 +24,6 @@ userRouter
   .route('/')
   .get(UserController.getAllUsers)
   .post(UserController.createUser);
-userRouter
-  .route('/:id')
-  .get(UserController.getUser)
-  .patch(UserController.updateUser)
-  .delete(UserController.deleteUser);
+userRouter.route('/:id').get(UserController.getUser);
 
 export default userRouter;

@@ -14,17 +14,25 @@ export default class ErrorsHandler {
       error.message = err.message;
 
       // Hanlding specific types of errors form production environment
-      if (error.name === 'CastError')
-        error = DBErrorsHandler.handleCastErrorDB(error);
-      if (error.code === 11000)
-        error = DBErrorsHandler.handleDuplicateFieldsDB(error);
-      if (error.name === 'ValidationError')
-        error = DBErrorsHandler.handleValidationErrorDB(error);
-      if (error.name === 'JsonWebTokenError')
-        error = JWTErrorsHandler.handleJWTError();
-      if (error.name === 'TokenExpiredError')
-        error = JWTErrorsHandler.handleJWTExpiredToken();
-
+      switch (error.name) {
+        case 'CastError':
+          error = DBErrorsHandler.handleCastErrorDB(error);
+          break;
+        case 'ValidationError':
+          error = DBErrorsHandler.handleValidationErrorDB(error);
+          break;
+        case 'JsonWebTokenError':
+          error = JWTErrorsHandler.handleJWTError();
+          break;
+        case 'TokenExpiredError':
+          error = JWTErrorsHandler.handleJWTExpiredToken();
+          break;
+        default:
+          if (error.code === 11000) {
+            error = DBErrorsHandler.handleDuplicateFieldsDB(error);
+          }
+          break;
+      }
       ErrorsHandler.sendErrorForProd(error, req, res);
     }
   }

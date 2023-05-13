@@ -1,8 +1,8 @@
 import { promisify } from 'util';
+import { catchAsync } from '../utils/helpers.js';
 import jwt from 'jsonwebtoken';
 import UserService from '../services/UserService.js';
 import AppError from '../errors/AppError.js';
-import catchAsync from '../utils/catchAsync.js';
 
 // In this protect function we need to get token, check if it's true
 // making verification token, checking current user and Grant access to
