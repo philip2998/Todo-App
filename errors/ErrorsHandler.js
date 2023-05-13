@@ -22,7 +22,7 @@ export default class ErrorsHandler {
         error = DBErrorsHandler.handleValidationErrorDB(error);
       if (error.name === 'JsonWebTokenError')
         error = JWTErrorsHandler.handleJWTError();
-      if (error.anme === 'TokenExpiredError')
+      if (error.name === 'TokenExpiredError')
         error = JWTErrorsHandler.handleJWTExpiredToken();
 
       ErrorsHandler.sendErrorForProd(error, req, res);
