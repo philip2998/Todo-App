@@ -9,39 +9,42 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import UserRepository from '../repositories/UserRepository.js';
 export default class UserService {
-    static getAllUsers() {
+    constructor() {
+        this.userRepository = new UserRepository();
+    }
+    getAllUsers() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield UserRepository.getAllData();
+            return yield this.userRepository.getAllData();
         });
     }
-    static getUser(id) {
+    getUser(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield UserRepository.getOneData(id);
+            return yield this.userRepository.getOneData(id);
         });
     }
-    static createUser(data) {
+    createUser(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield UserRepository.createOneData(data);
+            return yield this.userRepository.createOneData(data);
         });
     }
-    static updateUser(id, data) {
+    updateUser(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield UserRepository.updateOneData(id, data);
+            return yield this.userRepository.updateOneData(id, data);
         });
     }
-    static findOneUser(query, select = '') {
+    findOneUser(query, select = '') {
         return __awaiter(this, void 0, void 0, function* () {
-            return UserRepository.findOneData(query, select);
+            return this.userRepository.findOneData(query, select);
         });
     }
-    static findUserById(id) {
+    findUserById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield UserRepository.findDataById(id);
+            return yield this.userRepository.findDataById(id);
         });
     }
-    static deleteUser(id, active) {
+    deleteUser(id, active) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield UserRepository.deleteOneData(id, active);
+            return yield this.userRepository.deleteOneData(id, active);
         });
     }
 }

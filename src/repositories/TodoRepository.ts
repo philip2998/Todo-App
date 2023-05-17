@@ -1,27 +1,27 @@
 import Todo from '../models/todoModel.js';
 
 export default class TodoRepository {
-  static async getAllData() {
+  public async getAllData() {
     return await Todo.find();
   }
 
-  static async getOneData(id: string) {
+  public async getOneData(id: string) {
     return await Todo.findById(id);
   }
 
-  static async createOneData(data: object) {
+  public async createOneData(data: object) {
     const newDocument = await Todo.create(data);
     return newDocument;
   }
 
-  static async updateOneData(id: string, data: object) {
+  public async updateOneData(id: string, data: object) {
     return await Todo.findByIdAndUpdate(id, data, {
       new: true,
       runValidators: true,
     });
   }
 
-  static async deleteOneData(id: string) {
+  public async deleteOneData(id: string) {
     return await Todo.findByIdAndDelete(id);
   }
 }

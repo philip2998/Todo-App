@@ -7,40 +7,40 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a;
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
-class UserController {
+export default class UserController {
+    constructor() {
+        this.getAllUsers = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const users = yield this.userService.getAllUsers();
+            sendSuccessResponse(res, 200, users);
+        }));
+        this.getUser = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.userService.getUser(req.params.id);
+            if (!user)
+                return next(new AppError('No User found with that ID', 404, 'Fail'));
+            sendSuccessResponse(res, 200, user);
+        }));
+        this.createUser = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const newUser = yield this.userService.createUser(req.body);
+            sendSuccessResponse(res, 201, newUser);
+        }));
+        this.updateUser = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const updatedUser = yield this.userService.updateUser(req.params.id, req.body);
+            if (!updatedUser)
+                return next(new AppError('No User found with that ID', 404, 'Fail'));
+            sendSuccessResponse(res, 200, updatedUser);
+        }));
+        this.deleteUser = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const deletedUser = yield this.userService.deleteUser(req.user.id, {
+                active: false,
+            });
+            if (!deletedUser)
+                return next(new AppError('No User found with tat ID', 404, 'Fail'));
+            sendSuccessResponse(res, 200, deletedUser);
+        }));
+        this.userService = new UserService();
+    }
 }
-_a = UserController;
-UserController.getAllUsers = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield UserService.getAllUsers();
-    sendSuccessResponse(res, 200, users);
-}));
-UserController.getUser = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield UserService.getUser(req.params.id);
-    if (!user)
-        return next(new AppError('No User found with that ID', 404, 'Fail'));
-    sendSuccessResponse(res, 200, user);
-}));
-UserController.createUser = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = yield UserService.createUser(req.body);
-    sendSuccessResponse(res, 201, newUser);
-}));
-UserController.updateUser = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedUser = yield UserService.updateUser(req.params.id, req.body);
-    if (!updatedUser)
-        return next(new AppError('No User found with that ID', 404, 'Fail'));
-    sendSuccessResponse(res, 200, updatedUser);
-}));
-UserController.deleteUser = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const deletedUser = yield UserService.deleteUser(req.user.id, {
-        active: false,
-    });
-    if (!deletedUser)
-        return next(new AppError('No User found with tat ID', 404, 'Fail'));
-    sendSuccessResponse(res, 200, deletedUser);
-}));
-export default UserController;
 //# sourceMappingURL=UserController.js.map

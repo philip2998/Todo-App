@@ -9,23 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Todo from '../models/todoModel.js';
 export default class TodoRepository {
-    static getAllData() {
+    getAllData() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Todo.find();
         });
     }
-    static getOneData(id) {
+    getOneData(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Todo.findById(id);
         });
     }
-    static createOneData(data) {
+    createOneData(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const newDocument = yield Todo.create(data);
             return newDocument;
         });
     }
-    static updateOneData(id, data) {
+    updateOneData(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Todo.findByIdAndUpdate(id, data, {
                 new: true,
@@ -33,7 +33,7 @@ export default class TodoRepository {
             });
         });
     }
-    static deleteOneData(id) {
+    deleteOneData(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield Todo.findByIdAndDelete(id);
         });

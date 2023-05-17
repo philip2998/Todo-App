@@ -7,38 +7,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var _a;
 import TodoService from '../services/TodoService.js';
 import AppError from '../utils/exceptions/AppError.js';
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
-class TodoController {
+export default class TodoController {
+    constructor() {
+        this.getAllTodos = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const todos = yield this.todoService.getAllTodos();
+            sendSuccessResponse(res, 200, todos);
+        }));
+        this.getTodo = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const todo = yield this.todoService.getTodo(req.params.id);
+            if (!todo)
+                return next(new AppError('No Todo found with that ID', 404, 'Fail'));
+            sendSuccessResponse(res, 200, todo);
+        }));
+        this.createTodo = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const newTodo = yield this.todoService.createTodo(req.body);
+            sendSuccessResponse(res, 201, newTodo);
+        }));
+        this.updateTodo = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const updatedTodo = yield this.todoService.updateTodo(req.params.id, req.body);
+            if (!updatedTodo)
+                return next(new AppError('No Todo found with that ID', 404, 'Fail'));
+            sendSuccessResponse(res, 200, updatedTodo);
+        }));
+        this.deleteTodo = catchAsync((req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const deletedTodo = yield this.todoService.deleteTodo(req.params.id);
+            if (!deletedTodo)
+                return next(new AppError('No Todo found with tat ID', 404, 'Fail'));
+            sendSuccessResponse(res, 200, deletedTodo);
+        }));
+        this.todoService = new TodoService();
+    }
 }
-_a = TodoController;
-TodoController.getAllTodos = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const todos = yield TodoService.getAllTodos();
-    sendSuccessResponse(res, 200, todos);
-}));
-TodoController.getTodo = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const todo = yield TodoService.getTodo(req.params.id);
-    if (!todo)
-        return next(new AppError('No Todo found with that ID', 404, 'Fail'));
-    sendSuccessResponse(res, 200, todo);
-}));
-TodoController.createTodo = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const newTodo = yield TodoService.createTodo(req.body);
-    sendSuccessResponse(res, 201, newTodo);
-}));
-TodoController.updateTodo = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedTodo = yield TodoService.updateTodo(req.params.id, req.body);
-    if (!updatedTodo)
-        return next(new AppError('No Todo found with that ID', 404, 'Fail'));
-    sendSuccessResponse(res, 200, updatedTodo);
-}));
-TodoController.deleteTodo = catchAsync((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const deletedTodo = yield TodoService.deleteTodo(req.params.id);
-    if (!deletedTodo)
-        return next(new AppError('No Todo found with tat ID', 404, 'Fail'));
-    sendSuccessResponse(res, 200, deletedTodo);
-}));
-export default TodoController;
 //# sourceMappingURL=TodoController.js.map

@@ -9,29 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import TodoRepository from '../repositories/TodoRepository.js';
 export default class TodoService {
-    static getAllTodos() {
+    constructor() {
+        this.todoRepository = new TodoRepository();
+    }
+    getAllTodos() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield TodoRepository.getAllData();
+            return yield this.todoRepository.getAllData();
         });
     }
-    static getTodo(id) {
+    getTodo(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield TodoRepository.getOneData(id);
+            return yield this.todoRepository.getOneData(id);
         });
     }
-    static createTodo(data) {
+    createTodo(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield TodoRepository.createOneData(data);
+            return yield this.todoRepository.createOneData(data);
         });
     }
-    static updateTodo(id, data) {
+    updateTodo(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield TodoRepository.updateOneData(id, data);
+            return yield this.todoRepository.updateOneData(id, data);
         });
     }
-    static deleteTodo(id) {
+    deleteTodo(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield TodoRepository.deleteOneData(id);
+            return yield this.todoRepository.deleteOneData(id);
         });
     }
 }

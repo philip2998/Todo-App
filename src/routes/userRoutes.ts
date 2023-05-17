@@ -1,29 +1,32 @@
 import express from 'express';
 import UserController from '../controllers/UserController.js';
-import protectRoutes from '../controllers/protectRoutes.js';
+import ProtectRoutes from '../controllers/ProtectRoutes.js';
 import AuthController from '../controllers/AuthController.js';
 
 const userRouter = express.Router();
+const userController = new UserController();
+const authController = new AuthController();
+const protectRoutes = new ProtectRoutes();
 
-userRouter.post('/signup', AuthController.signup);
-userRouter.post('/login', AuthController.login);
-userRouter.get('/logout', AuthController.logout);
+userRouter.post('/signup', authController.signup);
+userRouter.post('/login', authController.login);
+userRouter.get('/logout', authController.logout);
 
 // Protect all routes that it comes after this middleware
-userRouter.use(protectRoutes);
+userRouter.use(protectRoutes.routeGuard);
 
 userRouter
   .route('/:id')
-  .patch(UserController.updateUser)
-  .delete(UserController.deleteUser);
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 // Protect all routes that it comes after this middleware
-userRouter.use(AuthController.checkPermissions('admin'));
+userRouter.use(authController.checkPermissions('admin'));
 
 userRouter
   .route('/')
-  .get(UserController.getAllUsers)
-  .post(UserController.createUser);
-userRouter.route('/:id').get(UserController.getUser);
+  .get(userController.getAllUsers)
+  .post(userController.createUser);
+userRouter.route('/:id').get(userController.getUser);
 
 export default userRouter;

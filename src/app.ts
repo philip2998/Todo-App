@@ -5,7 +5,7 @@ import path from 'path';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
-// import xss from 'xss-clean';
+import xss from 'xss-clean';
 import cookieParser from 'cookie-parser';
 
 import routes from './routes/index.js';
@@ -47,7 +47,7 @@ export default class App {
     this.app.use(cookieParser());
 
     this.app.use(mongoSanitize());
-    // this.app.use(xss());
+    this.app.use(xss());
 
     this.app.use((req: CustomRequest, res: Response, next: NextFunction) => {
       req.requestedTime = new Date().toISOString();

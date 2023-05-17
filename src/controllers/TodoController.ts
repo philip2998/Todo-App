@@ -4,16 +4,22 @@ import AppError from '../utils/exceptions/AppError.js';
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
 
 export default class TodoController {
-  static getAllTodos = catchAsync(
+  private todoService: TodoService;
+
+  constructor() {
+    this.todoService = new TodoService();
+  }
+
+  public getAllTodos = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const todos = await TodoService.getAllTodos();
+      const todos = await this.todoService.getAllTodos();
       sendSuccessResponse(res, 200, todos);
     }
   );
 
-  static getTodo = catchAsync(
+  public getTodo = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const todo = await TodoService.getTodo(req.params.id);
+      const todo = await this.todoService.getTodo(req.params.id);
 
       if (!todo)
         return next(new AppError('No Todo found with that ID', 404, 'Fail'));
@@ -22,16 +28,19 @@ export default class TodoController {
     }
   );
 
-  static createTodo = catchAsync(
+  public createTodo = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const newTodo = await TodoService.createTodo(req.body);
+      const newTodo = await this.todoService.createTodo(req.body);
       sendSuccessResponse(res, 201, newTodo);
     }
   );
 
-  static updateTodo = catchAsync(
+  public updateTodo = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const updatedTodo = await TodoService.updateTodo(req.params.id, req.body);
+      const updatedTodo = await this.todoService.updateTodo(
+        req.params.id,
+        req.body
+      );
 
       if (!updatedTodo)
         return next(new AppError('No Todo found with that ID', 404, 'Fail'));
@@ -40,9 +49,9 @@ export default class TodoController {
     }
   );
 
-  static deleteTodo = catchAsync(
+  public deleteTodo = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const deletedTodo = await TodoService.deleteTodo(req.params.id);
+      const deletedTodo = await this.todoService.deleteTodo(req.params.id);
 
       if (!deletedTodo)
         return next(new AppError('No Todo found with tat ID', 404, 'Fail'));

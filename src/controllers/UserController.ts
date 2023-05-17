@@ -4,16 +4,22 @@ import AppError from '../utils/exceptions/AppError.js';
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
 
 export default class UserController {
-  static getAllUsers = catchAsync(
+  private userService: UserService;
+
+  constructor() {
+    this.userService = new UserService();
+  }
+
+  public getAllUsers = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const users = await UserService.getAllUsers();
+      const users = await this.userService.getAllUsers();
       sendSuccessResponse(res, 200, users);
     }
   );
 
-  static getUser = catchAsync(
+  public getUser = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const user = await UserService.getUser(req.params.id);
+      const user = await this.userService.getUser(req.params.id);
 
       if (!user)
         return next(new AppError('No User found with that ID', 404, 'Fail'));
@@ -22,16 +28,19 @@ export default class UserController {
     }
   );
 
-  static createUser = catchAsync(
+  public createUser = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const newUser = await UserService.createUser(req.body);
+      const newUser = await this.userService.createUser(req.body);
       sendSuccessResponse(res, 201, newUser);
     }
   );
 
-  static updateUser = catchAsync(
+  public updateUser = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const updatedUser = await UserService.updateUser(req.params.id, req.body);
+      const updatedUser = await this.userService.updateUser(
+        req.params.id,
+        req.body
+      );
 
       if (!updatedUser)
         return next(new AppError('No User found with that ID', 404, 'Fail'));
@@ -40,9 +49,9 @@ export default class UserController {
     }
   );
 
-  static deleteUser = catchAsync(
+  public deleteUser = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const deletedUser = await UserService.deleteUser(req.user.id, {
+      const deletedUser = await this.userService.deleteUser(req.user.id, {
         active: false,
       });
 

@@ -9,23 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import User from '../models/userModel.js';
 export default class UserRepository {
-    static getAllData() {
+    getAllData() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield User.find();
         });
     }
-    static getOneData(id) {
+    getOneData(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield User.findById(id);
         });
     }
-    static createOneData(data) {
+    createOneData(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const newDocument = yield User.create(data);
             return newDocument;
         });
     }
-    static updateOneData(id, data) {
+    updateOneData(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield User.findByIdAndUpdate(id, data, {
                 new: true,
@@ -33,17 +33,17 @@ export default class UserRepository {
             });
         });
     }
-    static findOneData(query, select = '') {
+    findOneData(query, select = '') {
         return __awaiter(this, void 0, void 0, function* () {
             return User.findOne(query).select(select);
         });
     }
-    static findDataById(id) {
+    findDataById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield User.findById(id);
         });
     }
-    static deleteOneData(id, active) {
+    deleteOneData(id, active) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield User.findByIdAndDelete(id, active);
         });

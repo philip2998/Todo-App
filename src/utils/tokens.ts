@@ -2,17 +2,6 @@ import { Response } from 'express';
 import IUserSchema from '../interfaces/modelInterfaces.js';
 import jwt from 'jsonwebtoken';
 
-interface User {
-  _id: string;
-  password?: string;
-}
-
-export const signJwtToken = (id: string): string => {
-  return jwt.sign({ id }, process.env.JWT_SECRET!, {
-    expiresIn: process.env.JWT_EXPIRES_IN!,
-  });
-};
-
 export const createSendToken = (
   user: IUserSchema,
   statusCode: number,
@@ -39,5 +28,11 @@ export const createSendToken = (
     data: {
       user,
     },
+  });
+};
+
+export const signJwtToken = (id: string): string => {
+  return jwt.sign({ id }, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES_IN!,
   });
 };

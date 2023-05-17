@@ -1,23 +1,28 @@
 import TodoRepository from '../repositories/TodoRepository.js';
 
 export default class TodoService {
-  static async getAllTodos() {
-    return await TodoRepository.getAllData();
+  private todoRepository: TodoRepository;
+
+  constructor() {
+    this.todoRepository = new TodoRepository();
+  }
+  public async getAllTodos() {
+    return await this.todoRepository.getAllData();
   }
 
-  static async getTodo(id: string) {
-    return await TodoRepository.getOneData(id);
+  public async getTodo(id: string) {
+    return await this.todoRepository.getOneData(id);
   }
 
-  static async createTodo(data: object) {
-    return await TodoRepository.createOneData(data);
+  public async createTodo(data: object) {
+    return await this.todoRepository.createOneData(data);
   }
 
-  static async updateTodo(id: string, data: object) {
-    return await TodoRepository.updateOneData(id, data);
+  public async updateTodo(id: string, data: object) {
+    return await this.todoRepository.updateOneData(id, data);
   }
 
-  static async deleteTodo(id: string) {
-    return await TodoRepository.deleteOneData(id);
+  public async deleteTodo(id: string) {
+    return await this.todoRepository.deleteOneData(id);
   }
 }
