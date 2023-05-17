@@ -52,7 +52,7 @@ export default class AuthController {
     res.status(200).json({ status: 'success' });
   }
 
-  public checkPermissions(role: string) {
+  public checkPermissions(role: string): Function {
     return (req: Request, res: Response, next: NextFunction) => {
       if (!role.includes(req.user.role)) {
         return next(

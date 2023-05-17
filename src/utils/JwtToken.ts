@@ -9,7 +9,7 @@ export default class JwtToken {
     statusCode: number,
     res: Response
   ): void {
-    const token: string = this.signJwtToken(user._id);
+    const token: string = JwtToken.signJwtToken(user._id);
     const cookieOptions: OptionsForCookie = {
       expires: new Date(
         Date.now() +
@@ -30,7 +30,7 @@ export default class JwtToken {
     });
   }
 
-  private signJwtToken(id: string): string {
+  private static signJwtToken(id: string): string {
     return jwt.sign({ id }, process.env.JWT_SECRET!, {
       expiresIn: process.env.JWT_EXPIRES_IN!,
     });

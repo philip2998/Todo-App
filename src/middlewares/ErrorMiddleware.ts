@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import AppError from '../utils/exceptions/AppError.js';
 
 export default class ErrorMiddleware {
-  static errorHandler(
+  public static errorHandler(
     err: AppError,
     req: Request,
     res: Response,
@@ -14,7 +14,11 @@ export default class ErrorMiddleware {
     ErrorMiddleware.sendErrorForDev(err, req, res);
   }
 
-  static sendErrorForDev(err: AppError, req: Request, res: Response): void {
+  private static sendErrorForDev(
+    err: AppError,
+    req: Request,
+    res: Response
+  ): void {
     if (req.originalUrl.startsWith('/api')) {
       res.status(err.statusCode).json({
         status: err.status,
