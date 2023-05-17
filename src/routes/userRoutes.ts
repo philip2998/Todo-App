@@ -1,12 +1,12 @@
-import express from 'express';
+import express, { Router } from 'express';
 import UserController from '../controllers/UserController.js';
 import ProtectRoutes from '../controllers/ProtectRoutes.js';
 import AuthController from '../controllers/AuthController.js';
 
-const userRouter = express.Router();
-const userController = new UserController();
-const authController = new AuthController();
-const protectRoutes = new ProtectRoutes();
+const userRouter: Router = express.Router();
+const userController: UserController = new UserController();
+const authController: AuthController = new AuthController();
+const protectRoutes: ProtectRoutes = new ProtectRoutes();
 
 userRouter.post('/signup', authController.signup);
 userRouter.post('/login', authController.login);

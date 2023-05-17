@@ -51,16 +51,16 @@ const userSchema: Schema<IUserSchema> = new mongoose.Schema(
 );
 
 // Managing password Middleware
-userSchema.pre<IUserSchema>('save', async function (next) {
+userSchema.pre<IUserSchema>('save', async function (next): Promise<void> {
   // Only run if password was actually modified
   if (!this.isModified('password')) return next();
 
   this.password = await bcrypt.hash(this.password, 12);
-  this.passwordConfirm = '';
+  this.passwordConfirm = undefined;
   next();
 });
 
-userSchema.pre<IUserSchema>(/^find/, function (next) {
+userSchema.pre<IUserSchema>(/^find/, function (next): void {
   this.find({ active: { $ne: false } });
   next();
 });
@@ -68,7 +68,7 @@ userSchema.pre<IUserSchema>(/^find/, function (next) {
 userSchema.methods.correctPassword = async function (
   candidatePassword: string,
   userPassword: string
-) {
+): Promise<boolean> {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 

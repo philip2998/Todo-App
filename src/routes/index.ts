@@ -1,8 +1,8 @@
-import express from 'express';
+import express, { Router } from 'express';
 import todoRouter from './todoRoutes.js';
 import userRouter from './userRoutes.js';
 
-const routes = express.Router();
+const routes: Router = express.Router();
 
 routes.use('/todos', todoRouter);
 routes.use('/users', userRouter);

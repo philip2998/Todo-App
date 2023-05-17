@@ -5,7 +5,7 @@ export default interface IUserSchema extends Document {
   email: string;
   role: 'user' | 'admin';
   password: string;
-  passwordConfirm: string;
+  passwordConfirm?: string;
   active: boolean;
   find(active: object): Query<IUserSchema[], IUserSchema>;
   correctPassword(

@@ -1,14 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
-import { createSendToken } from '../utils/tokens.js';
+import JwtToken from '../utils/JwtToken.js';
 import { catchAsync } from '../utils/helpers.js';
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
 
 export default class AuthController {
   private userService: UserService;
+  private jwtToken: JwtToken;
 
   constructor() {
     this.userService = new UserService();
+    this.jwtToken = new JwtToken();
   }
 
   public signup = catchAsync(
@@ -20,7 +22,7 @@ export default class AuthController {
         passwordConfirm: req.body.passwordConfirm,
         role: req.body.role,
       });
-      createSendToken(newUser, 201, res);
+      this.jwtToken.createSendStoken(newUser, 201, res);
     }
   );
 
@@ -38,7 +40,7 @@ export default class AuthController {
       if (!user || !(await user.correctPassword(password, user.password))) {
         return next(new AppError('Incorrect email or password', 401, 'Fail'));
       }
-      createSendToken(user, 200, res);
+      this.jwtToken.createSendStoken(user, 200, res);
     }
   );
 

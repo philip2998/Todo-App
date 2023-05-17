@@ -27,7 +27,7 @@ export default class App {
     this.initalizeErrorHandling();
   }
 
-  private initalizeMiddlewares() {
+  private initalizeMiddlewares(): void {
     this.app.use(express.static(path.resolve('public')));
 
     this.app.use(helmet());
@@ -55,11 +55,11 @@ export default class App {
     });
   }
 
-  private initalizeRoutes() {
+  private initalizeRoutes(): void {
     this.app.use('/api', routes);
   }
 
-  private initalizeErrorHandling() {
+  private initalizeErrorHandling(): void {
     this.app.all('*', (req: Request, res: Response, next: NextFunction) => {
       next(
         new AppError(

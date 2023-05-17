@@ -1,12 +1,12 @@
-import express from 'express';
+import express, { Router } from 'express';
 import TodoController from '../controllers/TodoController.js';
 import ProtectRoutes from '../controllers/ProtectRoutes.js';
 import AuthController from '../controllers/AuthController.js';
 
-const todoRouter = express.Router();
-const todoController = new TodoController();
-const authController = new AuthController();
-const protectRoutes = new ProtectRoutes();
+const todoRouter: Router = express.Router();
+const todoController: TodoController = new TodoController();
+const authController: AuthController = new AuthController();
+const protectRoutes: ProtectRoutes = new ProtectRoutes();
 
 todoRouter.use(protectRoutes.routeGuard);
 
