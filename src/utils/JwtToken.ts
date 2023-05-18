@@ -31,7 +31,7 @@ export default class JwtToken {
   }
 
   private static signJwtToken(id: string): string {
-    return jwt.sign({ id }, process.env.JWT_SECRET!, {
+    return jwt.sign({ id }, process.env.JWT_SECRET as jwt.Secret, {
       expiresIn: process.env.JWT_EXPIRES_IN!,
     });
   }

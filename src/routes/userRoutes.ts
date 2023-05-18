@@ -3,30 +3,41 @@ import UserController from '../controllers/UserController.js';
 import ProtectRoutes from '../controllers/ProtectRoutes.js';
 import AuthController from '../controllers/AuthController.js';
 
-const userRouter: Router = express.Router();
-const userController: UserController = new UserController();
-const authController: AuthController = new AuthController();
-const protectRoutes: ProtectRoutes = new ProtectRoutes();
+export default class UserRoutes {
+  public router: Router;
+  private userController: UserController;
+  private authController: AuthController;
+  private protectRoutes: ProtectRoutes;
 
-userRouter.post('/signup', authController.signup);
-userRouter.post('/login', authController.login);
-userRouter.get('/logout', authController.logout);
+  constructor() {
+    this.router = express.Router();
+    this.userController = new UserController();
+    this.authController = new AuthController();
+    this.protectRoutes = new ProtectRoutes();
 
-// Protect all routes that it comes after this middleware
-userRouter.use(protectRoutes.routeGuard);
+    this.initalizeRoutes();
+  }
 
-userRouter
-  .route('/:id')
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  private initalizeRoutes(): void {
+    this.router.post('/signup', this.authController.signup);
+    this.router.post('/login', this.authController.login);
+    this.router.get('/logout', this.authController.logout);
 
-// Protect all routes that it comes after this middleware
-userRouter.use(authController.checkPermissions('admin'));
+    // Protect all routes that comes after this middleware
+    this.router.use(this.protectRoutes.routeGuard);
 
-userRouter
-  .route('/')
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
-userRouter.route('/:id').get(userController.getUser);
+    this.router
+      .route('/:id')
+      .patch(this.userController.updateUser)
+      .delete(this.userController.deleteUser);
 
-export default userRouter;
+    // Protect all routes that comes after this middleware
+    this.router.use(this.authController.checkPermissions('admin'));
+
+    this.router
+      .route('/')
+      .get(this.userController.getAllUsers)
+      .post(this.userController.createUser);
+    this.router.route('/:id').get(this.userController.getUser);
+  }
+}

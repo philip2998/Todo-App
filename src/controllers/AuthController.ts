@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import JwtToken from '../utils/JwtToken.js';
 import { catchAsync } from '../utils/helpers.js';
+import JwtToken from '../utils/JwtToken.js';
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
 

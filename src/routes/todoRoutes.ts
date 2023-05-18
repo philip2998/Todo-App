@@ -3,21 +3,36 @@ import TodoController from '../controllers/TodoController.js';
 import ProtectRoutes from '../controllers/ProtectRoutes.js';
 import AuthController from '../controllers/AuthController.js';
 
-const todoRouter: Router = express.Router();
-const todoController: TodoController = new TodoController();
-const authController: AuthController = new AuthController();
-const protectRoutes: ProtectRoutes = new ProtectRoutes();
+export default class TodoRouter {
+  public router: Router;
+  private todoController: TodoController;
+  private authController: AuthController;
+  private protectRoutes: ProtectRoutes;
 
-todoRouter.use(protectRoutes.routeGuard);
+  constructor() {
+    this.router = express.Router();
+    this.todoController = new TodoController();
+    this.authController = new AuthController();
+    this.protectRoutes = new ProtectRoutes();
 
-todoRouter
-  .route('/')
-  .get(todoController.getAllTodos)
-  .post(todoController.createTodo);
-todoRouter
-  .route('/:id')
-  .get(todoController.getTodo)
-  .patch(todoController.updateTodo)
-  .delete(authController.checkPermissions('admin'), todoController.deleteTodo);
+    this.initalizeRoutes();
+  }
 
-export default todoRouter;
+  private initalizeRoutes(): void {
+    this.router.use(this.protectRoutes.routeGuard);
+
+    this.router
+      .route('/')
+      .get(this.todoController.getAllTodos)
+      .post(this.todoController.createTodo);
+
+    this.router
+      .route('/:id')
+      .get(this.todoController.getTodo)
+      .patch(this.todoController.updateTodo)
+      .delete(
+        this.authController.checkPermissions('admin'),
+        this.todoController.deleteTodo
+      );
+  }
+}
