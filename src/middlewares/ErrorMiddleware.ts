@@ -1,18 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
+import { OptionsForErrorMiddleware } from '../types/index.js';
 import AppError from '../utils/exceptions/AppError.js';
 
 export default class ErrorMiddleware {
-  public static errorHandler(
+  public static errorHandler: OptionsForErrorMiddleware = (
     err: AppError,
     req: Request,
     res: Response,
     next: NextFunction
-  ): void {
+  ): void => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'Error';
 
     ErrorMiddleware.sendErrorForDev(err, req, res);
-  }
+  };
 
   private static sendErrorForDev(
     err: AppError,

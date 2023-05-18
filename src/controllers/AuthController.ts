@@ -44,7 +44,7 @@ export default class AuthController {
     }
   );
 
-  public logout(req: Request, res: Response) {
+  public logout(req: Request, res: Response): void {
     res.cookie('jwt', 'loggedout', {
       expires: new Date(Date.now() + 10 * 1000),
       httpOnly: true,
@@ -52,7 +52,7 @@ export default class AuthController {
     res.status(200).json({ status: 'success' });
   }
 
-  public checkPermissions(role: string): Function {
+  public checkPermissions(role: string) {
     return (req: Request, res: Response, next: NextFunction) => {
       if (!role.includes(req.user.role)) {
         return next(
