@@ -14,7 +14,7 @@ export default interface IUserSchema extends Document {
   ): Promise<boolean>;
 }
 
-export default interface ITodoSchema extends Document {
+export interface ITodoSchema extends Document {
   title: string;
   description: string;
 }

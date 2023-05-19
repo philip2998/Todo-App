@@ -1,14 +1,16 @@
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
+import routes from './routes/index.js';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
+import xss from 'xss-clean';
 import cookieParser from 'cookie-parser';
-import routes from './routes/index.js';
 import AppError from './utils/exceptions/AppError.js';
-import ErrorMiddleware from './middlewares/ErrorMiddleware.js';
+import errorHandler from './middlewares/ErrorMiddleware.js';
 export default class App {
+    app;
     constructor() {
         this.app = express();
         this.initalizeMiddlewares();
@@ -30,6 +32,7 @@ export default class App {
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(mongoSanitize());
+        this.app.use(xss());
         this.app.use((req, res, next) => {
             req.requestedTime = new Date().toISOString();
             next();
@@ -40,12 +43,12 @@ export default class App {
     }
     initalizeErrorHandling() {
         this.app.all('*', (req, res, next) => {
-            next(new AppError(`Can't find ${req.originalUrl} on this server`, 404, 'Fail'));
+            next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
         });
-        this.app.use(ErrorMiddleware.errorHandler);
+        this.app.use(errorHandler);
     }
     getApp() {
         return this.app;
     }
 }
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=App.js.map

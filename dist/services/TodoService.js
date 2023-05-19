@@ -1,41 +1,23 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-import TodoRepository from '../repositories/TodoRepository.js';
+import { todoRepository } from '../repositories/todoRepository';
 export default class TodoService {
+    todoRepository;
     constructor() {
-        this.todoRepository = new TodoRepository();
+        this.todoRepository = todoRepository;
     }
-    getAllTodos() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.todoRepository.getAllData();
-        });
+    async getAllTodos() {
+        return await this.todoRepository.getAllData();
     }
-    getTodo(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.todoRepository.getOneData(id);
-        });
+    async getTodo(id) {
+        return await this.todoRepository.getOneData(id);
     }
-    createTodo(data) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.todoRepository.createOneData(data);
-        });
+    async createTodo(data) {
+        return await this.todoRepository.createOneData(data);
     }
-    updateTodo(id, data) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.todoRepository.updateOneData(id, data);
-        });
+    async updateTodo(id, data) {
+        return await this.todoRepository.updateOneData(id, data);
     }
-    deleteTodo(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield this.todoRepository.deleteOneData(id);
-        });
+    async deleteTodo(id) {
+        return await this.todoRepository.deleteOneData(id);
     }
 }
 //# sourceMappingURL=TodoService.js.map

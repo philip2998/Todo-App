@@ -1,4 +1,4 @@
-import mongoose, { Document, Model, Query, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import IUserSchema from '../interfaces/modelInterfaces.js';

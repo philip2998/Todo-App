@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import path from 'path';
+import routes from './routes/index.js';
 
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -8,10 +9,8 @@ import helmet from 'helmet';
 import xss from 'xss-clean';
 import cookieParser from 'cookie-parser';
 
-import routes from './routes/index.js';
-
 import AppError from './utils/exceptions/AppError.js';
-import ErrorMiddleware from './middlewares/ErrorMiddleware.js';
+import errorHandler from './middlewares/ErrorMiddleware.js';
 
 interface CustomRequest extends Request {
   requestedTime?: string;
@@ -61,16 +60,10 @@ export default class App {
 
   private initalizeErrorHandling(): void {
     this.app.all('*', (req: Request, res: Response, next: NextFunction) => {
-      next(
-        new AppError(
-          `Can't find ${req.originalUrl} on this server`,
-          404,
-          'Fail'
-        )
-      );
+      next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
     });
 
-    this.app.use(ErrorMiddleware.errorHandler);
+    this.app.use(errorHandler);
   }
 
   public getApp(): express.Application {

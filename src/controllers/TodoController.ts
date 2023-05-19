@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
+import { ITodoSchema } from '../interfaces/modelInterfaces.js';
+import { ErrorType } from '../utils/enums/index.js';
 import TodoService from '../services/TodoService.js';
 import AppError from '../utils/exceptions/AppError.js';
 
@@ -10,40 +12,42 @@ export default class TodoController {
     this.todoService = new TodoService();
   }
 
-  public getAllTodos = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {
-      const todos = await this.todoService.getAllTodos();
-      sendSuccessResponse(res, 200, todos);
-    }
-  );
+  public getAllTodos = catchAsync(async (req: Request, res: Response) => {
+    const todos: ITodoSchema[] = await this.todoService.getAllTodos();
+    sendSuccessResponse(res, 200, todos);
+  });
 
   public getTodo = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const todo = await this.todoService.getTodo(req.params.id);
+      const todo: ITodoSchema | null = await this.todoService.getTodo(
+        req.params.id
+      );
 
       if (!todo)
-        return next(new AppError('No Todo found with that ID', 404, 'Fail'));
+        return next(
+          new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND)
+        );
 
       sendSuccessResponse(res, 200, todo);
     }
   );
 
-  public createTodo = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {
-      const newTodo = await this.todoService.createTodo(req.body);
-      sendSuccessResponse(res, 201, newTodo);
-    }
-  );
+  public createTodo = catchAsync(async (req: Request, res: Response) => {
+    const newTodo: ITodoSchema = await this.todoService.createTodo(req.body);
+    sendSuccessResponse(res, 201, newTodo);
+  });
 
   public updateTodo = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const updatedTodo = await this.todoService.updateTodo(
+      const updatedTodo: ITodoSchema | null = await this.todoService.updateTodo(
         req.params.id,
         req.body
       );
 
       if (!updatedTodo)
-        return next(new AppError('No Todo found with that ID', 404, 'Fail'));
+        return next(
+          new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND)
+        );
 
       sendSuccessResponse(res, 200, updatedTodo);
     }
@@ -51,10 +55,14 @@ export default class TodoController {
 
   public deleteTodo = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const deletedTodo = await this.todoService.deleteTodo(req.params.id);
+      const deletedTodo: ITodoSchema | null = await this.todoService.deleteTodo(
+        req.params.id
+      );
 
       if (!deletedTodo)
-        return next(new AppError('No Todo found with tat ID', 404, 'Fail'));
+        return next(
+          new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND)
+        );
 
       sendSuccessResponse(res, 200, deletedTodo);
     }

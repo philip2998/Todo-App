@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema } from 'mongoose';
-import ITodoSchema from '../interfaces/modelInterfaces.js';
+import { ITodoSchema } from '../interfaces/modelInterfaces.js';
 
 const todoSchema: Schema<ITodoSchema> = new mongoose.Schema({
   title: {

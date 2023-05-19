@@ -1,10 +1,10 @@
-import TodoRepository from '../repositories/TodoRepository.js';
+import { todoRepository } from '../repositories/todoRepository';
 
 export default class TodoService {
-  private todoRepository: TodoRepository;
+  private todoRepository;
 
   constructor() {
-    this.todoRepository = new TodoRepository();
+    this.todoRepository = todoRepository;
   }
   public async getAllTodos() {
     return await this.todoRepository.getAllData();

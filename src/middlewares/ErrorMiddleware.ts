@@ -1,32 +1,25 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { OptionsForErrorMiddleware } from '../types/index.js';
 import AppError from '../utils/exceptions/AppError.js';
 
-export default class ErrorMiddleware {
-  public static errorHandler: OptionsForErrorMiddleware = (
-    err: AppError,
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): void => {
-    err.statusCode = err.statusCode || 500;
-    err.status = err.status || 'Error';
-
-    ErrorMiddleware.sendErrorForDev(err, req, res);
-  };
-
-  private static sendErrorForDev(
-    err: AppError,
-    req: Request,
-    res: Response
-  ): void {
-    if (req.originalUrl.startsWith('/api')) {
-      res.status(err.statusCode).json({
-        status: err.status,
-        error: err,
-        message: err.message,
-        stack: err.stack,
-      });
-    }
+const sendErrorForDev = (err: AppError, req: Request, res: Response): void => {
+  if (req.originalUrl.startsWith('/api')) {
+    res.status(err.statusCode).json({
+      error: err,
+      message: err.message,
+      stack: err.stack,
+    });
   }
-}
+};
+
+const errorHandler: OptionsForErrorMiddleware = (
+  err: AppError,
+  req: Request,
+  res: Response
+): void => {
+  err.statusCode = err.statusCode || 500;
+
+  sendErrorForDev(err, req, res);
+};
+
+export default errorHandler;
