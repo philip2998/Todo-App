@@ -1,6 +1,6 @@
 import { CookieOptions, Response } from 'express';
 import { OptionsForCookie } from '../types/index.js';
-import IUserSchema from '../interfaces/modelInterfaces.js';
+import { IUserSchema } from '../interfaces/modelInterfaces.js';
 import jwt from 'jsonwebtoken';
 
 const signJwtToken = (id: string): string => {

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
 import { ErrorType } from '../utils/enums/index.js';
+import { IUserSchema } from '../interfaces/modelInterfaces.js';
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
-import IUserSchema from '../interfaces/modelInterfaces.js';
 
 export default class UserController {
   private userService: UserService;

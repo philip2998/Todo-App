@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
+import {
+  catchingUncaughtExceptions,
+  handleRejections,
+} from './utils/exceptions/exceptionHandlers.js';
 import dotenv from 'dotenv';
 
-// Catching Uncaught Exceptions
-process.on('uncaughtException', (err: Error) => {
-  console.log('Uncaught Error!');
-  console.log(err.name, err.message);
-  process.exit(1);
-});
+catchingUncaughtExceptions;
 
 dotenv.config({ path: './.env' });
 
@@ -28,9 +27,4 @@ mongoose
 const PORT: string | number = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server connected on port ${PORT}...`));
 
-// Errors outside Express: Unhandled Rejection
-process.on('unhandledRejection', (err: Error) => {
-  console.log('Unhandled Error!');
-  console.log(err.name, err.message);
-  process.exit(1);
-});
+handleRejections;

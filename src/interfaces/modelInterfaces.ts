@@ -1,11 +1,11 @@
 import { Document, Query } from 'mongoose';
 
-export default interface IUserSchema extends Document {
+export interface IUserSchema extends Document {
   name: string;
   email: string;
   role: 'user' | 'admin';
   password: string;
-  passwordConfirm?: string;
+  passwordConfirm: string | undefined;
   active: boolean;
   find(active: object): Query<IUserSchema[], IUserSchema>;
   correctPassword(
