@@ -1,6 +1,6 @@
 import { Button, Form } from "antd";
 
-type Props = {
+type CustomButtonProps = {
   children: React.ReactNode;
   htmlType?: "button" | "submit" | "reset" | undefined;
   onClick?: () => void;
@@ -18,7 +18,7 @@ type Props = {
   icon?: React.ReactNode;
 };
 
-const CustomBotton: React.FC<Props> = ({
+const CustomBotton = ({
   children,
   htmlType = "button",
   type,
@@ -27,7 +27,7 @@ const CustomBotton: React.FC<Props> = ({
   shape,
   icon,
   onClick,
-}) => {
+}: CustomButtonProps) => {
   return (
     <Form.Item>
       <Button

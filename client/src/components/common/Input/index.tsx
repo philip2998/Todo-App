@@ -1,12 +1,16 @@
 import { Input, Form } from "antd";
 
-type Props = {
+type CustomInputProps = {
   name: string;
   placeholder: string;
   type?: string;
 };
 
-const CustomInput: React.FC<Props> = ({ name, placeholder, type = "text" }) => {
+const CustomInput = ({
+  name,
+  placeholder,
+  type = "text",
+}: CustomInputProps) => {
   return (
     <Form.Item
       name={name}

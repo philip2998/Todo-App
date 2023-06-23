@@ -1,11 +1,11 @@
 import { Layout as AntLayout } from "antd";
 import Header from "../header/Header";
 
-type Props = {
+type LayoutProps = {
   children: React.ReactNode;
 };
 
-const Layout: React.FC<Props> = ({ children }) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="w-75 h-100 mx-auto">
       <Header />

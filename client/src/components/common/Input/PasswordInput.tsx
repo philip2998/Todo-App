@@ -1,17 +1,17 @@
 import { Form, Input } from "antd";
 import { NamePath } from "antd/es/form/interface";
 
-type Props = {
+type PasswordInputProps = {
   name: string;
   placeholder: string;
   dependencies?: NamePath[];
 };
 
-const PasswordInput: React.FC<Props> = ({
+const PasswordInput = ({
   name,
   placeholder,
   dependencies,
-}) => {
+}: PasswordInputProps) => {
   return (
     <Form.Item
       name={name}

@@ -1,8 +1,8 @@
 import { TeamOutlined, UserOutlined, LoginOutlined } from "@ant-design/icons";
 import { Layout, Space, Typography } from "antd";
 import { Link } from "react-router-dom";
-import CustomBotton from "../common/Button";
 import { Paths } from "../../paths";
+import CustomBotton from "../common/Button";
 
 const Header: React.FC = () => {
   return (

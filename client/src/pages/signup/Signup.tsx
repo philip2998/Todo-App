@@ -6,7 +6,7 @@ import CustomInput from "../../components/common/Input";
 import PasswordInput from "../../components/common/Input/PasswordInput";
 import CustomBotton from "../../components/common/Button";
 
-const Signup = () => {
+const Signup: React.FC = () => {
   return (
     <Layout>
       <Row align="middle" justify="center">
