@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import path from 'path';
 import routes from './routes/index.js';
+import cors from 'cors';
 
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -41,6 +42,7 @@ export default class App {
 
     this.app.use('/users', limiter);
 
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());

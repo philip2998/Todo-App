@@ -18,7 +18,7 @@ type CustomButtonProps = {
   icon?: React.ReactNode;
 };
 
-const CustomBotton = ({
+const CustomButton = ({
   children,
   htmlType = "button",
   type,
@@ -45,4 +45,4 @@ const CustomBotton = ({
   );
 };
 
-export default CustomBotton;
+export default CustomButton;

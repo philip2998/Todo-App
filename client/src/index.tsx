@@ -8,13 +8,19 @@ import { Paths } from "./paths";
 
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
+import Todos from "./pages/todos/Todos";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/index.css";
 
 const router = createBrowserRouter([
   {
     path: Paths.home,
-    element: <h1>Home</h1>,
+    element: (
+      <h1>
+        <Todos />
+      </h1>
+    ),
   },
   {
     path: Paths.login,

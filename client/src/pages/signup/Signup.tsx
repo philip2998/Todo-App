@@ -2,9 +2,9 @@ import { Row, Card, Form, Space, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { Paths } from "../../paths";
 import Layout from "../../components/layout/Layout";
-import CustomInput from "../../components/common/Input";
+import CustomInput from "../../components/common/Input/CustomInput";
 import PasswordInput from "../../components/common/Input/PasswordInput";
-import CustomBotton from "../../components/common/Button";
+import CustomBotton from "../../components/common/Button/CustomButton";
 
 const Signup: React.FC = () => {
   return (

@@ -2,7 +2,7 @@ import { TeamOutlined, UserOutlined, LoginOutlined } from "@ant-design/icons";
 import { Layout, Space, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { Paths } from "../../paths";
-import CustomBotton from "../common/Button";
+import CustomBotton from "../common/Button/CustomButton";
 
 const Header: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const Header: React.FC = () => {
         <TeamOutlined className="fs-2 me-2" />
         <Link to={Paths.home}>
           <CustomBotton type="ghost">
-            <Typography.Title level={1}>ToDos</Typography.Title>
+            <Typography.Title level={1}>ToDo App</Typography.Title>
           </CustomBotton>
         </Link>
       </Space>

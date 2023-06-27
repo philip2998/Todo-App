@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
 import routes from './routes/index.js';
+import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
@@ -28,6 +29,7 @@ export default class App {
             message: 'Too many requests from this IP. Please try again an hour!',
         });
         this.app.use('/users', limiter);
+        this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());

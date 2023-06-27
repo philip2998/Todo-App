@@ -3,34 +3,22 @@ import { routeGuard } from '../middlewares/routeGuard.js';
 import TodoController from '../controllers/TodoController.js';
 import AuthController from '../controllers/AuthController.js';
 
-export default class TodoRouter {
-  public router: Router;
-  private todoController: TodoController;
-  private authController: AuthController;
+const todoRouter: Router = express.Router();
+const todoController = new TodoController();
+const authController = new AuthController();
 
-  constructor() {
-    this.router = express.Router();
-    this.todoController = new TodoController();
-    this.authController = new AuthController();
+// Routes with authentication
+todoRouter.use(routeGuard);
 
-    this.initalizeRoutes();
-  }
+todoRouter
+  .route('/')
+  .get(todoController.getAllTodos)
+  .post(todoController.createTodo);
 
-  private initalizeRoutes(): void {
-    this.router.use(routeGuard);
+todoRouter
+  .route('/:id')
+  .get(todoController.getTodo)
+  .patch(todoController.updateTodo)
+  .delete(authController.checkPermissions('admin'), todoController.deleteTodo);
 
-    this.router
-      .route('/')
-      .get(this.todoController.getAllTodos)
-      .post(this.todoController.createTodo);
-
-    this.router
-      .route('/:id')
-      .get(this.todoController.getTodo)
-      .patch(this.todoController.updateTodo)
-      .delete(
-        this.authController.checkPermissions('admin'),
-        this.todoController.deleteTodo
-      );
-  }
-}
+export default todoRouter;
