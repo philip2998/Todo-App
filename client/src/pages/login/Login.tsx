@@ -2,8 +2,10 @@ import { Row, Card, Form, Space, Typography } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Paths } from "../../paths";
-import { UserData, useLoginMutation } from "../../app/services/authApi";
+import { useLoginMutation } from "../../app/services/authApi";
+import { User } from "../../types";
 import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
+
 import ErrorMessage from "../../components/errorMessage/ErrorMessage";
 import Layout from "../../components/layout/Layout";
 import CustomInput from "../../components/common/Input/CustomInput";
@@ -12,10 +14,10 @@ import CustomBotton from "../../components/common/Button/CustomButton";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [loginUser, loginUserResult] = useLoginMutation();
+  const [loginUser] = useLoginMutation();
   const [error, setError] = useState("");
 
-  const handleLogin = async (data: UserData) => {
+  const handleLogin = async (data: User) => {
     try {
       await loginUser(data).unwrap();
       navigate("/");

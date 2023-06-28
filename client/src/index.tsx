@@ -9,6 +9,10 @@ import { Paths } from "./paths";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import Todos from "./pages/todos/Todos";
+import AddTodo from "./pages/addTodo/AddTodo";
+import Status from "./pages/status/Status";
+import Todo from "./pages/todo/Todo";
+import EditTodo from "./pages/editTodo/EditTodo";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/index.css";
@@ -29,6 +33,22 @@ const router = createBrowserRouter([
   {
     path: Paths.signup,
     element: <Signup />,
+  },
+  {
+    path: Paths.todoAdd,
+    element: <AddTodo />,
+  },
+  {
+    path: `${Paths.status}/:status`,
+    element: <Status />,
+  },
+  {
+    path: `${Paths.todo}/:id`,
+    element: <Todo />,
+  },
+  {
+    path: `${Paths.todoEdit}/:id`,
+    element: <EditTodo />,
   },
 ]);
 

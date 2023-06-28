@@ -33,7 +33,12 @@ export default class TodoController {
   );
 
   public createTodo = catchAsync(async (req: Request, res: Response) => {
-    const newTodo: ITodoSchema = await this.todoService.createTodo(req.body);
+    const userId = req.user.id;
+    const todo: ITodoSchema = {
+      ...req.body,
+      userId,
+    };
+    const newTodo: ITodoSchema = await this.todoService.createTodo(todo);
     sendSuccessResponse(res, 201, newTodo);
   });
 

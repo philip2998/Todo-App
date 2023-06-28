@@ -6,7 +6,7 @@ export default class UserController {
     constructor() {
         this.userService = new UserService();
     }
-    getAllUsers = catchAsync(async (res) => {
+    getAllUsers = catchAsync(async (req, res) => {
         const users = await this.userService.getAllUsers();
         sendSuccessResponse(res, 200, users);
     });

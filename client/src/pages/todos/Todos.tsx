@@ -8,6 +8,9 @@ import { Paths } from "../../paths";
 
 import CustomButton from "../../components/common/Button/CustomButton";
 import Layout from "../../components/layout/Layout";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/auth/authSlice";
+import { useEffect } from "react";
 
 const columns: ColumnsType<Todo> = [
   {
@@ -24,17 +27,22 @@ const columns: ColumnsType<Todo> = [
 
 const Todos = () => {
   const navigate = useNavigate();
+  const user = useSelector(selectUser);
   const { data, isLoading } = useGetAllTodosQuery();
 
-  if (!Array.isArray(data)) {
-    return <div>Invalid data format</div>;
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [navigate, user]);
+
+  const goToAddTodo = () => navigate(Paths.todoAdd);
 
   return (
     <Layout>
       <CustomButton
         type="primary"
-        onClick={() => null}
+        onClick={goToAddTodo}
         icon={<PlusCircleOutlined />}
       >
         Add Todo
@@ -44,10 +52,10 @@ const Todos = () => {
         dataSource={data}
         pagination={false}
         columns={columns}
-        rowKey={(record) => record.id}
+        rowKey={(record) => record._id}
         onRow={(record) => {
           return {
-            onClick: () => navigate(`${Paths.todo}/${record.id}`),
+            onClick: () => navigate(`${Paths.todo}/${record._id}`),
           };
         }}
       />

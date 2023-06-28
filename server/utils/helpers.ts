@@ -11,8 +11,5 @@ export const sendSuccessResponse = (
   statusCode: number,
   data: object
 ): void => {
-  res.status(statusCode).json({
-    status: 'success',
-    data,
-  });
+  res.status(statusCode).json(data);
 };

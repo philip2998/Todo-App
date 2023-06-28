@@ -4,9 +4,6 @@ export const catchAsync = (fn) => {
     };
 };
 export const sendSuccessResponse = (res, statusCode, data) => {
-    res.status(statusCode).json({
-        status: 'success',
-        data,
-    });
+    res.status(statusCode).json(data);
 };
 //# sourceMappingURL=helpers.js.map

@@ -17,7 +17,12 @@ export default class TodoController {
         sendSuccessResponse(res, 200, todo);
     });
     createTodo = catchAsync(async (req, res) => {
-        const newTodo = await this.todoService.createTodo(req.body);
+        const userId = req.user.id;
+        const todo = {
+            ...req.body,
+            userId,
+        };
+        const newTodo = await this.todoService.createTodo(todo);
         sendSuccessResponse(res, 201, newTodo);
     });
     updateTodo = catchAsync(async (req, res, next) => {

@@ -7,11 +7,6 @@ const userRouter: Router = express.Router();
 const userController = new UserController();
 const authController = new AuthController();
 
-// Routes without authentication
-userRouter.post('/signup', authController.signup);
-userRouter.post('/login', authController.login);
-userRouter.get('/logout', authController.logout);
-
 // Routes with authentication
 userRouter.use(routeGuard);
 

@@ -17,4 +17,5 @@ export interface IUserSchema extends Document {
 export interface ITodoSchema extends Document {
   title: string;
   description: string;
+  userId: string;
 }

@@ -8,6 +8,9 @@ const todoSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    userId: {
+        type: String,
+    },
 });
 const Todo = mongoose.model('Todo', todoSchema);
 export default Todo;

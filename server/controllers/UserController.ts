@@ -12,7 +12,7 @@ export default class UserController {
     this.userService = new UserService();
   }
 
-  public getAllUsers = catchAsync(async (res: Response) => {
+  public getAllUsers = catchAsync(async (req: Request, res: Response) => {
     const users: IUserSchema[] = await this.userService.getAllUsers();
     sendSuccessResponse(res, 200, users);
   });

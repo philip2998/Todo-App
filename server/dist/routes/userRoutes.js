@@ -5,9 +5,6 @@ import AuthController from '../controllers/AuthController.js';
 const userRouter = express.Router();
 const userController = new UserController();
 const authController = new AuthController();
-userRouter.post('/signup', authController.signup);
-userRouter.post('/login', authController.login);
-userRouter.get('/logout', authController.logout);
 userRouter.use(routeGuard);
 userRouter
     .route('/:id')

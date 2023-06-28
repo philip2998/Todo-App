@@ -9,30 +9,31 @@ export const todosApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
-    getTodo: builder.query<Todo, void>({
+    getTodo: builder.query<Todo, string>({
       query: (id) => ({
         url: `/todos/${id}`,
         method: "GET",
       }),
     }),
+    createTodo: builder.mutation<Todo, Todo>({
+      query: (todo) => ({
+        url: `/todos/add`,
+        method: "POST",
+        body: todo,
+      }),
+    }),
     updateTodo: builder.mutation<string, Todo>({
       query: (todo) => ({
-        url: `/todos/${todo.id}`,
+        url: `/todos/edit/${todo._id}`,
         method: "PATCH",
+        body: todo,
       }),
     }),
     removeTodo: builder.mutation<string, string>({
       query: (id) => ({
-        url: `/todo/${id}`,
+        url: `/todos/${id}`,
         method: "DELETE",
         boyd: { id },
-      }),
-    }),
-    createTodo: builder.mutation<Todo, Todo>({
-      query: (todo) => ({
-        url: `/todos`,
-        method: "POST",
-        body: todo,
       }),
     }),
   }),
