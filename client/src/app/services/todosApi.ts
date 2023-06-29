@@ -15,6 +15,12 @@ export const todosApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    getUserTodos: builder.query<Todo[], string>({
+      query: (id) => ({
+        url: `/todos/main/${id}`,
+        method: "GET",
+      }),
+    }),
     createTodo: builder.mutation<Todo, Todo>({
       query: (todo) => ({
         url: `/todos/add`,
@@ -33,7 +39,7 @@ export const todosApi = api.injectEndpoints({
       query: (id) => ({
         url: `/todos/${id}`,
         method: "DELETE",
-        boyd: { id },
+        body: { id },
       }),
     }),
   }),
@@ -42,11 +48,19 @@ export const todosApi = api.injectEndpoints({
 export const {
   useGetAllTodosQuery,
   useGetTodoQuery,
+  useGetUserTodosQuery,
   useUpdateTodoMutation,
   useRemoveTodoMutation,
   useCreateTodoMutation,
 } = todosApi;
 
 export const {
-  endpoints: { getAllTodos, getTodo, updateTodo, removeTodo, createTodo },
+  endpoints: {
+    getAllTodos,
+    getTodo,
+    getUserTodos,
+    updateTodo,
+    removeTodo,
+    createTodo,
+  },
 } = todosApi;

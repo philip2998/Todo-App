@@ -14,6 +14,10 @@ export default class TodoService {
     return await this.todoRepository.getOneData(id);
   }
 
+  public async getUserTodos(userId: string) {
+    return await this.todoRepository.getUserTodos(userId);
+  }
+
   public async createTodo(data: object) {
     return await this.todoRepository.createOneData(data);
   }

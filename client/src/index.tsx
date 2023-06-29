@@ -20,11 +20,7 @@ import "./css/index.css";
 const router = createBrowserRouter([
   {
     path: Paths.home,
-    element: (
-      <h1>
-        <Todos />
-      </h1>
-    ),
+    element: <Todos />,
   },
   {
     path: Paths.login,

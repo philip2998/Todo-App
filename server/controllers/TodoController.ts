@@ -32,6 +32,14 @@ export default class TodoController {
     }
   );
 
+  public getUserTodos = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const userId = req.user.id;
+      const todos: ITodoSchema[] = await this.todoService.getUserTodos(userId);
+      sendSuccessResponse(res, 200, todos);
+    }
+  );
+
   public createTodo = catchAsync(async (req: Request, res: Response) => {
     const userId = req.user.id;
     const todo: ITodoSchema = {

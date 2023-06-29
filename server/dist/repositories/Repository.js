@@ -9,6 +9,9 @@ export default class Repository {
     async getOneData(id) {
         return await this.model.findById(id);
     }
+    async getUserTodos(userId) {
+        return await this.model.find({ userId });
+    }
     async createOneData(data) {
         const newDocument = await this.model.create(data);
         return newDocument;

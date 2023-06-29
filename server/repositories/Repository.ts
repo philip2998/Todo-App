@@ -15,6 +15,10 @@ export default class Repository<T extends Document> {
     return await this.model.findById(id);
   }
 
+  public async getUserTodos(userId: string): Promise<T[]> {
+    return await this.model.find({ userId });
+  }
+
   public async createOneData(data: object): Promise<T> {
     const newDocument = await this.model.create(data);
     return newDocument;

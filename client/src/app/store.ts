@@ -3,12 +3,14 @@ import { listenerMiddleware } from "../middleware/auth";
 import { api } from "./services/api";
 import auth from "../features/auth/authSlice";
 import todos from "../features/todos/todosSlice";
+import users from "../features/users/usersSlice";
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     auth,
     todos,
+    users,
   },
   middleware: (getDefaultMiddlware) => {
     return getDefaultMiddlware()

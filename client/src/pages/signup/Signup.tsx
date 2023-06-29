@@ -12,18 +12,16 @@ import PasswordInput from "../../components/common/Input/PasswordInput";
 import CustomBotton from "../../components/common/Button/CustomButton";
 import ErrorMessage from "../../components/errorMessage/ErrorMessage";
 
-type SignupData = Omit<User, "id">;
-
 const Signup: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [signupUser] = useSignupMutation();
 
-  const signup = async (data: SignupData) => {
+  const signup = async (data: User) => {
     try {
       console.log(data);
       await signupUser(data).unwrap();
-      navigate("/");
+      navigate(`/todos/main/${data._id}`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
       if (maybeError) {

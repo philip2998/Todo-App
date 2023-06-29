@@ -16,6 +16,11 @@ export default class TodoController {
             return next(new AppError("No Todo found with that ID", 404));
         sendSuccessResponse(res, 200, todo);
     });
+    getUserTodos = catchAsync(async (req, res, next) => {
+        const userId = req.user.id;
+        const todos = await this.todoService.getUserTodos(userId);
+        sendSuccessResponse(res, 200, todos);
+    });
     createTodo = catchAsync(async (req, res) => {
         const userId = req.user.id;
         const todo = {

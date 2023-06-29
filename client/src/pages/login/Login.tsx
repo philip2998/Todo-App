@@ -20,7 +20,7 @@ const Login: React.FC = () => {
   const handleLogin = async (data: User) => {
     try {
       await loginUser(data).unwrap();
-      navigate("/");
+      navigate(`/todos/main/${data._id}`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
 
