@@ -28,7 +28,7 @@ const columns: ColumnsType<Todo> = [
 const Todos = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const { data, isLoading } = useGetUserTodosQuery(user?._id || "");
+  const { data, isLoading } = useGetUserTodosQuery(user?.id || "");
 
   useEffect(() => {
     if (!user) {

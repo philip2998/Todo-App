@@ -4,6 +4,7 @@ import TodoController from '../controllers/TodoController.js';
 const todoRouter = express.Router();
 const todoController = new TodoController();
 todoRouter.use(routeGuard);
+todoRouter.route('/').get(todoController.getAllTodos);
 todoRouter.route('/main/:id').get(todoController.getUserTodos);
 todoRouter.route('/add').post(todoController.createTodo);
 todoRouter.route('/edit/:id').patch(todoController.updateTodo);

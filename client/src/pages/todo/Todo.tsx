@@ -6,13 +6,14 @@ import {
 } from "../../app/services/todosApi";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/auth/authSlice";
-import Layout from "../../components/layout/Layout";
 import { Descriptions, Divider, Modal, Space } from "antd";
-import CustomButton from "../../components/common/Button/CustomButton";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import ErrorMessage from "../../components/errorMessage/ErrorMessage";
 import { Paths } from "../../paths";
 import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
+
+import CustomButton from "../../components/common/Button/CustomButton";
+import ErrorMessage from "../../components/errorMessage/ErrorMessage";
+import Layout from "../../components/layout/Layout";
 
 const Todo = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const Todo = () => {
           {`${data.description}`}
         </Descriptions.Item>
       </Descriptions>
-      {user?._id === data.userId && (
+      {user?.id === data.userId && (
         <>
           <Divider orientation="left">Actions</Divider>
           <Space>

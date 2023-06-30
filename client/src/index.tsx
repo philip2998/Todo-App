@@ -35,6 +35,10 @@ const router = createBrowserRouter([
     element: <AddTodo />,
   },
   {
+    path: `${Paths.userTodos}/:id`,
+    element: <Todos />,
+  },
+  {
     path: `${Paths.status}/:status`,
     element: <Status />,
   },

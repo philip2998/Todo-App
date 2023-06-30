@@ -8,6 +8,7 @@ const todoController = new TodoController();
 // Routes with authentication
 todoRouter.use(routeGuard);
 
+todoRouter.route('/').get(todoController.getAllTodos);
 todoRouter.route('/main/:id').get(todoController.getUserTodos);
 
 todoRouter.route('/add').post(todoController.createTodo);

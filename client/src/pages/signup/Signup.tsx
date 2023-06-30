@@ -19,9 +19,9 @@ const Signup: React.FC = () => {
 
   const signup = async (data: User) => {
     try {
-      console.log(data);
       await signupUser(data).unwrap();
-      navigate(`/todos/main/${data._id}`);
+      console.log(data);
+      navigate(`${Paths.userTodos}/${data.id}`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
       if (maybeError) {

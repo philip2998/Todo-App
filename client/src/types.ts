@@ -6,7 +6,7 @@ export type ErrorWithMessage = {
 };
 
 export interface User {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   password: string;
