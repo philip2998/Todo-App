@@ -6,11 +6,15 @@ export type ErrorWithMessage = {
 };
 
 export interface User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
+  data: {
+    user: {
+      role: string;
+      id: string;
+      name: string;
+      password: string;
+      passwordConfirm: string;
+    };
+  };
 }
 
 export interface Todo {

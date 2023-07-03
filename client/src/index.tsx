@@ -19,10 +19,6 @@ import "./css/index.css";
 
 const router = createBrowserRouter([
   {
-    path: Paths.home,
-    element: <Todos />,
-  },
-  {
     path: Paths.login,
     element: <Login />,
   },

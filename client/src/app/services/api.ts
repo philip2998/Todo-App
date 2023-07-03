@@ -11,6 +11,14 @@ const baseQuery = fetchBaseQuery({
     if (token && token !== null) {
       headers.set("authorization", `Bearer ${token}`);
     }
+
+    const userId =
+      (getState() as RootState).auth.user?.data.user.id ||
+      localStorage.getItem("userId");
+
+    if (userId && userId !== null) {
+      headers.set("user-id", userId);
+    }
   },
 });
 

@@ -18,19 +18,12 @@ const todosSlice = createSlice({
     logout: () => initialState,
   },
   extraReducers: (builder) => {
-    builder
-      .addMatcher(
-        todosApi.endpoints.getAllTodos.matchFulfilled,
-        (state, action) => {
-          state.todos = action.payload;
-        }
-      )
-      .addMatcher(
-        todosApi.endpoints.getUserTodos.matchFulfilled,
-        (state, action) => {
-          state.todos = action.payload;
-        }
-      );
+    builder.addMatcher(
+      todosApi.endpoints.getAllTodos.matchFulfilled,
+      (state, action) => {
+        state.todos = action.payload;
+      }
+    );
   },
 });
 

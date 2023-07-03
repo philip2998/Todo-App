@@ -11,5 +11,9 @@ listenerMiddleware.startListening({
     if (action.payload.token) {
       localStorage.setItem("token", action.payload.token);
     }
+
+    if (action.payload.data.user.id) {
+      localStorage.setItem("userId", action.payload.data.user.id);
+    }
   },
 });

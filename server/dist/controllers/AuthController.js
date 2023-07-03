@@ -2,6 +2,7 @@ import { catchAsync } from '../utils/helpers.js';
 import createToken from '../utils/JwtToken.js';
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
+import errorHandler from '../middlewares/errorMiddleware.js';
 export default class AuthController {
     userService;
     constructor() {
@@ -23,7 +24,7 @@ export default class AuthController {
             return next(new AppError("Please provide email and password", 400));
         const user = await this.userService.findOneUser({ email }, '+password');
         if (!user || !(await user.correctPassword(password, user.password))) {
-            return next(new AppError("Incorrect email or password", 401));
+            return next(errorHandler(new AppError("Incorrect email or password", 401), req, res, next));
         }
         createToken(user, 200, res);
     });
@@ -37,7 +38,7 @@ export default class AuthController {
     checkPermissions(role) {
         return (req, res, next) => {
             if (!role.includes(req.user.role)) {
-                return next(new AppError("You do not have permisson to perform this action", 401));
+                return next(errorHandler(new AppError("You do not have permisson to perform this action", 401), req, res, next));
             }
             next();
         };

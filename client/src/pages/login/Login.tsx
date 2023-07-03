@@ -19,16 +19,16 @@ const Login: React.FC = () => {
 
   const handleLogin = async (data: User) => {
     try {
-      await loginUser(data).unwrap();
-      console.log(data);
-      navigate(`${Paths.userTodos}/${data.id}`);
+      const response = await loginUser(data).unwrap();
+      const userId = response.data.user.id;
+      navigate(`${Paths.userTodos}/${userId}`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
 
       if (maybeError) {
         setError(err.data.message);
       } else {
-        setError("Unknown Error");
+        setError("Unknown Error. Please try later.");
       }
     }
   };

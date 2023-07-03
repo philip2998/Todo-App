@@ -1,6 +1,7 @@
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
 import TodoService from '../services/TodoService.js';
 import AppError from '../utils/exceptions/AppError.js';
+import errorHandler from '../middlewares/errorMiddleware.js';
 export default class TodoController {
     todoService;
     constructor() {
@@ -13,7 +14,7 @@ export default class TodoController {
     getTodo = catchAsync(async (req, res, next) => {
         const todo = await this.todoService.getTodo(req.params.id);
         if (!todo)
-            return next(new AppError("No Todo found with that ID", 404));
+            return next(errorHandler(new AppError("No Todo found with that ID", 404), req, res, next));
         sendSuccessResponse(res, 200, todo);
     });
     getUserTodos = catchAsync(async (req, res, next) => {
@@ -33,13 +34,13 @@ export default class TodoController {
     updateTodo = catchAsync(async (req, res, next) => {
         const updatedTodo = await this.todoService.updateTodo(req.params.id, req.body);
         if (!updatedTodo)
-            return next(new AppError("No Todo found with that ID", 404));
+            return next(errorHandler(new AppError("No Todo found with that ID", 404), req, res, next));
         sendSuccessResponse(res, 200, updatedTodo);
     });
     deleteTodo = catchAsync(async (req, res, next) => {
         const deletedTodo = await this.todoService.deleteTodo(req.params.id);
         if (!deletedTodo)
-            return next(new AppError("No Todo found with that ID", 404));
+            return next(errorHandler(new AppError("No Todo found with that ID", 404), req, res, next));
         sendSuccessResponse(res, 200, deletedTodo);
     });
 }

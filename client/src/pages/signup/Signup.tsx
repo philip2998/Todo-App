@@ -17,17 +17,17 @@ const Signup: React.FC = () => {
   const [error, setError] = useState("");
   const [signupUser] = useSignupMutation();
 
-  const signup = async (data: User) => {
+  const handleSignup = async (data: User) => {
     try {
-      await signupUser(data).unwrap();
-      console.log(data);
-      navigate(`${Paths.userTodos}/${data.id}`);
+      const response = await signupUser(data).unwrap();
+      const userId = response.data.user.id;
+      navigate(`${Paths.userTodos}/${userId}`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
       if (maybeError) {
         setError(err.data.message);
       } else {
-        setError("Unknown Error");
+        setError("Unknown Error. Please try later");
       }
     }
   };
@@ -36,7 +36,7 @@ const Signup: React.FC = () => {
     <Layout>
       <Row align="middle" justify="center">
         <Card title="Sign up" style={{ width: "30rem" }}>
-          <Form onFinish={signup}>
+          <Form onFinish={handleSignup}>
             <CustomInput name="name" placeholder="Name" />
             <CustomInput type="email" name="email" placeholder="Email" />
             <PasswordInput name="password" placeholder="Password" />

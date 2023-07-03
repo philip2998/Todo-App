@@ -4,6 +4,7 @@ import { ErrorType } from '../utils/enums/index.js';
 import createToken from '../utils/JwtToken.js';
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
+import errorHandler from '../middlewares/errorMiddleware.js';
 
 export default class AuthController {
   private userService: UserService;
@@ -36,9 +37,14 @@ export default class AuthController {
 
       if (!user || !(await user.correctPassword(password, user.password))) {
         return next(
-          new AppError(
-            ErrorType.INCORRECT_EMAIL_OR_PASSWORD,
-            ErrorType.UNAUTHORIZED
+          errorHandler(
+            new AppError(
+              ErrorType.INCORRECT_EMAIL_OR_PASSWORD,
+              ErrorType.UNAUTHORIZED
+            ),
+            req,
+            res,
+            next
           )
         );
       }
@@ -58,7 +64,12 @@ export default class AuthController {
     return (req: Request, res: Response, next: NextFunction) => {
       if (!role.includes(req.user.role)) {
         return next(
-          new AppError(ErrorType.UNAUTHORIZED_ACCESS, ErrorType.UNAUTHORIZED)
+          errorHandler(
+            new AppError(ErrorType.UNAUTHORIZED_ACCESS, ErrorType.UNAUTHORIZED),
+            req,
+            res,
+            next
+          )
         );
       }
       next();

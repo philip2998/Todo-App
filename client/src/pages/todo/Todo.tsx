@@ -50,14 +50,14 @@ const Todo = () => {
   return (
     <Layout>
       <Descriptions title="Information about Todo" bordered>
-        <Descriptions.Item label="title" span={3}>
+        <Descriptions.Item label="title" span={3} className="bg-light">
           {`${data.title}`}
         </Descriptions.Item>
-        <Descriptions.Item label="description" span={3}>
+        <Descriptions.Item label="description" span={3} className="bg-light">
           {`${data.description}`}
         </Descriptions.Item>
       </Descriptions>
-      {user?.id === data.userId && (
+      {user?.data.user.id === data.userId && (
         <>
           <Divider orientation="left">Actions</Divider>
           <Space>

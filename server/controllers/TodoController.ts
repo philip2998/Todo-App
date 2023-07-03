@@ -4,6 +4,7 @@ import { ITodoSchema } from '../interfaces/modelInterfaces.js';
 import { ErrorType } from '../utils/enums/index.js';
 import TodoService from '../services/TodoService.js';
 import AppError from '../utils/exceptions/AppError.js';
+import errorHandler from '../middlewares/errorMiddleware.js';
 
 export default class TodoController {
   private todoService: TodoService;
@@ -25,7 +26,12 @@ export default class TodoController {
 
       if (!todo)
         return next(
-          new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND)
+          errorHandler(
+            new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND),
+            req,
+            res,
+            next
+          )
         );
 
       sendSuccessResponse(res, 200, todo);
@@ -59,7 +65,12 @@ export default class TodoController {
 
       if (!updatedTodo)
         return next(
-          new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND)
+          errorHandler(
+            new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND),
+            req,
+            res,
+            next
+          )
         );
 
       sendSuccessResponse(res, 200, updatedTodo);
@@ -74,7 +85,12 @@ export default class TodoController {
 
       if (!deletedTodo)
         return next(
-          new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND)
+          errorHandler(
+            new AppError(ErrorType.TODO_NOT_FOUND, ErrorType.NOT_FOUND),
+            req,
+            res,
+            next
+          )
         );
 
       sendSuccessResponse(res, 200, deletedTodo);

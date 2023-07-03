@@ -1,6 +1,5 @@
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Table } from "antd";
-import { useGetUserTodosQuery } from "../../app/services/todosApi";
 import { Todo } from "../../types";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../paths";
@@ -11,6 +10,7 @@ import type { ColumnsType } from "antd/es/table";
 
 import CustomButton from "../../components/common/Button/CustomButton";
 import Layout from "../../components/layout/Layout";
+import { useGetUserTodosQuery } from "../../app/services/todosApi";
 
 const columns: ColumnsType<Todo> = [
   {
@@ -28,7 +28,7 @@ const columns: ColumnsType<Todo> = [
 const Todos = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const { data, isLoading } = useGetUserTodosQuery(user?.id || "");
+  const { data, isLoading } = useGetUserTodosQuery(user?.data.user.id || "");
 
   useEffect(() => {
     if (!user) {

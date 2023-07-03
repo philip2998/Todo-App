@@ -7,9 +7,10 @@ import {
 import { Layout, Space, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Paths } from "../../paths";
-import CustomBotton from "../common/Button/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../features/auth/authSlice";
+
+import CustomBotton from "../common/Button/CustomButton";
 
 const Header: React.FC = () => {
   const user = useSelector(selectUser);
@@ -19,6 +20,7 @@ const Header: React.FC = () => {
   const onLogoutClick = () => {
     dispatch(logout());
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     navigate("/login");
   };
 

@@ -10,16 +10,27 @@ html,
 body,
 body > div {
   height: 100%;
+  color: white;
 }
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #c4dfdf;
-  color: white;
+  background: rgb(174, 238, 202);
+  background: linear-gradient(
+    347deg,
+    rgba(174, 238, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  min-height: 100vh;
+  background-attachment: fixed;
 }
 
 a {
   text-decoration: none;
+}
+
+span {
+  font-size: 15px;
 }
 
 code {
