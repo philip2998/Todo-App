@@ -13,6 +13,8 @@ import AddTodo from "./pages/addTodo/AddTodo";
 import Status from "./pages/status/Status";
 import Todo from "./pages/todo/Todo";
 import EditTodo from "./pages/editTodo/EditTodo";
+import EditUser from "./pages/editUser/EditUser";
+import User from "./pages/user/User";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/index.css";
@@ -43,8 +45,16 @@ const router = createBrowserRouter([
     element: <Todo />,
   },
   {
+    path: `${Paths.user}/:id`,
+    element: <User />,
+  },
+  {
     path: `${Paths.todoEdit}/:id`,
     element: <EditTodo />,
+  },
+  {
+    path: `${Paths.userEdit}/:id`,
+    element: <EditUser />,
   },
 ]);
 

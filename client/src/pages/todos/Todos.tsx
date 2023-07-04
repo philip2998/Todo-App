@@ -6,11 +6,11 @@ import { Paths } from "../../paths";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/auth/authSlice";
 import { useEffect } from "react";
+import { useGetUserTodosQuery } from "../../app/services/todosApi";
 import type { ColumnsType } from "antd/es/table";
 
 import CustomButton from "../../components/common/Button/CustomButton";
 import Layout from "../../components/layout/Layout";
-import { useGetUserTodosQuery } from "../../app/services/todosApi";
 
 const columns: ColumnsType<Todo> = [
   {

@@ -1,28 +1,29 @@
 import { Card, Form, Space } from "antd";
-import { Todo } from "../../types";
-import CustomInput from "../common/Input/CustomInput";
-import ErrorMessage from "../errorMessage/ErrorMessage";
-import CustomButton from "../common/Button/CustomButton";
+import { Todo, User } from "../../../types";
 
-type TodoFormProps<T> = {
+import CustomInput from "../Input/CustomInput";
+import ErrorMessage from "../../errorMessage/ErrorMessage";
+import CustomButton from "../Button/CustomButton";
+
+type CustomFormProps<T> = {
   onFinish: (values: T) => void;
   btnText: string;
   title: string;
   description?: string;
   error?: string | undefined;
-  todo?: T;
+  type?: T;
 };
 
-const TodoForm = ({
+const CustomForm = <T extends Todo | User>({
   onFinish,
   title,
   btnText,
   error,
-  todo,
-}: TodoFormProps<Todo>) => {
+  type,
+}: CustomFormProps<T>) => {
   return (
     <Card title={title} style={{ width: "30rem" }}>
-      <Form name="todo form" onFinish={onFinish} initialValues={todo}>
+      <Form name="Custom form" onFinish={onFinish} initialValues={type}>
         <CustomInput type="text" name="title" placeholder="Title" />
         <CustomInput type="text" name="description" placeholder="Description" />
         <Space>
@@ -34,4 +35,4 @@ const TodoForm = ({
   );
 };
 
-export default TodoForm;
+export default CustomForm;

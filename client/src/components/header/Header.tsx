@@ -9,15 +9,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { Paths } from "../../paths";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../features/auth/authSlice";
+import { PersonFillGear } from "react-bootstrap-icons";
+import { useEffect, useState } from "react";
 
 import CustomBotton from "../common/Button/CustomButton";
 
 const Header: React.FC = () => {
+  const [userName, setUserName] = useState("");
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onLogoutClick = () => {
+  useEffect(() => {
+    if (user) {
+      setUserName(`${user.data.user.name}'s Todos`);
+    } else {
+      setUserName("Todo App");
+    }
+  }, [user]);
+
+  const handleLogoutClick = () => {
     dispatch(logout());
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
@@ -30,18 +41,26 @@ const Header: React.FC = () => {
         <TeamOutlined className="fs-2 me-2" />
         <Link to={Paths.home}>
           <CustomBotton type="ghost">
-            <Typography.Title level={1}>ToDo App</Typography.Title>
+            <Typography.Title level={1}>{userName}</Typography.Title>
           </CustomBotton>
         </Link>
       </Space>
       {user ? (
-        <CustomBotton
-          type="ghost"
-          icon={<LogoutOutlined />}
-          onClick={onLogoutClick}
-        >
-          Log Out
-        </CustomBotton>
+        <div>
+          <CustomBotton
+            type="ghost"
+            icon={<LogoutOutlined />}
+            onClick={handleLogoutClick}
+          >
+            Log Out
+          </CustomBotton>
+          <CustomBotton
+            type="ghost"
+            onClick={() => navigate(`${Paths.user}/${user.data.user.id}`)}
+          >
+            <PersonFillGear size={30} />
+          </CustomBotton>
+        </div>
       ) : (
         <Space>
           <Link to={Paths.signup}>

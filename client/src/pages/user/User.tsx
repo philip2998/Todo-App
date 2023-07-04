@@ -1,9 +1,9 @@
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import {
-  useGetTodoQuery,
-  useRemoveTodoMutation,
-} from "../../app/services/todosApi";
+  useGetUserQuery,
+  useDeleteUserMutation,
+} from "../../app/services/usersApi";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/auth/authSlice";
 import { Descriptions, Divider, Modal, Space } from "antd";
@@ -15,27 +15,27 @@ import CustomButton from "../../components/common/Button/CustomButton";
 import ErrorMessage from "../../components/errorMessage/ErrorMessage";
 import Layout from "../../components/layout/Layout";
 
-const Todo = () => {
+const User = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const params = useParams<{ id: string }>();
-  const { data, isLoading } = useGetTodoQuery(params.id || "");
-  const [removeTodo] = useRemoveTodoMutation();
+
+  const { data, isLoading } = useGetUserQuery(params.id || "");
+  const [removeUser] = useDeleteUserMutation();
   const user = useSelector(selectUser);
 
   if (isLoading) return <span>Loading...</span>;
-  if (!data) return <Navigate to="/" />;
+  if (!data) return <Navigate to="/login" />;
 
   const showModal = () => setIsModalOpen(true);
   const hideModal = () => setIsModalOpen(false);
 
-  const handleDeleteTodo = async () => {
+  const handleDeleteUser = async () => {
     hideModal();
 
     try {
-      await removeTodo(data._id).unwrap();
+      await removeUser(data?.data.user.id).unwrap();
       navigate(`${Paths.status}/deleted`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
@@ -49,51 +49,45 @@ const Todo = () => {
 
   return (
     <Layout>
-      <Descriptions title="Information about Todo" bordered>
-        <Descriptions.Item label="title" span={3} className="bg-light">
-          {`${data.title}`}
+      <Descriptions title="Information about User" bordered>
+        <Descriptions.Item label="name" span={3} className="bg-light">
+          {`${user?.data.user.name}`}
         </Descriptions.Item>
-        <Descriptions.Item label="description" span={3} className="bg-light">
-          {`${data.description}`}
+        <Descriptions.Item label="role" span={3} className="bg-light">
+          {`${user?.data.user.role}`}
         </Descriptions.Item>
       </Descriptions>
-      {user?.data.user.id === data.userId && (
-        <>
-          <Divider orientation="left">Actions</Divider>
-          <Space>
-            <Link to={`/todos/edit/${data._id}`}>
-              <CustomButton
-                shape="round"
-                type="default"
-                icon={<EditOutlined />}
-              >
-                Edit
-              </CustomButton>
-            </Link>
-            <CustomButton
-              shape="round"
-              danger
-              onClick={showModal}
-              icon={<DeleteOutlined />}
-            >
-              Delete
+      <>
+        <Divider orientation="left">Actions</Divider>
+        <Space>
+          <Link to={`${Paths.userEdit}/${user?.data.user.id}`}>
+            <CustomButton shape="round" type="default" icon={<EditOutlined />}>
+              Edit
             </CustomButton>
-          </Space>
-        </>
-      )}
+          </Link>
+          <CustomButton
+            shape="round"
+            danger
+            onClick={showModal}
+            icon={<DeleteOutlined />}
+          >
+            Delete
+          </CustomButton>
+        </Space>
+      </>
       <ErrorMessage message={error} />
       <Modal
         title="Confirm deletion"
         open={isModalOpen}
-        onOk={handleDeleteTodo}
+        onOk={handleDeleteUser}
         onCancel={hideModal}
         okText="Confirm"
         cancelText="Cancel"
       >
-        Do you really want to delete this todo?
+        Do you really want to delete your profile?
       </Modal>
     </Layout>
   );
 };
 
-export default Todo;
+export default User;

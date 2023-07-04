@@ -7,5 +7,6 @@ export const Paths = {
   todoAdd: "/todos/add",
   todoEdit: "/todos/edit",
   user: "/users",
+  userEdit: "/users/edit",
   status: "/status",
 } as const;

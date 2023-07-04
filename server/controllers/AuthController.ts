@@ -13,16 +13,44 @@ export default class AuthController {
     this.userService = new UserService();
   }
 
-  public signup = catchAsync(async (req: Request, res: Response) => {
-    const newUser = await this.userService.createUser({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
-      role: req.body.role,
-    });
-    createToken(newUser, 201, res);
-  });
+  public signup = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const { name, email, password, passwordConfirm, role } = req.body;
+
+      // Check if the email already exists
+      const existingUser = await this.userService.findOneUser({ email });
+      if (existingUser) {
+        return next(
+          errorHandler(
+            new AppError(ErrorType.EMAIL_ALREADY_EXISTS, ErrorType.BAD_REQUEST),
+            req,
+            res,
+            next
+          )
+        );
+      }
+
+      if (passwordConfirm !== password) {
+        return next(
+          errorHandler(
+            new AppError(ErrorType.NOT_SAME_PASSWORD, ErrorType.BAD_REQUEST),
+            req,
+            res,
+            next
+          )
+        );
+      }
+
+      const newUser = await this.userService.createUser({
+        name,
+        email,
+        password,
+        passwordConfirm,
+        role,
+      });
+      createToken(newUser, 201, res);
+    }
+  );
 
   public login = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {

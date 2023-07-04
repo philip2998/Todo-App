@@ -1,37 +1,38 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import {
-  useGetTodoQuery,
-  useUpdateTodoMutation,
-} from "../../app/services/todosApi";
+  useGetUserQuery,
+  useUpdateUserMutation,
+} from "../../app/services/usersApi";
 import { Row } from "antd";
-import { Todo } from "../../types";
+import { User } from "../../types";
 import { Paths } from "../../paths";
 import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
 
 import Layout from "../../components/layout/Layout";
 import CustomForm from "../../components/common/Form/CustomForm";
 
-const EditTodo = () => {
+const EditUser = () => {
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
   const [error, setError] = useState("");
 
-  const { data, isLoading } = useGetTodoQuery(params.id || "");
-  const [editTodo] = useUpdateTodoMutation();
+  const { data, isLoading } = useGetUserQuery(params.id || "");
+  const [editUser] = useUpdateUserMutation();
 
   if (isLoading) return <span>Loading...</span>;
 
-  const handleEditTodo = async (todo: Todo) => {
+  const handleEditUser = async (user: User) => {
     try {
       const editedTodo = {
         ...data,
-        ...todo,
+        ...user,
       };
-      await editTodo(editedTodo).unwrap();
+      await editUser(editedTodo).unwrap();
       navigate(`${Paths.status}/updated`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
+
       if (maybeError) {
         setError(err.data.message);
       } else {
@@ -44,15 +45,15 @@ const EditTodo = () => {
     <Layout>
       <Row align="middle" justify="center">
         <CustomForm
-          title="Edit Todo"
+          title="Information About User"
           btnText="Edit"
           error={error}
           type={data}
-          onFinish={handleEditTodo}
+          onFinish={handleEditUser}
         />
       </Row>
     </Layout>
   );
 };
 
-export default EditTodo;
+export default EditUser;

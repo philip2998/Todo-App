@@ -19,14 +19,14 @@ export const routeGuard = catchAsync(async (req, res, next) => {
         const decoded = await verifyJwtToken(token, process.env.JWT_SECRET);
         const currentUser = await userService.findUserById(decoded.id);
         if (!currentUser) {
-            return next(new AppError("The user belonging to this token does no longer exist", 401));
+            return next(new AppError("The user belonging to this token does no longer exist!", 401));
         }
         req.user = currentUser;
         res.locals.user = currentUser;
         next();
     }
     catch (error) {
-        return next(new AppError("This is invalid token", 401));
+        return next(new AppError("This is invalid token!", 401));
     }
 });
 //# sourceMappingURL=routeGuard.js.map

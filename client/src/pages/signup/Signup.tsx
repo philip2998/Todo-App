@@ -19,11 +19,11 @@ const Signup: React.FC = () => {
 
   const handleSignup = async (data: User) => {
     try {
-      const response = await signupUser(data).unwrap();
-      const userId = response.data.user.id;
-      navigate(`${Paths.userTodos}/${userId}`);
+      await signupUser(data).unwrap();
+      navigate(`${Paths.login}`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
+
       if (maybeError) {
         setError(err.data.message);
       } else {

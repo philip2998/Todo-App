@@ -12,8 +12,9 @@ userRouter.use(routeGuard);
 
 userRouter
   .route('/:id')
-  .patch(userController.updateUser)
+  .get(userController.getUser)
   .delete(userController.deleteUser);
+userRouter.route('/edit/:id').patch(userController.updateUser);
 
 // Routes with admin permissions
 userRouter.use(authController.checkPermissions('admin'));
@@ -22,6 +23,5 @@ userRouter
   .route('/')
   .get(userController.getAllUsers)
   .post(userController.createUser);
-userRouter.route('/:id').get(userController.getUser);
 
 export default userRouter;

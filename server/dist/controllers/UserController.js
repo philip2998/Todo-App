@@ -13,7 +13,7 @@ export default class UserController {
     getUser = catchAsync(async (req, res, next) => {
         const user = await this.userService.getUser(req.params.id);
         if (!user)
-            return next(new AppError("No User found with that ID", 404));
+            return next(new AppError("No User found with that ID!", 404));
         sendSuccessResponse(res, 200, user);
     });
     createUser = catchAsync(async (req, res) => {
@@ -23,7 +23,7 @@ export default class UserController {
     updateUser = catchAsync(async (req, res, next) => {
         const updatedUser = await this.userService.updateUser(req.params.id, req.body);
         if (!updatedUser)
-            return next(new AppError("No User found with that ID", 404));
+            return next(new AppError("No User found with that ID!", 404));
         sendSuccessResponse(res, 200, updatedUser);
     });
     deleteUser = catchAsync(async (req, res, next) => {
@@ -31,7 +31,7 @@ export default class UserController {
             active: false,
         });
         if (!deletedUser)
-            return next(new AppError("No User found with that ID", 404));
+            return next(new AppError("No User found with that ID!", 404));
         sendSuccessResponse(res, 200, deletedUser);
     });
 }
