@@ -3,14 +3,14 @@ import { useState } from "react";
 import {
   useGetTodoQuery,
   useUpdateTodoMutation,
-} from "../../app/services/todosApi";
-import { Row } from "antd";
-import { Todo } from "../../types";
-import { Paths } from "../../paths";
-import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
+} from "../../../app/services/todosApi";
+import { Row, Spin } from "antd";
+import { Todo } from "../../../types";
+import { Paths } from "../../../paths";
+import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import Layout from "../../components/layout/Layout";
-import CustomForm from "../../components/common/Form/CustomForm";
+import Layout from "../../../components/layout/Layout";
+import CustomForm from "../../../components/common/Form/CustomForm";
 
 const EditTodo = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const EditTodo = () => {
   const { data, isLoading } = useGetTodoQuery(params.id || "");
   const [editTodo] = useUpdateTodoMutation();
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Spin tip="loading" size="large" />;
 
   const handleEditTodo = async (todo: Todo) => {
     try {

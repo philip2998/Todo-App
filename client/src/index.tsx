@@ -1,4 +1,5 @@
 import React from "react";
+
 import { ConfigProvider } from "antd";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -6,15 +7,16 @@ import { store } from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Paths } from "./paths";
 
-import Login from "./pages/login/Login";
-import Signup from "./pages/signup/Signup";
-import Todos from "./pages/todos/Todos";
-import AddTodo from "./pages/addTodo/AddTodo";
-import Status from "./pages/status/Status";
-import Todo from "./pages/todo/Todo";
-import EditTodo from "./pages/editTodo/EditTodo";
-import EditUser from "./pages/editUser/EditUser";
-import User from "./pages/user/User";
+import Login from "./pages/common/login/Login";
+import Signup from "./pages/common/signup/Signup";
+import Todos from "./pages/common/todos/Todos";
+import AddTodo from "./pages/common/addTodo/AddTodo";
+import Status from "./pages/common/status/Status";
+import Todo from "./pages/common/todo/Todo";
+import EditTodo from "./pages/common/editTodo/EditTodo";
+import EditUser from "./pages/common/editUser/EditUser";
+import User from "./pages/common/user/User";
+import Users from "./pages/admin/users/Users";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/index.css";
@@ -35,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: `${Paths.userTodos}/:id`,
     element: <Todos />,
+  },
+  {
+    path: Paths.allUsers,
+    element: <Users />,
   },
   {
     path: `${Paths.status}/:status`,

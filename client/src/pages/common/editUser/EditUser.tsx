@@ -3,14 +3,14 @@ import { useState } from "react";
 import {
   useGetUserQuery,
   useUpdateUserMutation,
-} from "../../app/services/usersApi";
-import { Row } from "antd";
-import { User } from "../../types";
-import { Paths } from "../../paths";
-import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
+} from "../../../app/services/usersApi";
+import { Row, Spin } from "antd";
+import { UserData } from "../../../types";
+import { Paths } from "../../../paths";
+import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import Layout from "../../components/layout/Layout";
-import CustomForm from "../../components/common/Form/CustomForm";
+import Layout from "../../../components/layout/Layout";
+import CustomForm from "../../../components/common/Form/CustomForm";
 
 const EditUser = () => {
   const navigate = useNavigate();
@@ -20,15 +20,15 @@ const EditUser = () => {
   const { data, isLoading } = useGetUserQuery(params.id || "");
   const [editUser] = useUpdateUserMutation();
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Spin tip="loading" size="large" />;
 
-  const handleEditUser = async (user: User) => {
+  const handleEditUser = async (user: UserData) => {
     try {
-      const editedTodo = {
+      const editedUser = {
         ...data,
         ...user,
       };
-      await editUser(editedTodo).unwrap();
+      await editUser(editedUser).unwrap();
       navigate(`${Paths.status}/updated`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);

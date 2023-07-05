@@ -3,17 +3,17 @@ import { useState } from "react";
 import {
   useGetTodoQuery,
   useRemoveTodoMutation,
-} from "../../app/services/todosApi";
+} from "../../../app/services/todosApi";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../features/auth/authSlice";
-import { Descriptions, Divider, Modal, Space } from "antd";
+import { selectUser } from "../../../features/auth/authSlice";
+import { Descriptions, Divider, Modal, Space, Spin } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Paths } from "../../paths";
-import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
+import { Paths } from "../../../paths";
+import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import CustomButton from "../../components/common/Button/CustomButton";
-import ErrorMessage from "../../components/errorMessage/ErrorMessage";
-import Layout from "../../components/layout/Layout";
+import CustomButton from "../../../components/common/Button/CustomButton";
+import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
+import Layout from "../../../components/layout/Layout";
 
 const Todo = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Todo = () => {
   const [removeTodo] = useRemoveTodoMutation();
   const user = useSelector(selectUser);
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Spin tip="loading" size="large" />;
   if (!data) return <Navigate to="/" />;
 
   const showModal = () => setIsModalOpen(true);

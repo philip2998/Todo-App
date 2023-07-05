@@ -1,11 +1,11 @@
 import { Button, Result, Row } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { Paths } from "../../paths";
+import { Paths } from "../../../paths";
 
 const Statuses: Record<string, string> = {
-  created: "Todo added",
-  updated: "Todo updated",
-  deleted: "Todo deleted",
+  created: "Item added",
+  updated: "Item updated",
+  deleted: "Item deleted",
 };
 
 const Status = () => {

@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { Row } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../features/auth/authSlice";
-import { useCreateTodoMutation } from "../../app/services/todosApi";
-import { Todo } from "../../types";
-import { Paths } from "../../paths";
-import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
+import { selectUser } from "../../../features/auth/authSlice";
+import { useCreateTodoMutation } from "../../../app/services/todosApi";
+import { Todo } from "../../../types";
+import { Paths } from "../../../paths";
+import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import Layout from "../../components/layout/Layout";
-import CustomForm from "../../components/common/Form/CustomForm";
+import Layout from "../../../components/layout/Layout";
+import CustomForm from "../../../components/common/Form/CustomForm";
 
 const AddTodo = () => {
   const [error, setError] = useState("");

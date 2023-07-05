@@ -1,16 +1,16 @@
 import { Row, Card, Form, Space, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { Paths } from "../../paths";
+import { Paths } from "../../../paths";
 import { useState } from "react";
-import { useSignupMutation } from "../../app/services/authApi";
-import { User } from "../../types";
-import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
+import { useSignupMutation } from "../../../app/services/authApi";
+import { User } from "../../../types";
+import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import Layout from "../../components/layout/Layout";
-import CustomInput from "../../components/common/Input/CustomInput";
-import PasswordInput from "../../components/common/Input/PasswordInput";
-import CustomBotton from "../../components/common/Button/CustomButton";
-import ErrorMessage from "../../components/errorMessage/ErrorMessage";
+import Layout from "../../../components/layout/Layout";
+import CustomInput from "../../../components/common/Input/CustomInput";
+import PasswordInput from "../../../components/common/Input/PasswordInput";
+import CustomButton from "../../../components/common/Button/CustomButton";
+import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -44,9 +44,9 @@ const Signup: React.FC = () => {
               name="passwordConfirm"
               placeholder="Password Confirm"
             />
-            <CustomBotton type="primary" htmlType="submit">
+            <CustomButton type="primary" htmlType="submit">
               Sign up
-            </CustomBotton>
+            </CustomButton>
           </Form>
           <Space direction="vertical" size="large">
             <Typography.Text>

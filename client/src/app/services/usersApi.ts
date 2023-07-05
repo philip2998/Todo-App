@@ -1,15 +1,15 @@
-import { User } from "../../types";
+import { User, UserData } from "../../types";
 import { api } from "./api";
 
 export const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getAllUsers: builder.query<User[], void>({
+    getAllUsers: builder.query<UserData[], void>({
       query: () => ({
-        url: "/users",
+        url: "/users/allusers",
         method: "GET",
       }),
     }),
-    getUser: builder.query<User, string>({
+    getUser: builder.query<UserData, string>({
       query: (id) => ({
         url: `/users/${id}`,
         method: "GET",
@@ -22,9 +22,9 @@ export const usersApi = api.injectEndpoints({
         body: user,
       }),
     }),
-    updateUser: builder.mutation<string, User>({
+    updateUser: builder.mutation<string, UserData>({
       query: (user) => ({
-        url: `/users/edit/${user.data.user.id}`,
+        url: `/users/edit/${user.id}`,
         method: "PATCH",
         body: user,
       }),

@@ -1,5 +1,5 @@
 import { Card, Form, Space } from "antd";
-import { Todo, User } from "../../../types";
+import { Todo, UserData } from "../../../types";
 
 import CustomInput from "../Input/CustomInput";
 import ErrorMessage from "../../errorMessage/ErrorMessage";
@@ -14,7 +14,7 @@ type CustomFormProps<T> = {
   type?: T;
 };
 
-const CustomForm = <T extends Todo | User>({
+const CustomForm = <T extends Todo | UserData>({
   onFinish,
   title,
   btnText,

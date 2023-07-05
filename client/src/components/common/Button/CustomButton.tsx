@@ -16,6 +16,7 @@ type CustomButtonProps = {
   loading?: boolean;
   shape?: "default" | "circle" | "round" | undefined;
   icon?: React.ReactNode;
+  className?: string;
 };
 
 const CustomButton = ({
@@ -26,6 +27,7 @@ const CustomButton = ({
   loading,
   shape,
   icon,
+  className,
   onClick,
 }: CustomButtonProps) => {
   return (
@@ -37,6 +39,7 @@ const CustomButton = ({
         loading={loading}
         shape={shape}
         icon={icon}
+        className={className}
         onClick={onClick}
       >
         {children}

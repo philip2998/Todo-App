@@ -1,19 +1,17 @@
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
 import {
   useGetUserQuery,
   useDeleteUserMutation,
-} from "../../app/services/usersApi";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../features/auth/authSlice";
-import { Descriptions, Divider, Modal, Space } from "antd";
+} from "../../../app/services/usersApi";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Descriptions, Divider, Modal, Space, Spin } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Paths } from "../../paths";
-import { isErrorWithMessages } from "../../utils/isErrorWithMessages";
+import { Paths } from "../../../paths";
+import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import CustomButton from "../../components/common/Button/CustomButton";
-import ErrorMessage from "../../components/errorMessage/ErrorMessage";
-import Layout from "../../components/layout/Layout";
+import CustomButton from "../../../components/common/Button/CustomButton";
+import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
+import Layout from "../../../components/layout/Layout";
 
 const User = () => {
   const navigate = useNavigate();
@@ -22,10 +20,9 @@ const User = () => {
   const params = useParams<{ id: string }>();
 
   const { data, isLoading } = useGetUserQuery(params.id || "");
-  const [removeUser] = useDeleteUserMutation();
-  const user = useSelector(selectUser);
+  const [deleteUser] = useDeleteUserMutation();
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Spin tip="loading" size="large" />;
   if (!data) return <Navigate to="/login" />;
 
   const showModal = () => setIsModalOpen(true);
@@ -35,10 +32,13 @@ const User = () => {
     hideModal();
 
     try {
-      await removeUser(data?.data.user.id).unwrap();
+      await deleteUser(data.id).unwrap();
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       navigate(`${Paths.status}/deleted`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
+
       if (maybeError) {
         setError(err.data.message);
       } else {
@@ -51,16 +51,16 @@ const User = () => {
     <Layout>
       <Descriptions title="Information about User" bordered>
         <Descriptions.Item label="name" span={3} className="bg-light">
-          {`${user?.data.user.name}`}
+          {`${data.name}`}
         </Descriptions.Item>
         <Descriptions.Item label="role" span={3} className="bg-light">
-          {`${user?.data.user.role}`}
+          {`${data.role}`}
         </Descriptions.Item>
       </Descriptions>
       <>
         <Divider orientation="left">Actions</Divider>
         <Space>
-          <Link to={`${Paths.userEdit}/${user?.data.user.id}`}>
+          <Link to={`${Paths.userEdit}/${data.id}`}>
             <CustomButton shape="round" type="default" icon={<EditOutlined />}>
               Edit
             </CustomButton>

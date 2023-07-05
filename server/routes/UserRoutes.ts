@@ -10,18 +10,16 @@ const authController = new AuthController();
 // Routes with authentication
 userRouter.use(routeGuard);
 
+// Routes with admin permissions
+userRouter
+  .route('/allusers')
+  .get(authController.checkPermissions('admin'), userController.getAllUsers)
+  .post(authController.checkPermissions('admin'), userController.createUser);
+
 userRouter
   .route('/:id')
   .get(userController.getUser)
   .delete(userController.deleteUser);
 userRouter.route('/edit/:id').patch(userController.updateUser);
-
-// Routes with admin permissions
-userRouter.use(authController.checkPermissions('admin'));
-
-userRouter
-  .route('/')
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
 
 export default userRouter;

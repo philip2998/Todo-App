@@ -17,6 +17,13 @@ export interface User {
   };
 }
 
+export interface UserData {
+  email: string;
+  id: string;
+  name: string;
+  role: string;
+}
+
 export interface Todo {
   _id: string;
   userId: string;
