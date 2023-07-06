@@ -13,6 +13,9 @@ const todoSchema: Schema<ITodoSchema> = new mongoose.Schema({
   userId: {
     type: String,
   },
+  userName: {
+    type: String,
+  },
 });
 
 const Todo: Model<ITodoSchema> = mongoose.model<ITodoSchema>(

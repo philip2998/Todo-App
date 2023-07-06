@@ -9,6 +9,8 @@ type CustomFormProps<T> = {
   onFinish: (values: T) => void;
   btnText: string;
   title: string;
+  firstInput: string;
+  secondInput: string;
   description?: string;
   error?: string | undefined;
   type?: T;
@@ -20,12 +22,14 @@ const CustomForm = <T extends Todo | UserData>({
   btnText,
   error,
   type,
+  firstInput,
+  secondInput,
 }: CustomFormProps<T>) => {
   return (
     <Card title={title} style={{ width: "30rem" }}>
       <Form name="Custom form" onFinish={onFinish} initialValues={type}>
-        <CustomInput type="text" name="title" placeholder="Title" />
-        <CustomInput type="text" name="description" placeholder="Description" />
+        <CustomInput type="text" name={firstInput} placeholder="Title" />
+        <CustomInput type="text" name={secondInput} placeholder="Description" />
         <Space>
           <ErrorMessage message={error} />
           <CustomButton htmlType="submit">{btnText}</CustomButton>

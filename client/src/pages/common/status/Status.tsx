@@ -6,6 +6,7 @@ const Statuses: Record<string, string> = {
   created: "Item added",
   updated: "Item updated",
   deleted: "Item deleted",
+  createdUser: "User created",
 };
 
 const Status = () => {

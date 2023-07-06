@@ -14,7 +14,8 @@ export default class UserController {
 
   public getAllUsers = catchAsync(async (req: Request, res: Response) => {
     const users: IUserSchema[] = await this.userService.getAllUsers();
-    sendSuccessResponse(res, 200, users);
+    const pureUsers = users.filter(user => user.role !== 'admin');
+    sendSuccessResponse(res, 200, pureUsers);
   });
 
   public getUser = catchAsync(
@@ -55,12 +56,16 @@ export default class UserController {
 
   public deleteUser = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
-      const deletedUser: IUserSchema | null = await this.userService.deleteUser(
-        req.user.id,
-        {
+      const { id } = req.params;
+      let deletedUser: IUserSchema | null = null;
+
+      if (req.user.role === 'admin') {
+        deletedUser = await this.userService.deleteUser(id, { active: false });
+      } else {
+        deletedUser = await this.userService.deleteUser(req.user.id, {
           active: false,
-        }
-      );
+        });
+      }
 
       if (!deletedUser)
         return next(

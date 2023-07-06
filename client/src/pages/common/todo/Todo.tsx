@@ -57,7 +57,8 @@ const Todo = () => {
           {`${data.description}`}
         </Descriptions.Item>
       </Descriptions>
-      {user?.data.user.id === data.userId && (
+      {(user?.data.user.id === data.userId ||
+        user?.data.user.role === "admin") && (
         <>
           <Divider orientation="left">Actions</Divider>
           <Space>

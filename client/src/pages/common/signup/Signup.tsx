@@ -11,16 +11,23 @@ import CustomInput from "../../../components/common/Input/CustomInput";
 import PasswordInput from "../../../components/common/Input/PasswordInput";
 import CustomButton from "../../../components/common/Button/CustomButton";
 import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../features/auth/authSlice";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [signupUser] = useSignupMutation();
+  const user = useSelector(selectUser);
 
   const handleSignup = async (data: User) => {
     try {
       await signupUser(data).unwrap();
-      navigate(`${Paths.login}`);
+      if (user && user.data.user.role === "admin") {
+        navigate(`${Paths.status}/createdUser`);
+      } else {
+        navigate(`${Paths.login}`);
+      }
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
 
@@ -35,7 +42,12 @@ const Signup: React.FC = () => {
   return (
     <Layout>
       <Row align="middle" justify="center">
-        <Card title="Sign up" style={{ width: "30rem" }}>
+        <Card
+          title={
+            user && user.data.user.role === "admin" ? "Create User" : "Sign up"
+          }
+          style={{ width: "30rem" }}
+        >
           <Form onFinish={handleSignup}>
             <CustomInput name="name" placeholder="Name" />
             <CustomInput type="email" name="email" placeholder="Email" />
@@ -45,13 +57,15 @@ const Signup: React.FC = () => {
               placeholder="Password Confirm"
             />
             <CustomButton type="primary" htmlType="submit">
-              Sign up
+              {user && user.data.user.role === "admin" ? "Create" : "Sign up"}
             </CustomButton>
           </Form>
           <Space direction="vertical" size="large">
-            <Typography.Text>
-              Have an account?<Link to={Paths.login}> Login</Link>
-            </Typography.Text>
+            {user && user.data.user.role === "admin" ? null : (
+              <Typography.Text>
+                Have an account?<Link to={Paths.login}> Login</Link>
+              </Typography.Text>
+            )}
             <ErrorMessage message={error} />
           </Space>
         </Card>

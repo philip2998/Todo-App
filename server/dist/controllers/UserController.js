@@ -8,7 +8,8 @@ export default class UserController {
     }
     getAllUsers = catchAsync(async (req, res) => {
         const users = await this.userService.getAllUsers();
-        sendSuccessResponse(res, 200, users);
+        const pureUsers = users.filter(user => user.role !== 'admin');
+        sendSuccessResponse(res, 200, pureUsers);
     });
     getUser = catchAsync(async (req, res, next) => {
         const user = await this.userService.getUser(req.params.id);
@@ -27,9 +28,16 @@ export default class UserController {
         sendSuccessResponse(res, 200, updatedUser);
     });
     deleteUser = catchAsync(async (req, res, next) => {
-        const deletedUser = await this.userService.deleteUser(req.user.id, {
-            active: false,
-        });
+        const { id } = req.params;
+        let deletedUser = null;
+        if (req.user.role === 'admin') {
+            deletedUser = await this.userService.deleteUser(id, { active: false });
+        }
+        else {
+            deletedUser = await this.userService.deleteUser(req.user.id, {
+                active: false,
+            });
+        }
         if (!deletedUser)
             return next(new AppError("No User found with that ID!", 404));
         sendSuccessResponse(res, 200, deletedUser);

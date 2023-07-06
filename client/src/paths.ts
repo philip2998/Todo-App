@@ -11,5 +11,6 @@ export const Paths = {
   todoEdit: "/todos/edit",
   user: "/users",
   userEdit: "/users/edit",
+  createUser: "/users/createuser",
   status: "/status",
 } as const;

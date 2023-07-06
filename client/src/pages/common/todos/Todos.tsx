@@ -44,7 +44,7 @@ const Todos = () => {
   const goToAddTodo = () => navigate(Paths.todoAdd);
   const goToAllUsers = () => navigate(Paths.allUsers);
   const goToAllTodos = () => navigate(Paths.allTodos);
-  const goToAddUser = () => navigate(Paths.addUser);
+  const goToAddUser = () => navigate(Paths.createUser);
 
   const isAdmin = user?.data.user.role === "admin";
   const adminButtons = [

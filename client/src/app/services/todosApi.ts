@@ -5,7 +5,7 @@ export const todosApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllTodos: builder.query<Todo[], void>({
       query: () => ({
-        url: "/todos",
+        url: "/todos/alltodos",
         method: "GET",
       }),
     }),

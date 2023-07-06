@@ -26,7 +26,8 @@ export interface UserData {
 
 export interface Todo {
   _id: string;
-  userId: string;
   title: string;
   description: string;
+  userId: string;
+  userName: string;
 }

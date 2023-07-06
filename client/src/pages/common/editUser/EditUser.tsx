@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
 import {
   useGetUserQuery,
   useUpdateUserMutation,
 } from "../../../app/services/usersApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 import { Row, Spin } from "antd";
 import { UserData } from "../../../types";
 import { Paths } from "../../../paths";
@@ -47,6 +47,8 @@ const EditUser = () => {
         <CustomForm
           title="Information About User"
           btnText="Edit"
+          firstInput="name"
+          secondInput="role"
           error={error}
           type={data}
           onFinish={handleEditUser}

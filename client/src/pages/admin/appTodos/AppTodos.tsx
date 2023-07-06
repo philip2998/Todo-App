@@ -1,43 +1,49 @@
 import { Spin, Table } from "antd";
-import { UserData } from "../../../types";
+import { Todo } from "../../../types";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../../paths";
-import { useGetAllUsersQuery } from "../../../app/services/usersApi";
+import { useGetAllTodosQuery } from "../../../app/services/todosApi";
 import type { ColumnsType } from "antd/es/table";
 
 import Layout from "../../../components/layout/Layout";
 
-const columns: ColumnsType<UserData> = [
+const columns: ColumnsType<Todo> = [
   {
-    title: "User",
-    dataIndex: "name",
-    key: "name",
+    title: "Title",
+    dataIndex: "title",
+    key: "title",
   },
   {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
+    title: "Description",
+    dataIndex: "description",
+    key: "description",
+  },
+  {
+    title: "User",
+    dataIndex: "userName",
+    key: "userName",
   },
 ];
 
-const Users = () => {
+const AppTodos = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllUsersQuery();
+  const { data, isLoading } = useGetAllTodosQuery();
 
   if (isLoading) return <Spin tip="loading" size="large" />;
 
-  const handleRowClick = (record: UserData) => {
-    navigate(`${Paths.user}/${record.id}`);
+  const handleRowClick = (record: Todo) => {
+    navigate(`${Paths.todo}/${record._id}`);
   };
 
   return (
     <Layout>
+      <h4 className="text-dark ms-2 mb-3">App Todos</h4>
       <Table
         loading={isLoading}
         dataSource={data}
         pagination={false}
         columns={columns}
-        rowKey={(record) => record?.id}
+        rowKey={(record) => record?._id}
         onRow={(record) => {
           return {
             onClick: () => handleRowClick(record),
@@ -48,4 +54,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default AppTodos;

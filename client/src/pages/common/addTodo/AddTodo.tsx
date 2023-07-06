@@ -44,6 +44,8 @@ const AddTodo = () => {
         <CustomForm
           title="Add Todo"
           btnText="Add"
+          firstInput="title"
+          secondInput="description"
           onFinish={handleAddTodo}
           error={error}
         />

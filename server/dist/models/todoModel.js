@@ -11,6 +11,9 @@ const todoSchema = new mongoose.Schema({
     userId: {
         type: String,
     },
+    userName: {
+        type: String,
+    },
 });
 const Todo = mongoose.model('Todo', todoSchema);
 export default Todo;

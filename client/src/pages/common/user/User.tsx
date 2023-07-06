@@ -33,6 +33,7 @@ const User = () => {
 
     try {
       await deleteUser(data.id).unwrap();
+      console.log(data);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       navigate(`${Paths.status}/deleted`);
@@ -50,11 +51,11 @@ const User = () => {
   return (
     <Layout>
       <Descriptions title="Information about User" bordered>
-        <Descriptions.Item label="name" span={3} className="bg-light">
+        <Descriptions.Item label="Name" span={3} className="bg-light">
           {`${data.name}`}
         </Descriptions.Item>
-        <Descriptions.Item label="role" span={3} className="bg-light">
-          {`${data.role}`}
+        <Descriptions.Item label="Email" span={3} className="bg-light">
+          {`${data.email}`}
         </Descriptions.Item>
       </Descriptions>
       <>
