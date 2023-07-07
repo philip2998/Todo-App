@@ -5,14 +5,14 @@ import { useState } from "react";
 import { useSignupMutation } from "../../../app/services/authApi";
 import { User } from "../../../types";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../features/auth/authSlice";
 
 import Layout from "../../../components/layout/Layout";
 import CustomInput from "../../../components/common/Input/CustomInput";
 import PasswordInput from "../../../components/common/Input/PasswordInput";
 import CustomButton from "../../../components/common/Button/CustomButton";
 import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../features/auth/authSlice";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();

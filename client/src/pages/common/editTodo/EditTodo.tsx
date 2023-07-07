@@ -1,9 +1,9 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
 import {
   useGetTodoQuery,
   useUpdateTodoMutation,
 } from "../../../app/services/todosApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 import { Row, Spin } from "antd";
 import { Todo } from "../../../types";
 import { Paths } from "../../../paths";

@@ -33,7 +33,6 @@ const User = () => {
 
     try {
       await deleteUser(data.id).unwrap();
-      console.log(data);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       navigate(`${Paths.status}/deleted`);
