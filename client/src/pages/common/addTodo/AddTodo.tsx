@@ -12,8 +12,9 @@ import Layout from "../../../components/layout/Layout";
 import CustomForm from "../../../components/common/Form/CustomForm";
 
 const AddTodo = () => {
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
   const user = useSelector(selectUser);
   const [addTodo] = useCreateTodoMutation();
 

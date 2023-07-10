@@ -33,9 +33,9 @@ const PasswordInput = ({
               }
               return Promise.reject(new Error("passwords must match"));
             } else {
-              if (value.length < 6) {
+              if (value.length < 8) {
                 return Promise.reject(
-                  new Error("password must be at least 6 symbols")
+                  new Error("password must be at least 8 symbols")
                 );
               }
               return Promise.resolve();

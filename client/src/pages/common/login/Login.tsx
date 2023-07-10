@@ -37,6 +37,7 @@ const Login: React.FC = () => {
     <Layout>
       <Row align="middle" justify="center">
         <Card title="Login" style={{ width: "30rem" }}>
+          <ErrorMessage message={error} />
           <Form onFinish={handleLogin}>
             <CustomInput type="email" name="email" placeholder="Email" />
             <PasswordInput name="password" placeholder="Password" />
@@ -48,7 +49,6 @@ const Login: React.FC = () => {
             <Typography.Text>
               Don't have an account? <Link to={Paths.signup}> Sign up</Link>
             </Typography.Text>
-            <ErrorMessage message={error} />
           </Space>
         </Card>
       </Row>

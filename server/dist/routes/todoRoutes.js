@@ -9,8 +9,10 @@ todoRouter.use(routeGuard);
 todoRouter
     .route('/alltodos')
     .get(authController.checkPermissions('admin'), todoController.getAllTodos);
-todoRouter.route('/main/:id').get(todoController.getUserTodos);
-todoRouter.route('/add').post(todoController.createTodo);
+todoRouter
+    .route('/main/:id')
+    .get(todoController.getUserTodos)
+    .post(todoController.createTodo);
 todoRouter.route('/edit/:id').patch(todoController.updateTodo);
 todoRouter
     .route('/:id')

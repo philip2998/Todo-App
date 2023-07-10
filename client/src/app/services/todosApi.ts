@@ -23,7 +23,7 @@ export const todosApi = api.injectEndpoints({
     }),
     createTodo: builder.mutation<Todo, Todo>({
       query: (todo) => ({
-        url: `/todos/add`,
+        url: `/todos/main/${todo._id}`,
         method: "POST",
         body: todo,
       }),

@@ -8,7 +8,7 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => {
   if (!message) {
     return null;
   }
-  return <Alert message={message} type="error" />;
+  return <Alert message={message} type="error" className="mb-3" />;
 };
 
 export default ErrorMessage;

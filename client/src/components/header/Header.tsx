@@ -5,7 +5,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Space, Typography } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Paths } from "../../paths";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../features/auth/authSlice";
@@ -18,10 +18,11 @@ const Header: React.FC = () => {
   const [userName, setUserName] = useState("");
   const user = useSelector(selectUser);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user) {
+    if (user && localStorage.getItem("token")) {
       setUserName(`${user.data.user.name}'s Todos`);
     } else {
       setUserName("Todo App");
@@ -35,6 +36,9 @@ const Header: React.FC = () => {
     navigate("/login");
   };
 
+  const isLoginPage = location.pathname === Paths.login;
+  const isSignupPage = location.pathname === Paths.signup;
+
   return (
     <Layout.Header className="py-4 px-0 d-flex align-items-center justify-content-between mb-3 text-light">
       <Space>
@@ -45,8 +49,8 @@ const Header: React.FC = () => {
           </CustomBotton>
         </Link>
       </Space>
-      {user ? (
-        <div>
+      {user && localStorage.getItem("token") ? (
+        <div className="d-flex">
           <CustomBotton
             type="ghost"
             icon={<LogoutOutlined />}
@@ -61,20 +65,19 @@ const Header: React.FC = () => {
             <PersonFillGear size={30} />
           </CustomBotton>
         </div>
-      ) : (
-        <Space>
-          <Link to={Paths.signup}>
-            <CustomBotton type="ghost" icon={<UserOutlined />}>
-              Signup
-            </CustomBotton>
-          </Link>
-          <Link to={Paths.login}>
-            <CustomBotton type="ghost" icon={<LoginOutlined />}>
-              Login
-            </CustomBotton>
-          </Link>
-        </Space>
-      )}
+      ) : isLoginPage ? (
+        <Link to={Paths.signup}>
+          <CustomBotton type="ghost" icon={<UserOutlined />}>
+            Signup
+          </CustomBotton>
+        </Link>
+      ) : isSignupPage ? (
+        <Link to={Paths.login}>
+          <CustomBotton type="ghost" icon={<LoginOutlined />}>
+            Login
+          </CustomBotton>
+        </Link>
+      ) : null}
     </Layout.Header>
   );
 };

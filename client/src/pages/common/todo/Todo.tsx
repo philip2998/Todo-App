@@ -6,7 +6,7 @@ import {
 } from "../../../app/services/todosApi";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../features/auth/authSlice";
-import { Descriptions, Divider, Modal, Space, Spin } from "antd";
+import { Descriptions, Divider, Space, Spin } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Paths } from "../../../paths";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
@@ -14,6 +14,7 @@ import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 import CustomButton from "../../../components/common/Button/CustomButton";
 import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
 import Layout from "../../../components/layout/Layout";
+import Modal from "../../../components/common/Modal/Modal";
 
 const Todo = () => {
   const navigate = useNavigate();
@@ -72,10 +73,9 @@ const Todo = () => {
               </CustomButton>
             </Link>
             <CustomButton
-              shape="round"
-              danger
-              onClick={showModal}
+              type="primary"
               icon={<DeleteOutlined />}
+              onClick={showModal}
             >
               Delete
             </CustomButton>
@@ -85,14 +85,12 @@ const Todo = () => {
       <ErrorMessage message={error} />
       <Modal
         title="Confirm deletion"
-        open={isModalOpen}
-        onOk={handleDeleteTodo}
-        onCancel={hideModal}
-        okText="Confirm"
-        cancelText="Cancel"
-      >
-        Do you really want to delete this todo?
-      </Modal>
+        btnText="Confirm"
+        show={isModalOpen}
+        close={hideModal}
+        handleFunctionality={handleDeleteTodo}
+        children="Do you really want to delete this todo?"
+      />
     </Layout>
   );
 };

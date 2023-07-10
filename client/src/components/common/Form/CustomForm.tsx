@@ -3,12 +3,12 @@ import { Todo, UserData } from "../../../types";
 
 import CustomInput from "../Input/CustomInput";
 import ErrorMessage from "../../errorMessage/ErrorMessage";
-import CustomButton from "../Button/CustomButton";
+// import CustomButton from "../Button/CustomButton";
 
 type CustomFormProps<T> = {
-  onFinish: (values: T) => void;
-  btnText: string;
-  title: string;
+  onFinish?: (values: T) => void;
+  btnText?: string;
+  title?: string;
   firstInput: string;
   secondInput: string;
   description?: string;
@@ -32,7 +32,6 @@ const CustomForm = <T extends Todo | UserData>({
         <CustomInput type="text" name={secondInput} placeholder="Description" />
         <Space>
           <ErrorMessage message={error} />
-          <CustomButton htmlType="submit">{btnText}</CustomButton>
         </Space>
       </Form>
     </Card>

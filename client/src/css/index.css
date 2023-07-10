@@ -37,3 +37,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.table-column-title {
+  font-size: 17px;
+  font-weight: bold;
+}

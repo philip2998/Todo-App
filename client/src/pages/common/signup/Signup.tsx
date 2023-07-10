@@ -48,6 +48,7 @@ const Signup: React.FC = () => {
           }
           style={{ width: "30rem" }}
         >
+          <ErrorMessage message={error} />
           <Form onFinish={handleSignup}>
             <CustomInput name="name" placeholder="Name" />
             <CustomInput type="email" name="email" placeholder="Email" />
@@ -66,7 +67,6 @@ const Signup: React.FC = () => {
                 Have an account?<Link to={Paths.login}> Login</Link>
               </Typography.Text>
             )}
-            <ErrorMessage message={error} />
           </Space>
         </Card>
       </Row>
