@@ -2,18 +2,15 @@ import {
   useGetTodoQuery,
   useUpdateTodoMutation,
 } from "../../../app/services/todosApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { Row, Spin } from "antd";
+import { Spin } from "antd";
 import { Todo } from "../../../types";
-import { Paths } from "../../../paths";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import Layout from "../../../components/layout/Layout";
 import CustomForm from "../../../components/common/Form/CustomForm";
 
 const EditTodo = () => {
-  const navigate = useNavigate();
   const params = useParams<{ id: string }>();
   const [error, setError] = useState("");
 
@@ -29,7 +26,6 @@ const EditTodo = () => {
         ...todo,
       };
       await editTodo(editedTodo).unwrap();
-      navigate(`${Paths.status}/updated`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
       if (maybeError) {
@@ -41,19 +37,14 @@ const EditTodo = () => {
   };
 
   return (
-    <Layout>
-      <Row align="middle" justify="center">
-        <CustomForm
-          title="Edit Todo"
-          btnText="Edit"
-          firstInput="title"
-          secondInput="description"
-          error={error}
-          type={data}
-          onFinish={handleEditTodo}
-        />
-      </Row>
-    </Layout>
+    <CustomForm
+      btnText="Edit"
+      firstInput="title"
+      secondInput="description"
+      error={error}
+      type={data}
+      onFinish={handleEditTodo}
+    />
   );
 };
 

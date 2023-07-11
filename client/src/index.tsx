@@ -12,7 +12,6 @@ import Signup from "./pages/common/signup/Signup";
 import UserTodos from "./pages/common/todos/Todos";
 import AddTodo from "./pages/common/addTodo/AddTodo";
 import Status from "./pages/common/status/Status";
-import Todo from "./pages/common/todo/Todo";
 import EditTodo from "./pages/common/editTodo/EditTodo";
 import EditUser from "./pages/common/editUser/EditUser";
 import User from "./pages/common/user/User";
@@ -56,10 +55,6 @@ const router = createBrowserRouter([
   {
     path: `${Paths.status}/:status`,
     element: <Status />,
-  },
-  {
-    path: `${Paths.todo}/:id`,
-    element: <Todo />,
   },
   {
     path: `${Paths.user}/:id`,

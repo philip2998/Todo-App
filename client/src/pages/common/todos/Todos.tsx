@@ -6,78 +6,62 @@ import {
   DeleteFilled,
   EditFilled,
 } from "@ant-design/icons";
-import {
-  useCreateTodoMutation,
-  useGetUserTodosQuery,
-} from "../../../app/services/todosApi";
+import { useGetUserTodosQuery } from "../../../app/services/todosApi";
 import { useState } from "react";
 import { Button, Table } from "antd";
 import { Todo } from "../../../types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Paths } from "../../../paths";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../features/auth/authSlice";
 import { useEffect } from "react";
-import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 import type { ColumnsType } from "antd/es/table";
 
 import CustomButton from "../../../components/common/Button/CustomButton";
-import CustomForm from "../../../components/common/Form/CustomForm";
 import Layout from "../../../components/layout/Layout";
 import Modal from "../../../components/common/Modal/Modal";
+import AddTodo from "../addTodo/AddTodo";
+import EditTodo from "../editTodo/EditTodo";
+import DeleteTodo from "../deleteTodo/DeleteTodo";
 
 const Todos = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalComponent, setModalComponent] = useState<JSX.Element | string>(
+    ""
+  );
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalButtonText, setModalButtonText] = useState("");
+  const params = useParams<{ id: string }>();
 
-  const user = useSelector(selectUser);
-  const { data, isLoading } = useGetUserTodosQuery(user?.data.user.id || "");
-  const [addTodo] = useCreateTodoMutation();
+  const currentUser = useSelector(selectUser);
+  const { data, isLoading } = useGetUserTodosQuery(params.id || "");
 
   useEffect(() => {
-    if (!user) {
+    if (!currentUser) {
       navigate("/login");
     }
-  }, [navigate, user]);
+  }, [navigate, currentUser]);
 
   const showModal = () => setIsModalOpen(true);
   const hideModal = () => setIsModalOpen(false);
 
-  const handleAddTodo = async (data: Todo) => {
-    try {
-      await addTodo(data).unwrap();
-    } catch (err) {
-      const maybeError = isErrorWithMessages(err);
-
-      if (maybeError) {
-        setError(err.data.message);
-      } else {
-        setError("Unknown Error");
-      }
-    }
-  };
-
-  const goToAllUsers = () => navigate(Paths.allUsers);
-  const goToAllTodos = () => navigate(Paths.allTodos);
-  const goToAddUser = () => navigate(Paths.createUser);
-
-  const isAdmin = user?.data.user.role === "admin";
+  const isAdmin = currentUser?.data.user.role === "admin";
   const adminButtons = [
     {
       text: "All Users",
       icon: <UserOutlined />,
-      onClick: () => goToAllUsers(),
+      onClick: () => navigate(Paths.allUsers),
     },
     {
       text: "All Todos",
       icon: <UnorderedListOutlined />,
-      onClick: () => goToAllTodos(),
+      onClick: () => navigate(Paths.allTodos),
     },
     {
       text: "Create User",
       icon: <UserAddOutlined />,
-      onClick: () => goToAddUser(),
+      onClick: () => navigate(Paths.createUser),
     },
   ];
 
@@ -100,13 +84,23 @@ const Todos = () => {
           <Button
             type="link"
             icon={<EditFilled />}
-            onClick={() => console.log(record)}
+            onClick={() => {
+              showModal();
+              setModalTitle("Edit Todo");
+              setModalButtonText("Edit");
+              setModalComponent(<EditTodo />);
+            }}
           />
           <Button
             type="link"
             danger
             icon={<DeleteFilled />}
-            onClick={() => console.log(record)}
+            onClick={() => {
+              showModal();
+              setModalTitle("Delete Todo");
+              setModalButtonText("Delete");
+              setModalComponent(<DeleteTodo />);
+            }}
           />
         </>
       ),
@@ -118,7 +112,12 @@ const Todos = () => {
       <div className="d-flex mb-2">
         <CustomButton
           type="primary"
-          onClick={showModal}
+          onClick={() => {
+            showModal();
+            setModalTitle("Add Todo");
+            setModalButtonText("Add");
+            setModalComponent(<AddTodo />);
+          }}
           icon={<PlusCircleOutlined />}
           className="ms-2"
         >
@@ -147,25 +146,13 @@ const Todos = () => {
         }}
         columns={columns}
         rowKey={(record) => record._id}
-        onRow={(record) => {
-          return {
-            onClick: () => navigate(`${Paths.todo}/${record._id}`),
-          };
-        }}
       />
       <Modal
-        title="Add new Todo"
-        btnText="Add"
+        title={modalTitle}
+        btnText={modalButtonText}
         show={isModalOpen}
         close={hideModal}
-        handleFunctionality={handleAddTodo}
-        children={
-          <CustomForm
-            firstInput="title"
-            secondInput="description"
-            error={error}
-          />
-        }
+        children={modalComponent}
       />
     </Layout>
   );

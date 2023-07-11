@@ -8,7 +8,6 @@ const todoController = new TodoController();
 const authController = new AuthController();
 
 // Routes with authentication
-
 todoRouter.use(routeGuard);
 
 todoRouter
@@ -18,12 +17,10 @@ todoRouter
 todoRouter
   .route('/main/:id')
   .get(todoController.getUserTodos)
-  .post(todoController.createTodo);
-todoRouter.route('/edit/:id').patch(todoController.updateTodo);
-
-todoRouter
-  .route('/:id')
-  .get(todoController.getTodo)
+  .post(todoController.createTodo)
+  .patch(todoController.updateTodo)
   .delete(todoController.deleteTodo);
+
+todoRouter.route('/:id').get(todoController.getTodo);
 
 export default todoRouter;

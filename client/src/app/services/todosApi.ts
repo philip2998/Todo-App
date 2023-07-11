@@ -21,9 +21,12 @@ export const todosApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
-    createTodo: builder.mutation<Todo, Todo>({
-      query: (todo) => ({
-        url: `/todos/main/${todo._id}`,
+    createTodo: builder.mutation<
+      Todo,
+      { todo: Todo; userId: string | undefined }
+    >({
+      query: ({ todo, userId }) => ({
+        url: `/todos/main/${userId}`,
         method: "POST",
         body: todo,
       }),
