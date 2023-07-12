@@ -11,8 +11,6 @@ import Login from "./pages/common/login/Login";
 import Signup from "./pages/common/signup/Signup";
 import UserTodos from "./pages/common/todos/Todos";
 import AddTodo from "./pages/common/addTodo/AddTodo";
-import Status from "./pages/common/status/Status";
-import EditTodo from "./pages/common/editTodo/EditTodo";
 import EditUser from "./pages/common/editUser/EditUser";
 import User from "./pages/common/user/User";
 
@@ -53,16 +51,8 @@ const router = createBrowserRouter([
     element: <AppTodos />,
   },
   {
-    path: `${Paths.status}/:status`,
-    element: <Status />,
-  },
-  {
     path: `${Paths.user}/:id`,
     element: <User />,
-  },
-  {
-    path: `${Paths.todoEdit}/:id`,
-    element: <EditTodo />,
   },
   {
     path: `${Paths.userEdit}/:id`,

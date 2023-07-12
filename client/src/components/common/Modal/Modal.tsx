@@ -1,7 +1,7 @@
 import { Modal as BootstrapModal, Button } from "react-bootstrap";
 
 type ModalProps = {
-  children: JSX.Element | string;
+  children: JSX.Element | null;
   title: string;
   btnText: string;
   show: boolean | undefined;

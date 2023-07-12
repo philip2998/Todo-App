@@ -10,7 +10,7 @@ import { Paths } from "../../../paths";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
 import CustomButton from "../../../components/common/Button/CustomButton";
-import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
+import StatusMessage from "../../../components/statusMessage/StatusMessage";
 import Layout from "../../../components/layout/Layout";
 
 const User = () => {
@@ -75,7 +75,7 @@ const User = () => {
           </CustomButton>
         </Space>
       </>
-      <ErrorMessage message={error} />
+      <StatusMessage message={error} type="error" />
       <Modal
         title="Confirm deletion"
         open={isModalOpen}

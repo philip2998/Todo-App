@@ -2,7 +2,7 @@ import { Card, Form, Space } from "antd";
 import { Todo, UserData } from "../../../types";
 
 import CustomInput from "../Input/CustomInput";
-import ErrorMessage from "../../errorMessage/ErrorMessage";
+import StatusMessage from "../../statusMessage/StatusMessage";
 import CustomButton from "../Button/CustomButton";
 
 type CustomFormProps<T> = {
@@ -27,7 +27,7 @@ const CustomForm = <T extends Todo | UserData>({
 }: CustomFormProps<T>) => {
   return (
     <>
-      <ErrorMessage message={error} />
+      <StatusMessage message={error} type="error" />
       <Card title={title} style={{ width: "30rem" }}>
         <Form name="Custom form" onFinish={onFinish} initialValues={type}>
           <CustomInput type="text" name={firstInput} placeholder="Title" />

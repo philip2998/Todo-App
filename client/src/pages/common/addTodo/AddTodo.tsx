@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../features/auth/authSlice";
 import { useCreateTodoMutation } from "../../../app/services/todosApi";
-import { Todo } from "../../../types";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
+import { Todo } from "../../../types";
 
 import CustomForm from "../../../components/common/Form/CustomForm";
+import StatusMessage from "../../../components/statusMessage/StatusMessage";
 
 const AddTodo = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const currentUser = useSelector(selectUser);
   const [addTodo] = useCreateTodoMutation();
@@ -24,6 +26,7 @@ const AddTodo = () => {
   const handleAddTodo = async (todo: Todo) => {
     try {
       await addTodo({ todo, userId: currentUser?.data.user.id }).unwrap();
+      setMessage("Todo added successfully!");
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
 
@@ -36,13 +39,16 @@ const AddTodo = () => {
   };
 
   return (
-    <CustomForm
-      btnText="Add"
-      firstInput="title"
-      secondInput="description"
-      onFinish={handleAddTodo}
-      error={error}
-    />
+    <>
+      <StatusMessage message={message} type="success" />
+      <CustomForm
+        btnText="Add"
+        firstInput="title"
+        secondInput="description"
+        onFinish={handleAddTodo}
+        error={error}
+      />
+    </>
   );
 };
 

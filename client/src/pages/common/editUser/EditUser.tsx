@@ -2,18 +2,16 @@ import {
   useGetUserQuery,
   useUpdateUserMutation,
 } from "../../../app/services/usersApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Row, Spin } from "antd";
 import { UserData } from "../../../types";
-import { Paths } from "../../../paths";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
 import Layout from "../../../components/layout/Layout";
 import CustomForm from "../../../components/common/Form/CustomForm";
 
 const EditUser = () => {
-  const navigate = useNavigate();
   const params = useParams<{ id: string }>();
   const [error, setError] = useState("");
 
@@ -29,7 +27,6 @@ const EditUser = () => {
         ...user,
       };
       await editUser(editedUser).unwrap();
-      navigate(`${Paths.status}/updated`);
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
 

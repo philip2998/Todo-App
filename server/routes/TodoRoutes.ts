@@ -17,10 +17,12 @@ todoRouter
 todoRouter
   .route('/main/:id')
   .get(todoController.getUserTodos)
-  .post(todoController.createTodo)
+  .post(todoController.createTodo);
+
+todoRouter
+  .route('/main/:id/:id')
+  .get(todoController.getTodo)
   .patch(todoController.updateTodo)
   .delete(todoController.deleteTodo);
-
-todoRouter.route('/:id').get(todoController.getTodo);
 
 export default todoRouter;

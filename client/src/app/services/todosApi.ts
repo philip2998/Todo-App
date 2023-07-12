@@ -9,9 +9,12 @@ export const todosApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
-    getTodo: builder.query<Todo, string>({
-      query: (id) => ({
-        url: `/todos/${id}`,
+    getTodo: builder.query<
+      Todo,
+      { todoId: string; userId: string | undefined }
+    >({
+      query: ({ todoId, userId }) => ({
+        url: `/todos/main/${userId}/${todoId}`,
         method: "GET",
       }),
     }),
@@ -31,18 +34,24 @@ export const todosApi = api.injectEndpoints({
         body: todo,
       }),
     }),
-    updateTodo: builder.mutation<string, Todo>({
-      query: (todo) => ({
-        url: `/todos/edit/${todo._id}`,
+    updateTodo: builder.mutation<
+      Todo,
+      { todo: Todo; userId: string | undefined }
+    >({
+      query: ({ todo, userId }) => ({
+        url: `/todos/main/${userId}/${todo._id}`,
         method: "PATCH",
         body: todo,
       }),
     }),
-    removeTodo: builder.mutation<string, string>({
-      query: (id) => ({
-        url: `/todos/${id}`,
+    removeTodo: builder.mutation<
+      string,
+      { todoId: string; userId: string | undefined }
+    >({
+      query: ({ todoId, userId }) => ({
+        url: `/todos/main/${userId}/${todoId}`,
         method: "DELETE",
-        body: { id },
+        body: { todoId },
       }),
     }),
   }),

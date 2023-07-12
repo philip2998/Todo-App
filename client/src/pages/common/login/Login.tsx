@@ -6,7 +6,7 @@ import { useLoginMutation } from "../../../app/services/authApi";
 import { User } from "../../../types";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
+import StatusMessage from "../../../components/statusMessage/StatusMessage";
 import Layout from "../../../components/layout/Layout";
 import CustomInput from "../../../components/common/Input/CustomInput";
 import PasswordInput from "../../../components/common/Input/PasswordInput";
@@ -37,7 +37,7 @@ const Login: React.FC = () => {
     <Layout>
       <Row align="middle" justify="center">
         <Card title="Login" style={{ width: "30rem" }}>
-          <ErrorMessage message={error} />
+          <StatusMessage message={error} type="error" />
           <Form onFinish={handleLogin}>
             <CustomInput type="email" name="email" placeholder="Email" />
             <PasswordInput name="password" placeholder="Password" />

@@ -3,12 +3,21 @@ import {
   useRemoveTodoMutation,
 } from "../../../app/services/todosApi";
 import { Navigate, useParams } from "react-router-dom";
-import { Spin } from "antd";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
+import { useState } from "react";
+import { Spin } from "antd";
 
-const DeleteTodo = () => {
-  const params = useParams<{ id: string }>();
-  const { data, isLoading } = useGetTodoQuery(params.id || "");
+import StatusMessage from "../../../components/statusMessage/StatusMessage";
+
+type DeleteTodoProps = {
+  todoId: string;
+};
+
+const DeleteTodo = ({ todoId }: DeleteTodoProps) => {
+  const { id } = useParams<{ id: string }>();
+  const [message, setMessage] = useState("");
+
+  const { data, isLoading } = useGetTodoQuery({ todoId, userId: id });
   const [removeTodo] = useRemoveTodoMutation();
 
   if (isLoading) return <Spin tip="loading" size="large" />;
@@ -16,7 +25,8 @@ const DeleteTodo = () => {
 
   const handleDeleteTodo = async () => {
     try {
-      await removeTodo(data._id).unwrap();
+      await removeTodo({ todoId: data._id, userId: id }).unwrap();
+      setMessage("Todo deleted!");
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
       if (maybeError) {
@@ -29,7 +39,8 @@ const DeleteTodo = () => {
 
   return (
     <>
-      <h2 className="text-priamry">Do you really want to delete this Todo ?</h2>
+      <StatusMessage message={message} type="warning" />
+      <p className="text-dark">Do you really want to delete this Todo ?</p>
       <button
         type="button"
         className="btn btn-danger"

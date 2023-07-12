@@ -12,7 +12,7 @@ import Layout from "../../../components/layout/Layout";
 import CustomInput from "../../../components/common/Input/CustomInput";
 import PasswordInput from "../../../components/common/Input/PasswordInput";
 import CustomButton from "../../../components/common/Button/CustomButton";
-import ErrorMessage from "../../../components/errorMessage/ErrorMessage";
+import StatusMessage from "../../../components/statusMessage/StatusMessage";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const Signup: React.FC = () => {
           }
           style={{ width: "30rem" }}
         >
-          <ErrorMessage message={error} />
+          <StatusMessage message={error} type="error" />
           <Form onFinish={handleSignup}>
             <CustomInput name="name" placeholder="Name" />
             <CustomInput type="email" name="email" placeholder="Email" />
