@@ -19,7 +19,7 @@ userRouter
 userRouter
   .route('/:id')
   .get(userController.getUser)
+  .patch(userController.updateUser)
   .delete(userController.deleteUser);
-userRouter.route('/edit/:id').patch(userController.updateUser);
 
 export default userRouter;

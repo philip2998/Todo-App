@@ -8,6 +8,10 @@ export const todosApi = api.injectEndpoints({
         url: "/todos/alltodos",
         method: "GET",
       }),
+      providesTags: ["Todos"],
+      transformResponse: (response: Todo[]) => {
+        return response.reverse();
+      },
     }),
     getTodo: builder.query<
       Todo,
@@ -17,12 +21,17 @@ export const todosApi = api.injectEndpoints({
         url: `/todos/main/${userId}/${todoId}`,
         method: "GET",
       }),
+      providesTags: ["Todos"],
     }),
     getUserTodos: builder.query<Todo[], string>({
       query: (id) => ({
         url: `/todos/main/${id}`,
         method: "GET",
       }),
+      providesTags: ["Todos"],
+      transformResponse: (response: Todo[]) => {
+        return response.reverse();
+      },
     }),
     createTodo: builder.mutation<
       Todo,
@@ -33,6 +42,7 @@ export const todosApi = api.injectEndpoints({
         method: "POST",
         body: todo,
       }),
+      invalidatesTags: ["Todos"],
     }),
     updateTodo: builder.mutation<
       Todo,
@@ -43,6 +53,7 @@ export const todosApi = api.injectEndpoints({
         method: "PATCH",
         body: todo,
       }),
+      invalidatesTags: ["Todos"],
     }),
     removeTodo: builder.mutation<
       string,
@@ -53,6 +64,7 @@ export const todosApi = api.injectEndpoints({
         method: "DELETE",
         body: { todoId },
       }),
+      invalidatesTags: ["Todos"],
     }),
   }),
 });

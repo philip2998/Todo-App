@@ -43,7 +43,7 @@ const Header: React.FC = () => {
     <Layout.Header className="py-4 px-0 d-flex align-items-center justify-content-between mb-3 text-light">
       <Space>
         <TeamOutlined className="fs-2 me-2" />
-        <Link to={Paths.home}>
+        <Link to={`/todos/main/${user?.data.user.id}`}>
           <CustomBotton type="ghost">
             <Typography.Title level={1}>{userName}</Typography.Title>
           </CustomBotton>

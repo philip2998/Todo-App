@@ -38,7 +38,9 @@ code {
     monospace;
 }
 
-.table-column-title {
-  font-size: 17px;
-  font-weight: bold;
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
 }

@@ -7,7 +7,7 @@ import { selectUser } from "../../../features/auth/authSlice";
 
 import CustomButton from "../../../components/common/Button/CustomButton";
 import Layout from "../../../components/layout/Layout";
-import AddTodo from "../addTodo/AddTodo";
+import AddTodo from "./AddTodo";
 import AdminButtons from "../../../components/adminButtons/AdminButtons";
 import TodoTable from "./TodoTable";
 

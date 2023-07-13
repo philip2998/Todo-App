@@ -1,91 +1,99 @@
-import {
-  useGetUserQuery,
-  useDeleteUserMutation,
-} from "../../../app/services/usersApi";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
-import { Descriptions, Divider, Modal, Space, Spin } from "antd";
+import { Descriptions, Divider, Space, Spin } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Paths } from "../../../paths";
-import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useGetUserQuery } from "../../../app/services/usersApi";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../features/auth/authSlice";
 
-import CustomButton from "../../../components/common/Button/CustomButton";
-import StatusMessage from "../../../components/statusMessage/StatusMessage";
 import Layout from "../../../components/layout/Layout";
+import CustomButton from "../../../components/common/Button/CustomButton";
+import Modal from "../../../components/common/Modal/Modal";
+import DeleteUser from "./DeleteUser";
+import EditUser from "./EditUser";
 
 const User = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const { id } = useParams<{ id: string }>();
+
+  const currentUser = useSelector(selectUser);
+  const { data, isLoading } = useGetUserQuery(id || "");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const params = useParams<{ id: string }>();
+  const [modalComponent, setModalComponent] = useState<JSX.Element | null>(
+    null
+  );
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalButtonText, setModalButtonText] = useState("");
 
-  const { data, isLoading } = useGetUserQuery(params.id || "");
-  const [deleteUser] = useDeleteUserMutation();
-
-  if (isLoading) return <Spin tip="loading" size="large" />;
-  if (!data) return <Navigate to="/login" />;
-
-  const showModal = () => setIsModalOpen(true);
-  const hideModal = () => setIsModalOpen(false);
-
-  const handleDeleteUser = async () => {
-    hideModal();
-
-    try {
-      await deleteUser(data.id).unwrap();
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      navigate(`${Paths.status}/deleted`);
-    } catch (err) {
-      const maybeError = isErrorWithMessages(err);
-
-      if (maybeError) {
-        setError(err.data.message);
-      } else {
-        setError("Unknown Error");
-      }
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
     }
+  }, [navigate, currentUser]);
+
+  if (isLoading) return <Spin tip="loading" size="large" className="spinner" />;
+
+  const showModal = (
+    title: string,
+    buttonText: string,
+    component: JSX.Element | null
+  ) => {
+    setModalTitle(title);
+    setModalButtonText(buttonText);
+    setModalComponent(component);
+    setIsModalOpen(true);
   };
+  const hideModal = () => setIsModalOpen(false);
 
   return (
     <Layout>
       <Descriptions title="Information about User" bordered>
-        <Descriptions.Item label="Name" span={3} className="bg-light">
-          {`${data.name}`}
+        <Descriptions.Item
+          label="NAME"
+          span={3}
+          className="bg-light fw-bolder fs-3"
+        >
+          {`${data?.name}`}
         </Descriptions.Item>
-        <Descriptions.Item label="Email" span={3} className="bg-light">
-          {`${data.email}`}
+        <Descriptions.Item
+          label="EMAIL"
+          span={3}
+          className="bg-light fw-bolder fs-3"
+        >
+          {`${data?.email}`}
         </Descriptions.Item>
       </Descriptions>
       <>
         <Divider orientation="left">Actions</Divider>
         <Space>
-          <Link to={`${Paths.userEdit}/${data.id}`}>
-            <CustomButton shape="round" type="default" icon={<EditOutlined />}>
-              Edit
-            </CustomButton>
-          </Link>
+          <CustomButton
+            shape="round"
+            type="default"
+            onClick={() => showModal("Edit Account", "Edit", <EditUser />)}
+            icon={<EditOutlined />}
+          >
+            Edit
+          </CustomButton>
           <CustomButton
             shape="round"
             danger
-            onClick={showModal}
+            onClick={() =>
+              showModal("Delete Account", "Delete", <DeleteUser />)
+            }
             icon={<DeleteOutlined />}
           >
             Delete
           </CustomButton>
         </Space>
       </>
-      <StatusMessage message={error} type="error" />
       <Modal
-        title="Confirm deletion"
-        open={isModalOpen}
-        onOk={handleDeleteUser}
-        onCancel={hideModal}
-        okText="Confirm"
-        cancelText="Cancel"
-      >
-        Do you really want to delete your profile?
-      </Modal>
+        title={modalTitle}
+        btnText={modalButtonText}
+        show={isModalOpen}
+        close={hideModal}
+        children={modalComponent}
+      />
     </Layout>
   );
 };

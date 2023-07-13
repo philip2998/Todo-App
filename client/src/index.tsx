@@ -10,8 +10,6 @@ import { Paths } from "./paths";
 import Login from "./pages/common/login/Login";
 import Signup from "./pages/common/signup/Signup";
 import UserTodos from "./pages/common/todos/Todos";
-import AddTodo from "./pages/common/addTodo/AddTodo";
-import EditUser from "./pages/common/editUser/EditUser";
 import User from "./pages/common/user/User";
 
 import AppUsers from "./pages/admin/appUsers/AppUsers";
@@ -29,10 +27,6 @@ const router = createBrowserRouter([
   {
     path: Paths.signup,
     element: <Signup />,
-  },
-  {
-    path: Paths.todoAdd,
-    element: <AddTodo />,
   },
   {
     path: `${Paths.userTodos}/:id`,
@@ -53,10 +47,6 @@ const router = createBrowserRouter([
   {
     path: `${Paths.user}/:id`,
     element: <User />,
-  },
-  {
-    path: `${Paths.userEdit}/:id`,
-    element: <EditUser />,
   },
 ]);
 

@@ -4,16 +4,18 @@ import {
 } from "../../../app/services/usersApi";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { Row, Spin } from "antd";
+import { Spin } from "antd";
 import { UserData } from "../../../types";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
-import Layout from "../../../components/layout/Layout";
 import CustomForm from "../../../components/common/Form/CustomForm";
 
 const EditUser = () => {
   const params = useParams<{ id: string }>();
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<
+    "error" | "success" | "info" | "warning" | undefined
+  >(undefined);
 
   const { data, isLoading } = useGetUserQuery(params.id || "");
   const [editUser] = useUpdateUserMutation();
@@ -27,31 +29,32 @@ const EditUser = () => {
         ...user,
       };
       await editUser(editedUser).unwrap();
+      setMessage("User edited successfully !");
+      setMessageType("info");
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
 
       if (maybeError) {
-        setError(err.data.message);
+        setMessage(err.data.message);
+        setMessageType("error");
       } else {
-        setError("Unknown Error");
+        setMessage("Unknown Error");
       }
     }
   };
 
   return (
-    <Layout>
-      <Row align="middle" justify="center">
-        <CustomForm
-          title="Information About User"
-          btnText="Edit"
-          firstInput="name"
-          secondInput="role"
-          error={error}
-          type={data}
-          onFinish={handleEditUser}
-        />
-      </Row>
-    </Layout>
+    <>
+      <CustomForm
+        btnText="Edit"
+        firstInput="name"
+        secondInput="email"
+        message={message}
+        messageType={messageType}
+        type={data}
+        onFinish={handleEditUser}
+      />
+    </>
   );
 };
 

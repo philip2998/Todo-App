@@ -16,6 +16,9 @@ type DeleteTodoProps = {
 const DeleteTodo = ({ todoId }: DeleteTodoProps) => {
   const { id } = useParams<{ id: string }>();
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<
+    "error" | "success" | "info" | "warning" | undefined
+  >(undefined);
 
   const { data, isLoading } = useGetTodoQuery({ todoId, userId: id });
   const [removeTodo] = useRemoveTodoMutation();
@@ -27,10 +30,12 @@ const DeleteTodo = ({ todoId }: DeleteTodoProps) => {
     try {
       await removeTodo({ todoId: data._id, userId: id }).unwrap();
       setMessage("Todo deleted!");
+      setMessageType("warning");
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
       if (maybeError) {
-        console.log(err.data.message);
+        setMessage(err.data.message);
+        setMessageType("error");
       } else {
         console.log("Unknown Error");
       }
@@ -39,7 +44,7 @@ const DeleteTodo = ({ todoId }: DeleteTodoProps) => {
 
   return (
     <>
-      <StatusMessage message={message} type="warning" />
+      <StatusMessage message={message} type={messageType} />
       <p className="text-dark">Do you really want to delete this Todo ?</p>
       <button
         type="button"

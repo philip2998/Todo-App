@@ -28,5 +28,6 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithRetry,
   refetchOnMountOrArgChange: true,
+  tagTypes: ["Todos", "Users"],
   endpoints: () => ({}),
 });

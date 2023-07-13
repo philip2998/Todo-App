@@ -9,16 +9,17 @@ import { Todo } from "../../../types";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
 import CustomForm from "../../../components/common/Form/CustomForm";
-import StatusMessage from "../../../components/statusMessage/StatusMessage";
 
 type EditTodoProps = {
   todoId: string;
 };
 
 const EditTodo = ({ todoId }: EditTodoProps) => {
-  const [error, setError] = useState("");
   const { id } = useParams<{ id: string }>();
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<
+    "error" | "success" | "info" | "warning" | undefined
+  >(undefined);
 
   const { data, isLoading } = useGetTodoQuery({ todoId, userId: id });
   const [editTodo] = useUpdateTodoMutation();
@@ -33,24 +34,26 @@ const EditTodo = ({ todoId }: EditTodoProps) => {
       };
       await editTodo({ todo: editedTodo, userId: id }).unwrap();
       setMessage("Todo edited successfully!");
+      setMessageType("info");
     } catch (err) {
       const maybeError = isErrorWithMessages(err);
       if (maybeError) {
-        setError(err.data.message);
+        setMessage(err.data.message);
+        setMessageType("error");
       } else {
-        setError("Unknown Error");
+        setMessage("Unknown Error");
       }
     }
   };
 
   return (
     <>
-      <StatusMessage message={message} type="info" />
       <CustomForm
         btnText="Edit"
         firstInput="title"
         secondInput="description"
-        error={error}
+        message={message}
+        messageType={messageType}
         type={data}
         onFinish={handleEditTodo}
       />

@@ -3,8 +3,8 @@ import Table, { ColumnsType } from "antd/es/table";
 import { Button } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 
-import EditTodo from "../editTodo/EditTodo";
-import DeleteTodo from "../deleteTodo/DeleteTodo";
+import EditTodo from "./EditTodo";
+import DeleteTodo from "./DeleteTodo";
 import Modal from "../../../components/common/Modal/Modal";
 
 type TodoTableProps = {

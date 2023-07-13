@@ -8,12 +8,14 @@ export const usersApi = api.injectEndpoints({
         url: "/users/allusers",
         method: "GET",
       }),
+      providesTags: ["Users"],
     }),
     getUser: builder.query<UserData, string>({
       query: (id) => ({
         url: `/users/${id}`,
         method: "GET",
       }),
+      providesTags: ["Users"],
     }),
     createUser: builder.mutation<User, User>({
       query: (user) => ({
@@ -21,13 +23,15 @@ export const usersApi = api.injectEndpoints({
         method: "POST",
         body: user,
       }),
+      invalidatesTags: ["Users"],
     }),
     updateUser: builder.mutation<string, UserData>({
       query: (user) => ({
-        url: `/users/edit/${user.id}`,
+        url: `/users/${user.id}`,
         method: "PATCH",
         body: user,
       }),
+      invalidatesTags: ["Users"],
     }),
     deleteUser: builder.mutation<string, string>({
       query: (id) => ({
@@ -35,6 +39,7 @@ export const usersApi = api.injectEndpoints({
         method: "DELETE",
         body: { id },
       }),
+      invalidatesTags: ["Users"],
     }),
   }),
 });

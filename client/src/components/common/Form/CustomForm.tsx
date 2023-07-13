@@ -6,13 +6,14 @@ import StatusMessage from "../../statusMessage/StatusMessage";
 import CustomButton from "../Button/CustomButton";
 
 type CustomFormProps<T> = {
+  firstInput: string;
+  secondInput: string;
   onFinish?: (values: T) => void;
   btnText?: string;
   title?: string;
-  firstInput: string;
-  secondInput: string;
+  message?: string | undefined;
+  messageType?: "error" | "success" | "info" | "warning" | undefined;
   description?: string;
-  error?: string | undefined;
   type?: T;
 };
 
@@ -20,14 +21,15 @@ const CustomForm = <T extends Todo | UserData>({
   onFinish,
   title,
   btnText,
-  error,
+  message,
+  messageType,
   type,
   firstInput,
   secondInput,
 }: CustomFormProps<T>) => {
   return (
     <>
-      <StatusMessage message={error} type="error" />
+      <StatusMessage message={message} type={messageType} />
       <Card title={title} style={{ width: "30rem" }}>
         <Form name="Custom form" onFinish={onFinish} initialValues={type}>
           <CustomInput type="text" name={firstInput} placeholder="Title" />
