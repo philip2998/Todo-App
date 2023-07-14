@@ -13,3 +13,9 @@ export type OptionsForErrorMiddleware = (
   res: Response,
   next: NextFunction
 ) => void;
+
+export type OptionsForNodemailer = {
+  email: string;
+  subject: string;
+  message: string;
+};

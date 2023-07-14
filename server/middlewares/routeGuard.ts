@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { catchAsync } from '../utils/helpers.js';
 import { ErrorType } from '../utils/enums/index.js';
 import { verifyJwtToken } from './verifyJwtToken.js';
+
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
 

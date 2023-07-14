@@ -16,6 +16,7 @@ userRouter
   .get(authController.checkPermissions('admin'), userController.getAllUsers)
   .post(authController.checkPermissions('admin'), userController.createUser);
 
+userRouter.route('/:id/updateMyPassword').patch(authController.updatePassword);
 userRouter
   .route('/:id')
   .get(userController.getUser)

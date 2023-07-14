@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { OptionsForErrorMiddleware } from '../types/index.js';
+
 import AppError from '../utils/exceptions/AppError.js';
 
 const sendErrorForDev = (err: AppError, req: Request, res: Response): void => {

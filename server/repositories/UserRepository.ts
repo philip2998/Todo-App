@@ -1,4 +1,5 @@
 import { IUserSchema } from '../interfaces/modelInterfaces.js';
+
 import User from '../models/userModel.js';
 import Repository from './Repository.js';
 

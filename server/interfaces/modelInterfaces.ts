@@ -6,12 +6,16 @@ export interface IUserSchema extends Document {
   role: 'user' | 'admin';
   password: string;
   passwordConfirm: string | undefined;
+  passwordChangedAt: number;
+  passwordResetToken: string | undefined;
+  passwordResetExpires: number | undefined;
   active: boolean;
   find(active: object): Query<IUserSchema[], IUserSchema>;
   correctPassword(
     candidatePassword: string,
     userPassword: string
   ): Promise<boolean>;
+  createPasswordResetToken(): string;
 }
 
 export interface ITodoSchema extends Document {
