@@ -1,11 +1,14 @@
 import express, { Router } from 'express';
 import { routeGuard } from '../middlewares/routeGuard.js';
+
 import UserController from '../controllers/UserController.js';
 import AuthController from '../controllers/AuthController.js';
+import PasswordController from '../controllers/PasswordController.js';
 
 const userRouter: Router = express.Router();
 const userController = new UserController();
 const authController = new AuthController();
+const passwordController = new PasswordController();
 
 // Routes with authentication
 userRouter.use(routeGuard);
@@ -16,7 +19,9 @@ userRouter
   .get(authController.checkPermissions('admin'), userController.getAllUsers)
   .post(authController.checkPermissions('admin'), userController.createUser);
 
-userRouter.route('/:id/updateMyPassword').patch(authController.updatePassword);
+userRouter
+  .route('/:id/updateMyPassword')
+  .patch(passwordController.updatePassword);
 userRouter
   .route('/:id')
   .get(userController.getUser)

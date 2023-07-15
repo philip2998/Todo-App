@@ -12,7 +12,7 @@ export default class UserRepository extends Repository<IUserSchema> {
     return this.model.findOne(query).select(select);
   }
 
-  public async findDataById(id: string) {
-    return await this.model.findById(id);
+  public async findDataById(id: string): Promise<IUserSchema | null> {
+    return await this.model.findById(id).select('+password');
   }
 }

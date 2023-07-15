@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import crypto from 'crypto';
-import validator from 'validator';
 import bcrypt from 'bcryptjs';
+import validator from 'validator';
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -73,7 +73,6 @@ userSchema.methods.createPasswordResetToken = function () {
         .createHash('sha256')
         .update(resetToken)
         .digest('hex');
-    console.log({ resetToken }, this.passwordResetToken);
     this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
     return resetToken;
 };

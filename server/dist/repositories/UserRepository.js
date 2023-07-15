@@ -8,7 +8,7 @@ export default class UserRepository extends Repository {
         return this.model.findOne(query).select(select);
     }
     async findDataById(id) {
-        return await this.model.findById(id);
+        return await this.model.findById(id).select('+password');
     }
 }
 //# sourceMappingURL=UserRepository.js.map
