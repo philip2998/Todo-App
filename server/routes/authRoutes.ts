@@ -12,7 +12,7 @@ authRouter.post('/signup', authController.signup);
 authRouter.post('/login', authController.login);
 authRouter.get('/logout', authController.logout);
 
-authRouter.post('/forgotPassword', passwordController.forgotPassword);
+authRouter.post('/login/forgotPassword', passwordController.forgotPassword);
 authRouter.patch('/resetPassword/:token', passwordController.resetPassword);
 
 export default authRouter;

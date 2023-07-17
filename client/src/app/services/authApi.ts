@@ -1,4 +1,4 @@
-import { User } from "../../types";
+import { User, UserData } from "../../types";
 import { api } from "./api";
 
 type ResponseLoginData = User & { token: string };
@@ -19,11 +19,29 @@ export const authApi = api.injectEndpoints({
         body: userData,
       }),
     }),
+    forgotPassword: builder.mutation<ResponseLoginData, UserData>({
+      query: (email) => ({
+        url: "/login/forgotPassword",
+        method: "POST",
+        body: email,
+      }),
+    }),
+    resetPassword: builder.mutation<ResponseLoginData, UserData>({
+      query: (userData) => ({
+        url: "/resetPassword",
+        method: "PATCH",
+        body: userData,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation } = authApi;
+export const {
+  useLoginMutation,
+  useForgotPasswordMutation,
+  useSignupMutation,
+} = authApi;
 
 export const {
-  endpoints: { login, signup },
+  endpoints: { login, forgotPassword, signup },
 } = authApi;

@@ -1,10 +1,10 @@
-import { Todo } from "../../../types";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import Table, { ColumnsType } from "antd/es/table";
 import { Button } from "antd";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { Todo } from "../../../types";
 
-import EditTodo from "./EditTodo";
 import DeleteTodo from "./DeleteTodo";
+import EditTodo from "./EditTodo";
 import Modal from "../../../components/common/Modal/Modal";
 
 type TodoTableProps = {

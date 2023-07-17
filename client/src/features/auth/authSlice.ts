@@ -1,7 +1,7 @@
-import { User } from "../../types";
 import { createSlice } from "@reduxjs/toolkit";
-import { authApi } from "../../app/services/authApi";
 import { RootState } from "../../app/store";
+import { authApi } from "../../app/services/authApi";
+import { User } from "../../types";
 
 interface InitialState {
   user: (User & { token: string }) | null;

@@ -8,6 +8,7 @@ export type ErrorWithMessage = {
 export interface User {
   data: {
     user: {
+      email: string;
       role: string;
       id: string;
       name: string;

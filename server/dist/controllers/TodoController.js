@@ -1,7 +1,7 @@
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
+import errorHandler from '../middlewares/errorMiddleware.js';
 import TodoService from '../services/TodoService.js';
 import AppError from '../utils/exceptions/AppError.js';
-import errorHandler from '../middlewares/errorMiddleware.js';
 export default class TodoController {
     todoService;
     constructor() {

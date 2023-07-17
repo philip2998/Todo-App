@@ -2,11 +2,11 @@ import {
   useGetTodoQuery,
   useUpdateTodoMutation,
 } from "../../../app/services/todosApi";
-import { useState } from "react";
+import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { Spin } from "antd";
 import { Todo } from "../../../types";
-import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
 
 import CustomForm from "../../../components/common/Form/CustomForm";
 

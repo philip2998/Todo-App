@@ -15,7 +15,7 @@ export default class PasswordController {
             email: req.body.email,
         });
         if (!user)
-            return next(errorHandler(new AppError("There is no user with email address", 404), req, res, next));
+            return next(errorHandler(new AppError("There is no user with that email address", 404), req, res, next));
         const resetToken = user.createPasswordResetToken();
         await user.save({ validateBeforeSave: false });
         const resetURL = `${req.protocol}://${req.get('host')}/api/resetPassword/${resetToken}`;
@@ -30,7 +30,7 @@ export default class PasswordController {
             });
             res.status(200).json({
                 status: 'success',
-                message: 'Token sent to email!',
+                message: 'Token sent to email!. Please check your email',
             });
         }
         catch (err) {

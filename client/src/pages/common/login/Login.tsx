@@ -1,21 +1,30 @@
-import { Row, Card, Form, Space, Typography } from "antd";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Paths } from "../../../paths";
-import { useLoginMutation } from "../../../app/services/authApi";
-import { User } from "../../../types";
+import { Row, Card, Form, Space, Typography, Button } from "antd";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../../app/services/authApi";
+import { useState } from "react";
+import { Paths } from "../../../paths";
+import { User } from "../../../types";
 
+import ForgotPassword from "./forgotPassword/ForgotPassword";
 import StatusMessage from "../../../components/statusMessage/StatusMessage";
-import Layout from "../../../components/layout/Layout";
-import CustomInput from "../../../components/common/Input/CustomInput";
 import PasswordInput from "../../../components/common/Input/PasswordInput";
 import CustomButton from "../../../components/common/Button/CustomButton";
+import CustomInput from "../../../components/common/Input/CustomInput";
+import Layout from "../../../components/layout/Layout";
+import Modal from "../../../components/common/Modal/Modal";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loginUser] = useLoginMutation();
   const [error, setError] = useState("");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalComponent, setModalComponent] = useState<JSX.Element | null>(
+    null
+  );
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalButtonText, setModalButtonText] = useState("");
 
   const handleLogin = async (data: User) => {
     try {
@@ -33,6 +42,18 @@ const Login: React.FC = () => {
     }
   };
 
+  const showModal = (
+    title: string,
+    buttonText: string,
+    component: JSX.Element | null
+  ) => {
+    setModalTitle(title);
+    setModalButtonText(buttonText);
+    setModalComponent(component);
+    setIsModalOpen(true);
+  };
+  const hideModal = () => setIsModalOpen(false);
+
   return (
     <Layout>
       <Row align="middle" justify="center">
@@ -49,9 +70,26 @@ const Login: React.FC = () => {
             <Typography.Text>
               Don't have an account? <Link to={Paths.signup}> Sign up</Link>
             </Typography.Text>
+            <Typography.Text>
+              <Button
+                type="link"
+                onClick={() =>
+                  showModal("Forgotten Password", "Submit", <ForgotPassword />)
+                }
+              >
+                Forgotten Password?
+              </Button>
+            </Typography.Text>
           </Space>
         </Card>
       </Row>
+      <Modal
+        title={modalTitle}
+        btnText={modalButtonText}
+        show={isModalOpen}
+        close={hideModal}
+        children={modalComponent}
+      />
     </Layout>
   );
 };

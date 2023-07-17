@@ -1,15 +1,15 @@
 import React from "react";
 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ConfigProvider } from "antd";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Paths } from "./paths";
 
-import Login from "./pages/common/login/Login";
-import Signup from "./pages/common/signup/Signup";
 import UserTodos from "./pages/common/todos/Todos";
+import Signup from "./pages/common/signup/Signup";
+import Login from "./pages/common/login/Login";
 import User from "./pages/common/user/User";
 
 import AppUsers from "./pages/admin/appUsers/AppUsers";

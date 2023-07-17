@@ -7,9 +7,9 @@ import CustomButton from "../Button/CustomButton";
 
 type CustomFormProps<T> = {
   firstInput: string;
-  secondInput: string;
+  btnText: string;
+  secondInput?: string;
   onFinish?: (values: T) => void;
-  btnText?: string;
   title?: string;
   message?: string | undefined;
   messageType?: "error" | "success" | "info" | "warning" | undefined;
@@ -32,12 +32,20 @@ const CustomForm = <T extends Todo | UserData>({
       <StatusMessage message={message} type={messageType} />
       <Card title={title} style={{ width: "30rem" }}>
         <Form name="Custom form" onFinish={onFinish} initialValues={type}>
-          <CustomInput type="text" name={firstInput} placeholder="Title" />
-          <CustomInput
-            type="text"
-            name={secondInput}
-            placeholder="Description"
-          />
+          {firstInput && (
+            <CustomInput
+              type="text"
+              name={firstInput}
+              placeholder={firstInput}
+            />
+          )}
+          {secondInput && (
+            <CustomInput
+              type="text"
+              name={secondInput}
+              placeholder={secondInput}
+            />
+          )}
           <Space>
             <CustomButton htmlType="submit">{btnText}</CustomButton>
           </Space>

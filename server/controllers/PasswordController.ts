@@ -51,7 +51,7 @@ export default class PasswordController {
 
         res.status(200).json({
           status: 'success',
-          message: 'Token sent to email!',
+          message: 'Token sent to email!. Please check your email',
         });
       } catch (err) {
         user.passwordResetToken = undefined;

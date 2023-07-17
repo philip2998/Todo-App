@@ -1,7 +1,7 @@
 export const enum ErrorType {
   USER_NOT_FOUND = 'No User found with that ID!',
   TODO_NOT_FOUND = 'No Todo found with that ID!',
-  USER_NOT_FOUND_EMAIL = 'There is no user with email address',
+  USER_NOT_FOUND_EMAIL = 'There is no user with that email address',
   NO_EMAIL_AND_PASSWORD = 'Please provide email and password!',
   INCORRECT_EMAIL_OR_PASSWORD = 'Incorrect email or password!',
   INCORRECT_PASSWORD = 'Your current password is wrong!',
