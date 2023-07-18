@@ -26,9 +26,12 @@ export const authApi = api.injectEndpoints({
         body: email,
       }),
     }),
-    resetPassword: builder.mutation<ResponseLoginData, UserData>({
-      query: (userData) => ({
-        url: "/resetPassword",
+    resetPassword: builder.mutation<
+      ResponseLoginData,
+      { userData: UserData; token: string | undefined }
+    >({
+      query: ({ userData, token }) => ({
+        url: `/resetPassword/${token}`,
         method: "PATCH",
         body: userData,
       }),
@@ -38,10 +41,11 @@ export const authApi = api.injectEndpoints({
 
 export const {
   useLoginMutation,
-  useForgotPasswordMutation,
   useSignupMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = authApi;
 
 export const {
-  endpoints: { login, forgotPassword, signup },
+  endpoints: { login, signup, forgotPassword, resetPassword },
 } = authApi;

@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { Paths } from "./paths";
 
+import ResetPassword from "./pages/common/login/resetPassword/ResetPassword";
 import UserTodos from "./pages/common/todos/Todos";
 import Signup from "./pages/common/signup/Signup";
 import Login from "./pages/common/login/Login";
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: Paths.signup,
     element: <Signup />,
+  },
+  {
+    path: Paths.resetPassword,
+    element: <ResetPassword />,
   },
   {
     path: `${Paths.userTodos}/:id`,

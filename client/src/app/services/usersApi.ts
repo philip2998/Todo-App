@@ -17,9 +17,9 @@ export const usersApi = api.injectEndpoints({
       }),
       providesTags: ["Users"],
     }),
-    createUser: builder.mutation<User, User>({
-      query: (user) => ({
-        url: `/users/add`,
+    createUser: builder.mutation<User, { user: User; adminId: string }>({
+      query: ({ user, adminId }) => ({
+        url: `todos/main/${adminId}`,
         method: "POST",
         body: user,
       }),

@@ -10,7 +10,9 @@ const passwordController = new PasswordController();
 userRouter.use(routeGuard);
 userRouter
     .route('/allusers')
-    .get(authController.checkPermissions('admin'), userController.getAllUsers)
+    .get(authController.checkPermissions('admin'), userController.getAllUsers);
+userRouter
+    .route('/todos/main/:id')
     .post(authController.checkPermissions('admin'), userController.createUser);
 userRouter
     .route('/:id/updateMyPassword')

@@ -1,8 +1,8 @@
+import { useGetAllUsersQuery } from "../../../app/services/usersApi";
+import { useNavigate } from "react-router-dom";
 import { Spin, Table } from "antd";
 import { UserData } from "../../../types";
-import { useNavigate } from "react-router-dom";
 import { Paths } from "../../../paths";
-import { useGetAllUsersQuery } from "../../../app/services/usersApi";
 import type { ColumnsType } from "antd/es/table";
 
 import Layout from "../../../components/layout/Layout";

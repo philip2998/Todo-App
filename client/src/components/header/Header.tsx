@@ -4,13 +4,13 @@ import {
   LoginOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Layout, Space, Typography } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Paths } from "../../paths";
+import { Layout, Space, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { logout, selectUser } from "../../features/auth/authSlice";
 import { PersonFillGear } from "react-bootstrap-icons";
-import { useEffect, useState } from "react";
+import { Paths } from "../../paths";
 
 import CustomBotton from "../common/Button/CustomButton";
 

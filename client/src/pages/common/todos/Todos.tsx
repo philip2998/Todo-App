@@ -10,6 +10,7 @@ import AdminButtons from "../../../components/adminButtons/AdminButtons";
 import TodoTable from "./TodoTable";
 import AddTodo from "./AddTodo";
 import Layout from "../../../components/layout/Layout";
+import Signup from "../signup/Signup";
 
 const Todos = () => {
   const navigate = useNavigate();
@@ -56,7 +57,11 @@ const Todos = () => {
         >
           Add Todo
         </CustomButton>
-        {isAdmin && <AdminButtons />}
+        {isAdmin && (
+          <AdminButtons
+            showModal={() => showModal("Create User", "Create", <Signup />)}
+          />
+        )}
       </div>
       <TodoTable
         data={data}

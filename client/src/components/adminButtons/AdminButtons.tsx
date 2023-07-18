@@ -8,7 +8,11 @@ import { Paths } from "../../paths";
 
 import CustomButton from "../common/Button/CustomButton";
 
-const AdminButtons = () => {
+type AdminButtonsProps = {
+  showModal: () => void;
+};
+
+const AdminButtons = ({ showModal }: AdminButtonsProps) => {
   const navigate = useNavigate();
 
   const adminButtons = [
@@ -25,7 +29,7 @@ const AdminButtons = () => {
     {
       text: "Create User",
       icon: <UserAddOutlined />,
-      onClick: () => navigate(Paths.createUser),
+      onClick: showModal,
     },
   ];
 

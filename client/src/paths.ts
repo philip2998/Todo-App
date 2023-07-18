@@ -2,6 +2,7 @@ export const Paths = {
   home: "/",
   login: "/login",
   signup: "/signup",
+  resetPassword: "/resetPassword/:token",
   todo: "/todos",
   allUsers: "/allusers",
   allTodos: "/alltodos",

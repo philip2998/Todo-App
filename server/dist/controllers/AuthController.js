@@ -1,7 +1,7 @@
 import { catchAsync } from '../utils/helpers.js';
 import errorHandler from '../middlewares/errorMiddleware.js';
-import createToken from '../utils/JwtToken.js';
 import UserService from '../services/UserService.js';
+import createToken from '../utils/JwtToken.js';
 import AppError from '../utils/exceptions/AppError.js';
 export default class AuthController {
     userService;
