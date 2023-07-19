@@ -17,6 +17,13 @@ export const usersApi = api.injectEndpoints({
       }),
       providesTags: ["Users"],
     }),
+    getAdmin: builder.query<UserData, string>({
+      query: (id) => ({
+        url: `/todos/main/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Users"],
+    }),
     createUser: builder.mutation<User, { user: User; adminId: string }>({
       query: ({ user, adminId }) => ({
         url: `todos/main/${adminId}`,
@@ -41,17 +48,37 @@ export const usersApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
+    updatePassword: builder.mutation<
+      string,
+      { user: UserData; password: string }
+    >({
+      query: ({ user, password }) => ({
+        url: `/users/${user.id}`,
+        method: "PATCH",
+        body: password,
+      }),
+    }),
   }),
 });
 
 export const {
   useGetAllUsersQuery,
   useGetUserQuery,
+  useGetAdminQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useUpdatePasswordMutation,
 } = usersApi;
 
 export const {
-  endpoints: { getAllUsers, getUser, createUser, updateUser, deleteUser },
+  endpoints: {
+    getAllUsers,
+    getUser,
+    getAdmin,
+    createUser,
+    updateUser,
+    deleteUser,
+    updatePassword,
+  },
 } = usersApi;

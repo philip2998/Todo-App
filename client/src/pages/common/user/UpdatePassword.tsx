@@ -1,16 +1,16 @@
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 import {
   useGetUserQuery,
   useUpdateUserMutation,
 } from "../../../app/services/usersApi";
+import { useUpdatePasswordMutation } from "../../../app/services/usersApi";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
-import { useParams } from "react-router-dom";
 import { UserData } from "../../../types";
-import { useState } from "react";
 import { Spin } from "antd";
-
 import CustomForm from "../../../components/common/Form/CustomForm";
 
-const EditUser = () => {
+const UpdatePassword = () => {
   const params = useParams<{ id: string }>();
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<
@@ -58,4 +58,4 @@ const EditUser = () => {
   );
 };
 
-export default EditUser;
+export default UpdatePassword;

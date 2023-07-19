@@ -17,8 +17,8 @@ import Modal from "../../../components/common/Modal/Modal";
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loginUser] = useLoginMutation();
-  const [error, setError] = useState("");
 
+  const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalComponent, setModalComponent] = useState<JSX.Element | null>(
     null

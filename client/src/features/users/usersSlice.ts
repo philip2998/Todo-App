@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 import { UserData } from "../../types";
 import { usersApi } from "../../app/services/usersApi";
-import { RootState } from "../../app/store";
 
 interface InitialState {
   users: UserData[] | null;

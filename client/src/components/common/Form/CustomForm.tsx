@@ -9,6 +9,7 @@ type CustomFormProps<T> = {
   firstInput: string;
   btnText: string;
   secondInput?: string;
+  thirdInput?: string;
   className?: string;
   onFinish?: (values: T) => void;
   title?: string;
@@ -28,6 +29,7 @@ const CustomForm = <T extends Todo | UserData>({
   type,
   firstInput,
   secondInput,
+  thirdInput,
 }: CustomFormProps<T>) => {
   return (
     <>
@@ -46,6 +48,13 @@ const CustomForm = <T extends Todo | UserData>({
               type="text"
               name={secondInput}
               placeholder={secondInput}
+            />
+          )}
+          {thirdInput && (
+            <CustomInput
+              type="text"
+              name={thirdInput}
+              placeholder={thirdInput}
             />
           )}
           <Space>

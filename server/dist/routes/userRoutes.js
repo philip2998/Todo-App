@@ -14,13 +14,12 @@ userRouter
 userRouter
     .route('/todos/main/:id')
     .post(authController.checkPermissions('admin'), userController.createUser);
-userRouter
-    .route('/:id/updateMyPassword')
-    .patch(passwordController.updatePassword);
+userRouter.route('/todos/main/:id').get(userController.getUser);
 userRouter
     .route('/:id')
     .get(userController.getUser)
     .patch(userController.updateUser)
+    .patch(passwordController.updatePassword)
     .delete(userController.deleteUser);
 export default userRouter;
 //# sourceMappingURL=UserRoutes.js.map

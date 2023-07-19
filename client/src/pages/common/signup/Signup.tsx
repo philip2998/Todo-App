@@ -1,6 +1,6 @@
 import { Row, Card, Form, Space, Typography } from "antd";
 import { isErrorWithMessages } from "../../../utils/isErrorWithMessages";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignupMutation } from "../../../app/services/authApi";
 import { useState } from "react";
 import { Paths } from "../../../paths";
@@ -13,18 +13,19 @@ import CustomInput from "../../../components/common/Input/CustomInput";
 import Layout from "../../../components/layout/Layout";
 
 const Signup: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const [signupUser] = useSignupMutation();
+  const adminId = localStorage.getItem("userId");
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<
     "error" | "success" | "info" | "warning" | undefined
   >(undefined);
+
+  const [signupUser] = useSignupMutation();
   const navigate = useNavigate();
 
   const handleSignup = async (data: User) => {
     try {
       await signupUser(data).unwrap();
-      if (id) {
+      if (adminId) {
         setMessage("User successfully created!");
         setMessageType("success");
       } else {
@@ -41,9 +42,12 @@ const Signup: React.FC = () => {
     }
   };
 
-  if (id) {
+  if (adminId) {
     return (
-      <Card title="Create User" style={{ width: "30rem", margin: "0 auto" }}>
+      <Card
+        title="Please fill the inputs for creating new User"
+        style={{ width: "30rem", margin: "0 auto" }}
+      >
         <StatusMessage message={message} type={messageType} />
         <Form onFinish={handleSignup}>
           <CustomInput name="name" placeholder="Name" />

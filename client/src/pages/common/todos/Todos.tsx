@@ -19,6 +19,7 @@ const Todos = () => {
   const currentUser = useSelector(selectUser);
   const { data, isLoading } = useGetUserTodosQuery(id || "");
 
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalComponent, setModalComponent] = useState<JSX.Element | null>(
     null
@@ -26,13 +27,17 @@ const Todos = () => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalButtonText, setModalButtonText] = useState("");
 
-  const isAdmin = currentUser?.data.user.role === "admin";
-
   useEffect(() => {
     if (!currentUser) {
       navigate("/login");
     }
-  }, [navigate, currentUser]);
+    if (currentUser?.data.user.role === "admin") {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate]);
 
   const showModal = (
     title: string,

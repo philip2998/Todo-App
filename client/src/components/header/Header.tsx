@@ -15,19 +15,20 @@ import { Paths } from "../../paths";
 import CustomBotton from "../common/Button/CustomButton";
 
 const Header: React.FC = () => {
-  const [userName, setUserName] = useState("");
+  const [headTitle, setHeadTitle] = useState("");
   const user = useSelector(selectUser);
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (user && localStorage.getItem("token")) {
-      setUserName(`${user.data.user.name}'s Todos`);
+      setHeadTitle(`${user.data.user.name}'s Todos`);
     } else {
-      setUserName("Todo App");
+      setHeadTitle("Todo App");
     }
-  }, [user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogoutClick = () => {
     dispatch(logout());
@@ -45,7 +46,7 @@ const Header: React.FC = () => {
         <TeamOutlined className="fs-2 me-2" />
         <Link to={`/todos/main/${user?.data.user.id}`}>
           <CustomBotton type="ghost">
-            <Typography.Title level={1}>{userName}</Typography.Title>
+            <Typography.Title level={1}>{headTitle}</Typography.Title>
           </CustomBotton>
         </Link>
       </Space>

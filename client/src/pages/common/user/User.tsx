@@ -6,11 +6,11 @@ import { useGetUserQuery } from "../../../app/services/usersApi";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../features/auth/authSlice";
 
-import Layout from "../../../components/layout/Layout";
 import CustomButton from "../../../components/common/Button/CustomButton";
-import Modal from "../../../components/common/Modal/Modal";
 import DeleteUser from "./DeleteUser";
 import EditUser from "./EditUser";
+import Layout from "../../../components/layout/Layout";
+import Modal from "../../../components/common/Modal/Modal";
 
 const User = () => {
   const navigate = useNavigate();
@@ -30,7 +30,8 @@ const User = () => {
     if (!currentUser) {
       navigate("/login");
     }
-  }, [navigate, currentUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate]);
 
   if (isLoading) return <Spin tip="loading" size="large" className="spinner" />;
 
@@ -74,6 +75,14 @@ const User = () => {
             icon={<EditOutlined />}
           >
             Edit
+          </CustomButton>
+          <CustomButton
+            shape="round"
+            onClick={() =>
+              showModal("Delete Account", "Delete", <DeleteUser />)
+            }
+          >
+            Change Password
           </CustomButton>
           <CustomButton
             shape="round"
