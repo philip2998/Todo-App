@@ -1,9 +1,9 @@
 import mongoose, { Model, Schema } from 'mongoose';
 import { IUserSchema } from '../interfaces/modelInterfaces.js';
 
+import validator from 'validator';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
-import validator from 'validator';
 
 const userSchema: Schema<IUserSchema> = new mongoose.Schema(
   {

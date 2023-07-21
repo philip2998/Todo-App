@@ -6,6 +6,7 @@ import { useGetUserQuery } from "../../../app/services/usersApi";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../features/auth/authSlice";
 
+import UpdatePassword from "./UpdatePassword";
 import CustomButton from "../../../components/common/Button/CustomButton";
 import DeleteUser from "./DeleteUser";
 import EditUser from "./EditUser";
@@ -79,10 +80,10 @@ const User = () => {
           <CustomButton
             shape="round"
             onClick={() =>
-              showModal("Delete Account", "Delete", <DeleteUser />)
+              showModal("Update Password", "Update", <UpdatePassword />)
             }
           >
-            Change Password
+            Update Password
           </CustomButton>
           <CustomButton
             shape="round"

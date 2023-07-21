@@ -1,5 +1,5 @@
-import User from '../models/userModel.js';
 import Repository from './Repository.js';
+import User from '../models/userModel.js';
 export default class UserRepository extends Repository {
     constructor() {
         super(User);

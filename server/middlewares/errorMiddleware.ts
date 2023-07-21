@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { OptionsForErrorMiddleware } from '../types/index.js';
+import { Request, Response } from 'express';
 
 import AppError from '../utils/exceptions/AppError.js';
 

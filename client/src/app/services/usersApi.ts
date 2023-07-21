@@ -50,12 +50,17 @@ export const usersApi = api.injectEndpoints({
     }),
     updatePassword: builder.mutation<
       string,
-      { user: UserData; password: string }
+      {
+        user: UserData;
+        passwordCurrent: string;
+        password: string;
+        passwordConfirm: string;
+      }
     >({
-      query: ({ user, password }) => ({
-        url: `/users/${user.id}`,
+      query: ({ user, passwordCurrent, password, passwordConfirm }) => ({
+        url: `/users/${user.id}/updatePassword`,
         method: "PATCH",
-        body: password,
+        body: { passwordCurrent, password, passwordConfirm },
       }),
     }),
   }),

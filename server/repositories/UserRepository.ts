@@ -1,7 +1,7 @@
 import { IUserSchema } from '../interfaces/modelInterfaces.js';
 
-import User from '../models/userModel.js';
 import Repository from './Repository.js';
+import User from '../models/userModel.js';
 
 export default class UserRepository extends Repository<IUserSchema> {
   constructor() {

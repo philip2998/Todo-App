@@ -12,6 +12,11 @@ type CustomFormProps<T> = {
   thirdInput?: string;
   className?: string;
   onFinish?: (values: T) => void;
+  onFinishForPassword?: (values: {
+    passwordCurrent: string;
+    password: string;
+    passwordConfirm: string;
+  }) => Promise<void>;
   title?: string;
   message?: string | undefined;
   messageType?: "error" | "success" | "info" | "warning" | undefined;
@@ -21,6 +26,7 @@ type CustomFormProps<T> = {
 
 const CustomForm = <T extends Todo | UserData>({
   onFinish,
+  onFinishForPassword,
   title,
   btnText,
   className,
@@ -35,7 +41,11 @@ const CustomForm = <T extends Todo | UserData>({
     <>
       <StatusMessage message={message} type={messageType} />
       <Card title={title} style={{ width: "30rem" }} className={className}>
-        <Form name="Custom form" onFinish={onFinish} initialValues={type}>
+        <Form
+          name="Custom form"
+          onFinish={onFinishForPassword}
+          initialValues={type}
+        >
           {firstInput && (
             <CustomInput
               type="text"

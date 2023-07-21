@@ -1,5 +1,5 @@
-import { catchAsync } from '../utils/helpers.js';
 import { verifyJwtToken } from './verifyJwtToken.js';
+import { catchAsync } from '../utils/helpers.js';
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
 export const routeGuard = catchAsync(async (req, res, next) => {

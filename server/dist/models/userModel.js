@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
+import validator from 'validator';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
-import validator from 'validator';
 const userSchema = new mongoose.Schema({
     name: {
         type: String,

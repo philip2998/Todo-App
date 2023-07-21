@@ -1,9 +1,9 @@
 import express, { Router } from 'express';
 import { routeGuard } from '../middlewares/routeGuard.js';
 
+import PasswordController from '../controllers/PasswordController.js';
 import UserController from '../controllers/UserController.js';
 import AuthController from '../controllers/AuthController.js';
-import PasswordController from '../controllers/PasswordController.js';
 
 const userRouter: Router = express.Router();
 const userController = new UserController();
@@ -22,12 +22,14 @@ userRouter
   .post(authController.checkPermissions('admin'), userController.createUser);
 
 userRouter.route('/todos/main/:id').get(userController.getUser);
+userRouter
+  .route('/:id/updatePassword')
+  .patch(passwordController.updatePassword);
 
 userRouter
   .route('/:id')
   .get(userController.getUser)
   .patch(userController.updateUser)
-  .patch(passwordController.updatePassword)
   .delete(userController.deleteUser);
 
 export default userRouter;

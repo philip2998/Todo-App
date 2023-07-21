@@ -1,4 +1,5 @@
 import { OptionsForNodemailer } from '../types';
+
 import nodemailer from 'nodemailer';
 
 const sendEmail = async (options: OptionsForNodemailer): Promise<void> => {
