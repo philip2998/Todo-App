@@ -48,6 +48,27 @@ const User = () => {
   };
   const hideModal = () => setIsModalOpen(false);
 
+  const userButtons = [
+    {
+      title: "Edit Account",
+      buttonText: "Edit",
+      component: <EditUser />,
+      icon: <EditOutlined />,
+    },
+    {
+      title: "Update Password",
+      buttonText: "Update",
+      component: <UpdatePassword />,
+      icon: null,
+    },
+    {
+      title: "Delete Account",
+      buttonText: "Delete",
+      component: <DeleteUser />,
+      icon: <DeleteOutlined />,
+    },
+  ];
+
   return (
     <Layout>
       <Descriptions title="Information about User" bordered>
@@ -69,32 +90,19 @@ const User = () => {
       <>
         <Divider orientation="left">Actions</Divider>
         <Space>
-          <CustomButton
-            shape="round"
-            type="default"
-            onClick={() => showModal("Edit Account", "Edit", <EditUser />)}
-            icon={<EditOutlined />}
-          >
-            Edit
-          </CustomButton>
-          <CustomButton
-            shape="round"
-            onClick={() =>
-              showModal("Update Password", "Update", <UpdatePassword />)
-            }
-          >
-            Update Password
-          </CustomButton>
-          <CustomButton
-            shape="round"
-            danger
-            onClick={() =>
-              showModal("Delete Account", "Delete", <DeleteUser />)
-            }
-            icon={<DeleteOutlined />}
-          >
-            Delete
-          </CustomButton>
+          {userButtons.map((button, index) => (
+            <CustomButton
+              key={index}
+              shape="round"
+              type={button.icon ? "default" : undefined}
+              onClick={() =>
+                showModal(button.title, button.buttonText, button.component)
+              }
+              icon={button.icon}
+            >
+              {button.title}
+            </CustomButton>
+          ))}
         </Space>
       </>
       <Modal

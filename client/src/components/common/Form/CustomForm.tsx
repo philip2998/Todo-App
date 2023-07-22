@@ -8,15 +8,10 @@ import CustomInput from "../Input/CustomInput";
 type CustomFormProps<T> = {
   firstInput: string;
   btnText: string;
+  onFinish?: (values: T) => void | Promise<void>;
   secondInput?: string;
   thirdInput?: string;
   className?: string;
-  onFinish?: (values: T) => void;
-  onFinishForPassword?: (values: {
-    passwordCurrent: string;
-    password: string;
-    passwordConfirm: string;
-  }) => Promise<void>;
   title?: string;
   message?: string | undefined;
   messageType?: "error" | "success" | "info" | "warning" | undefined;
@@ -24,9 +19,8 @@ type CustomFormProps<T> = {
   type?: T;
 };
 
-const CustomForm = <T extends Todo | UserData>({
+const CustomForm = <T extends Todo | UserData | object>({
   onFinish,
-  onFinishForPassword,
   title,
   btnText,
   className,
@@ -37,35 +31,26 @@ const CustomForm = <T extends Todo | UserData>({
   secondInput,
   thirdInput,
 }: CustomFormProps<T>) => {
+  const inputs = [
+    { name: firstInput, placeholder: firstInput },
+    { name: secondInput, placeholder: secondInput },
+    { name: thirdInput, placeholder: thirdInput },
+  ];
   return (
     <>
       <StatusMessage message={message} type={messageType} />
       <Card title={title} style={{ width: "30rem" }} className={className}>
-        <Form
-          name="Custom form"
-          onFinish={onFinishForPassword}
-          initialValues={type}
-        >
-          {firstInput && (
-            <CustomInput
-              type="text"
-              name={firstInput}
-              placeholder={firstInput}
-            />
-          )}
-          {secondInput && (
-            <CustomInput
-              type="text"
-              name={secondInput}
-              placeholder={secondInput}
-            />
-          )}
-          {thirdInput && (
-            <CustomInput
-              type="text"
-              name={thirdInput}
-              placeholder={thirdInput}
-            />
+        <Form name="Custom form" onFinish={onFinish} initialValues={type}>
+          {inputs.map(
+            (input, index) =>
+              input.name && (
+                <CustomInput
+                  key={index}
+                  type="text"
+                  name={input.name}
+                  placeholder={input.placeholder || ""}
+                />
+              )
           )}
           <Space>
             <CustomButton htmlType="submit">{btnText}</CustomButton>

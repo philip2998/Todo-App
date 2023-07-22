@@ -51,7 +51,7 @@ const UpdatePassword = () => {
         thirdInput="passwordConfirm"
         message={message}
         messageType={messageType}
-        onFinishForPassword={handleUpdatePassword}
+        onFinish={handleUpdatePassword}
       />
     </>
   );
