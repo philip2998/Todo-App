@@ -1,8 +1,8 @@
-import { todoRepository } from '../repositories/todoRepository.js';
+import TodoRepository from '../repositories/todoRepository.js';
 export default class TodoService {
     todoRepository;
     constructor() {
-        this.todoRepository = todoRepository;
+        this.todoRepository = new TodoRepository();
     }
     async getAllTodos() {
         return await this.todoRepository.getAllData();
@@ -21,6 +21,9 @@ export default class TodoService {
     }
     async deleteTodo(id) {
         return await this.todoRepository.deleteOneData(id);
+    }
+    async findOneTodo(query, select = '') {
+        return this.todoRepository.findOneData(query, select);
     }
 }
 //# sourceMappingURL=TodoService.js.map

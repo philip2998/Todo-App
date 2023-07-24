@@ -47,17 +47,33 @@ export default class TodoController {
     }
   );
 
-  public createTodo = catchAsync(async (req: Request, res: Response) => {
-    const userId = req.user.id;
-    const userName = req.user.name;
-    const todo: ITodoSchema = {
-      ...req.body,
-      userId,
-      userName,
-    };
-    const newTodo: ITodoSchema = await this.todoService.createTodo(todo);
-    sendSuccessResponse(res, 201, newTodo);
-  });
+  public createTodo = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const userId = req.user.id;
+      const userName = req.user.name;
+      const todoTitle = req.body.title;
+      const todo: ITodoSchema = {
+        ...req.body,
+        userId,
+        userName,
+      };
+      const existedTodo = await this.todoService.findOneTodo({
+        title: todoTitle,
+      });
+      if (existedTodo && existedTodo.userId === userId) {
+        return next(
+          errorHandler(
+            new AppError(ErrorType.TODO_ALREADY_EXISTS, ErrorType.BAD_REQUEST),
+            req,
+            res,
+            next
+          )
+        );
+      }
+      const newTodo: ITodoSchema = await this.todoService.createTodo(todo);
+      sendSuccessResponse(res, 201, newTodo);
+    }
+  );
 
   public updateTodo = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {

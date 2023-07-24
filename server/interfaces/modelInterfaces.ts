@@ -5,6 +5,7 @@ export interface IUserSchema extends Document {
   email: string;
   role: 'user' | 'admin';
   password: string;
+  photo: string;
   passwordConfirm: string | undefined;
   passwordChangedAt: number;
   passwordResetToken: string | undefined;

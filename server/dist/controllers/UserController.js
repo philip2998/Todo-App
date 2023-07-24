@@ -1,4 +1,6 @@
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
+import multer from 'multer';
+import errorHandler from '../middlewares/errorMiddleware.js';
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
 export default class UserController {
@@ -41,6 +43,30 @@ export default class UserController {
         if (!deletedUser)
             return next(new AppError("No User found with that ID!", 404));
         sendSuccessResponse(res, 200, deletedUser);
+    });
+    uploadUserPhoto = catchAsync(async (req, res, next) => {
+        const multerStorage = multer.diskStorage({
+            destination: (req, file, cb) => {
+                cb(null, 'public/img/users');
+            },
+            filename: (req, file, cb) => {
+                const extension = file.mimetype.split('/')[1];
+                cb(null, `user-${req.user.id}-${Date.now()}.${extension}`);
+            },
+        });
+        const multerFilter = (req, file, cb) => {
+            if (file.mimetype.startsWith('image')) {
+                next(cb(null, true));
+            }
+            else {
+                next(cb(errorHandler(new AppError('Not an image! Please upload only images', 400), req, res, next)));
+            }
+        };
+        const upload = multer({
+            storage: multerStorage,
+            fileFilter: multerFilter,
+        });
+        upload.single('photo');
     });
 }
 //# sourceMappingURL=UserController.js.map

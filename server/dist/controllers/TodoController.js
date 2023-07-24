@@ -22,14 +22,21 @@ export default class TodoController {
         const todos = await this.todoService.getUserTodos(userId);
         sendSuccessResponse(res, 200, todos);
     });
-    createTodo = catchAsync(async (req, res) => {
+    createTodo = catchAsync(async (req, res, next) => {
         const userId = req.user.id;
         const userName = req.user.name;
+        const todoTitle = req.body.title;
         const todo = {
             ...req.body,
             userId,
             userName,
         };
+        const existedTodo = await this.todoService.findOneTodo({
+            title: todoTitle,
+        });
+        if (existedTodo && existedTodo.userId === userId) {
+            return next(errorHandler(new AppError("This todo is already exist. Please create another", 400), req, res, next));
+        }
         const newTodo = await this.todoService.createTodo(todo);
         sendSuccessResponse(res, 201, newTodo);
     });

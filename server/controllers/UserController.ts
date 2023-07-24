@@ -3,8 +3,13 @@ import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
 import { IUserSchema } from '../interfaces/modelInterfaces.js';
 import { ErrorType } from '../utils/enums/index.js';
 
+import multer from 'multer';
+import errorHandler from '../middlewares/errorMiddleware.js';
 import UserService from '../services/UserService.js';
 import AppError from '../utils/exceptions/AppError.js';
+
+type DestinationCallback = (error: Error | null, destination: string) => void;
+type FileNameCallback = (error: Error | null, filename: string) => void;
 
 export default class UserController {
   private userService: UserService;
@@ -74,6 +79,51 @@ export default class UserController {
         );
 
       sendSuccessResponse(res, 200, deletedUser);
+    }
+  );
+
+  public uploadUserPhoto = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+      const multerStorage = multer.diskStorage({
+        destination: (
+          req,
+          file: Express.Multer.File,
+          cb: DestinationCallback
+        ) => {
+          cb(null, 'public/img/users');
+        },
+        filename: (req, file: Express.Multer.File, cb: FileNameCallback) => {
+          const extension = file.mimetype.split('/')[1];
+          cb(null, `user-${req.user.id}-${Date.now()}.${extension}`);
+        },
+      });
+
+      const multerFilter = (
+        req: Request,
+        file: Express.Multer.File,
+        cb: any
+      ) => {
+        if (file.mimetype.startsWith('image')) {
+          next(cb(null, true));
+        } else {
+          next(
+            cb(
+              errorHandler(
+                new AppError('Not an image! Please upload only images', 400),
+                req,
+                res,
+                next
+              )
+            )
+          );
+        }
+      };
+
+      const upload = multer({
+        storage: multerStorage,
+        fileFilter: multerFilter,
+      });
+      upload.single('photo');
     }
   );
 }

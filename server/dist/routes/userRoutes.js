@@ -21,7 +21,7 @@ userRouter
 userRouter
     .route('/:id')
     .get(userController.getUser)
-    .patch(userController.updateUser)
+    .patch(userController.uploadUserPhoto, userController.updateUser)
     .delete(userController.deleteUser);
 export default userRouter;
 //# sourceMappingURL=UserRoutes.js.map

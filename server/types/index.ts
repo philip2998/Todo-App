@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+
 import AppError from '../utils/exceptions/AppError';
 
 export type OptionsForCookie = {

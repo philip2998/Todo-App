@@ -12,6 +12,7 @@ export const enum ErrorType {
   INVALID_TOKEN = 'This is invalid token!',
   INVALID_OR_EXPIRED_TOKEN = 'Token is invalid or has expired',
   EMAIL_ALREADY_EXISTS = 'This Email is already exists, please provide another email!',
+  TODO_ALREADY_EXISTS = 'This todo is already exist. Please create another',
   NOT_SAME_PASSWORD = 'Passwords are not the same!',
   SERVER_ERROR = 500,
   BAD_REQUEST = 400,
