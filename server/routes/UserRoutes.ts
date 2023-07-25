@@ -1,4 +1,5 @@
 import express, { Router } from 'express';
+import { uploadUserPhoto } from '../controllers/PhotoController.js';
 import { routeGuard } from '../middlewares/routeGuard.js';
 
 import PasswordController from '../controllers/PasswordController.js';
@@ -29,7 +30,7 @@ userRouter
 userRouter
   .route('/:id')
   .get(userController.getUser)
-  .patch(userController.uploadUserPhoto, userController.updateUser)
+  .patch(uploadUserPhoto, userController.updateUser)
   .delete(userController.deleteUser);
 
 export default userRouter;
